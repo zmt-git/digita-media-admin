@@ -4,5 +4,8 @@
  * @Author: ZMT
  * @Date: 2021-05-24 22:41:04
  * @LastEditors: ZMT
- * @LastEditTime: 2021-05-24 22:41:15
+ * @LastEditTime: 2021-05-24 22:49:15
  */
+export const stableRoutes = [
+
+]

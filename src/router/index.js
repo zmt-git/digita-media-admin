@@ -4,19 +4,17 @@
  * @Author: ZMT
  * @Date: 2021-05-24 20:30:36
  * @LastEditors: ZMT
- * @LastEditTime: 2021-05-24 22:38:10
+ * @LastEditTime: 2021-05-24 22:49:35
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import stableRoutes from './routes/stableRoutes'
 
 Vue.use(VueRouter)
 
-const routes = [
-]
-
 const router = new VueRouter({
   mode: 'hash',
-  routes
+  stableRoutes
 })
 
 export default router
