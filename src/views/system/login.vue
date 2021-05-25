@@ -15,10 +15,10 @@
             prefix-icon
             class="login-contanier-form__input"
             clearable
-            ref="username"
+            ref="mobile"
             placeholder="请输入用户名"
             tabindex='1'
-            v-model="loginForm.username"
+            v-model="loginForm.mobile"
             @keyup.enter.native="handleLogin"
           >
             <img slot="prefix" class="input__img" src="../../assets/login/user.png"/>
@@ -53,7 +53,7 @@ export default {
 
   computed: {
     btnDisabled () {
-      if (!this.loginForm.username || !this.loginForm.password) {
+      if (!this.loginForm.mobile || !this.loginForm.password) {
         return true
       } else {
         return false
@@ -72,13 +72,13 @@ export default {
   data () {
     return {
       loginForm: {
-        username: '',
-        password: ''
+        mobile: '',
+        password: '',
+        freeLogin: false
       },
       loginRules: {
-        username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' },
-          {}
+        mobile: [
+          { required: true, message: '请输入用户名', trigger: 'blur' }
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' }
@@ -90,8 +90,8 @@ export default {
   },
 
   mounted () {
-    if (this.loginForm.username === '') {
-      this.$refs.username.focus()
+    if (this.loginForm.mobile === '') {
+      this.$refs.mobile.focus()
     } else if (this.loginForm.password === '') {
       this.$refs.password.focus()
     }
@@ -106,7 +106,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('login', this.loginForm)
+          this.$store.dispatch('loginActions', this.loginForm)
             .then(() => {
               this.$router.push({ path: '/' })
               this.loading = false

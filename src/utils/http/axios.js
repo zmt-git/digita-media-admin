@@ -7,10 +7,9 @@
  * @LastEditTime: 2021-05-24 22:23:08
  */
 import axios from 'axios'
-import { getToken } from '@/utils/cache/cacheToken'
+import { getToken, removeToken } from '@/utils/cache/cacheToken'
 import { removeEmptyParams } from './helper'
 import router from '@/router'
-import store from '@/store'
 import { Notification } from 'element-ui'
 
 const CancelToken = axios.CancelToken
@@ -19,7 +18,7 @@ let axiosResultStatus = 1
 let cancel
 
 const service = axios.create({
-  baseURL: window.globalConfig.api_url,
+  baseURL: '/api' /* window.globalConfig.api_url */,
   CancelToken: new CancelToken(function executor (c) {
     cancel = c
   })
@@ -48,8 +47,29 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   response => {
-    axiosResultStatus = 1
-    return response.data
+    // eslint-disable-next-line no-debugger
+    debugger
+    const code = response.data.code
+    if (code === 200) {
+      axiosResultStatus = 1
+      return response.data
+    } else {
+      if (code === 404) {
+        axiosResultStatus = 0
+        router.push('/404')
+      } else if (code === 401) {
+        axiosResultStatus = 0
+        removeToken()
+        router.push('/login')
+        location.reload()
+      }
+      Notification.error({
+        title: response.data.msg,
+        duration: 2500,
+        offset: 50
+      })
+      return Promise.reject(response)
+    }
   },
   error => {
     let code = 0
@@ -73,7 +93,6 @@ service.interceptors.response.use(
       router.push('/404')
     } else if (code === 401) {
       axiosResultStatus = 0
-      store.dispatch('logoutActions')
       router.push('/login')
       location.reload()
     } else {

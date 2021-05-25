@@ -16,6 +16,12 @@ module.exports = {
   assetsDir: 'static',
   // indexPath: "index.html", html输出路径 默认 index.html
   devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://192.168.2.240:8080',
+        changeOrigin: true
+      }
+    }
   },
   configureWebpack: {
     resolve: {

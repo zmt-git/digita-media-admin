@@ -8,7 +8,7 @@
 -->
 
 <template>
-  <div>首页</div>
+  <div>首页1212</div>
 </template>
 
 <script>
