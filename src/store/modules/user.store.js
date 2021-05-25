@@ -1,5 +1,5 @@
 import { login, logout } from '@/api/system/login'
-import { removeToken } from '@/utils/cache/tokenCache'
+import { removeToken } from '@/utils/cache/cacheToken'
 
 export default {
   state: {

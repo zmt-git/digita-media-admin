@@ -7,7 +7,7 @@
  * @LastEditTime: 2021-05-24 22:23:08
  */
 import axios from 'axios'
-import { getToken } from '@/utils/cache/tokenCache'
+import { getToken } from '@/utils/cache/cacheToken'
 import { removeEmptyParams } from './helper'
 import router from '@/router'
 import store from '@/store'
@@ -78,7 +78,7 @@ service.interceptors.response.use(
       location.reload()
     } else {
       Notification.error({
-        title: error.response.data.msg,
+        title: error.response.data.msg || '系统错误！',
         duration: 2500,
         offset: 50
       })
