@@ -6,6 +6,15 @@
  * @LastEditors: ZMT
  * @LastEditTime: 2021-05-24 22:49:15
  */
-export const stableRoutes = [
+import { lazyComponent } from '@/utils/lazyComponent'
 
+export const stableRoutes = [
+  {
+    name: 'login',
+    path: '/login',
+    meta: {
+      title: '登录'
+    },
+    component: () => lazyComponent(import('@/views/system/login.vue'))
+  }
 ]

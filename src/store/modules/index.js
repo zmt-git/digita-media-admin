@@ -1,11 +1,13 @@
 const modules = {}
-const requireModules = require.content('./', true, /\.store\.js$/)
-requireModules.keys().forEach(filename => {
-  const moduleConfig = requireModules(filename).default
+
+const modulesRequires = require.context('../modules', true, /\.store\.js$/)
+
+modulesRequires.keys().forEach(filename => {
+  const moduleConfig = modulesRequires(filename)
 
   const moduleName = filename.split('/').pop().replace(/\.store\.js$/, '')
 
-  modules[moduleName] = moduleConfig
+  modules[moduleName] = moduleConfig.default
 })
 
 export default modules

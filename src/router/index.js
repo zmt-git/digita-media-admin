@@ -8,13 +8,16 @@
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import stableRoutes from './routes/stableRoutes'
+import { stableRoutes } from './routes/stableRoutes'
+import { setupGuard } from './guard'
 
 Vue.use(VueRouter)
 
 const router = new VueRouter({
   mode: 'hash',
-  stableRoutes
+  routes: stableRoutes
 })
+
+setupGuard(router)
 
 export default router

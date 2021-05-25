@@ -6,6 +6,7 @@
  * @LastEditors: ZMT
  * @LastEditTime: 2021-05-24 22:12:39
  */
+const path = require('path')
 
 module.exports = {
   // 基本路径
@@ -15,5 +16,12 @@ module.exports = {
   assetsDir: 'static',
   // indexPath: "index.html", html输出路径 默认 index.html
   devServer: {
+  },
+  configureWebpack: {
+    resolve: {
+      alias: {
+        '@': path.join(__dirname, 'src')
+      }
+    }
   }
 }

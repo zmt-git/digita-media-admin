@@ -6,3 +6,18 @@
  * @LastEditors: ZMT
  * @LastEditTime: 2021-05-24 22:39:52
  */
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
+
+NProgress.configure({ showSpinner: false })
+
+export function createProgress (router) {
+  router.beforeEach((to, from, next) => {
+    NProgress.start()
+    next()
+  })
+
+  router.afterEach((to, from) => {
+    NProgress.done()
+  })
+}
