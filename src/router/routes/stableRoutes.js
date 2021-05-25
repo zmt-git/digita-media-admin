@@ -4,7 +4,7 @@
  * @Author: ZMT
  * @Date: 2021-05-24 22:41:04
  * @LastEditors: ZMT
- * @LastEditTime: 2021-05-24 22:49:15
+ * @LastEditTime: 2021-05-25 21:52:12
  */
 import { lazyComponent } from '@/utils/lazyComponent'
 import layout from '@/layout/index.vue'
@@ -55,6 +55,16 @@ export const stableRoutes = [
           icon: 'icon-meitiliebiao'
         },
         component: () => lazyComponent(import('@/views/media/index.vue'))
+      },
+      {
+        name: 'player',
+        path: '/media/player',
+        hidden: true,
+        meta: {
+          title: '媒体播放',
+          icon: 'icon-meitiliebiao'
+        },
+        component: () => lazyComponent(import('@/views/media/mediaPlayer.vue'))
       }
     ]
   },

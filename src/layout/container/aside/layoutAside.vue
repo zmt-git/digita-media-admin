@@ -4,7 +4,7 @@
  * @Author: ZMT
  * @Date: 2021-04-20 10:58:10
  * @LastEditors: ZMT
- * @LastEditTime: 2021-04-28 09:39:35
+ * @LastEditTime: 2021-05-25 21:49:19
 -->
 <template>
   <el-aside class="aside" :width='width'>
@@ -28,20 +28,24 @@
             <span>{{route.meta.title}}</span>
           </template>
           <template v-if="route.children && route.children.length > 0">
-            <router-link
+            <template
               v-for="subRoute in route.children"
-              :to='route.path + subRoute.path'
-              :key="route.path + subRoute.path"
             >
-              <el-menu-item
-                :index='route.path + subRoute.path'
+              <router-link
+                v-if="!subRoute.hidden"
+                :to='route.path + subRoute.path'
+                :key="route.path + subRoute.path"
               >
-                <template #title>
-                  <i class="iconfont menu-icon" :class="subRoute.meta.icon"></i>
-                  <span class="menu-title">{{subRoute.meta.title}}</span>
-                </template>
-              </el-menu-item>
-            </router-link>
+                <el-menu-item
+                  :index='route.path + subRoute.path'
+                >
+                  <template #title>
+                    <i class="iconfont menu-icon" :class="subRoute.meta.icon"></i>
+                    <span class="menu-title">{{subRoute.meta.title}}</span>
+                  </template>
+                </el-menu-item>
+              </router-link>
+            </template>
           </template>
         </el-submenu>
       </template>

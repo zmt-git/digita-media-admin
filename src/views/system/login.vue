@@ -4,7 +4,7 @@
  * @Author: ZMT
  * @Date: 2021-04-20 10:28:47
  * @LastEditors: ZMT
- * @LastEditTime: 2021-04-20 13:59:35
+ * @LastEditTime: 2021-05-25 21:12:21
 -->
 <template>
   <div class="login">
@@ -186,7 +186,6 @@ $color: #f9ffff;
         height: 50px;
         font-size: 24px;
         margin-top: 30px;
-        // background-color: $bg-color;
       }
     }
   }

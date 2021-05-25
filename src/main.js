@@ -4,7 +4,7 @@
  * @Author: ZMT
  * @Date: 2021-05-24 20:12:55
  * @LastEditors: ZMT
- * @LastEditTime: 2021-05-24 22:36:49
+ * @LastEditTime: 2021-05-25 21:29:59
  */
 
 import Vue from 'vue'
@@ -13,10 +13,8 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
-import './styles/reset.scss'
-import 'animate.css'
-import './styles/resetAnimate.scss'
+import './styles/index'
+
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)
