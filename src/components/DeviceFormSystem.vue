@@ -1,3 +1,11 @@
+<!--
+ * @Description:
+ * @version: 1.0
+ * @Author: ZMT
+ * @Date: 2021-05-26 19:01:25
+ * @LastEditors: ZMT
+ * @LastEditTime: 2021-05-26 21:21:40
+-->
 <template>
   <ul class="device-form-system">
     <li class="device-form-system-item">
@@ -60,6 +68,7 @@ export default {
     height: 50px;
     justify-content: space-between;
     align-items: center;
+    // border-bottom: 1px solid #f0f0f0;
     &_name{
       font-size: 14px;
       color: #999999;

@@ -15,8 +15,8 @@
       </transition>
     </div>
     <div class="detail-media-info">
-      <h3>520视频</h3>
-      <h6>2021-05-20</h6>
+      <h3 class="detail-media-info_name font-color ellipsis-1">520视频</h3>
+      <h6 class="detail-media-info_time font-color ellipsis-1">2021-05-20</h6>
     </div>
   </li>
 </template>
@@ -34,7 +34,7 @@ export default {
 
   computed: {
     img () {
-      return this.info.img ? this.info.img : '../assets/layout/header/empty.png'
+      return this.info.img ? this.info.img : require('../assets/layout/header/empty.png')
     }
   },
 
@@ -59,13 +59,12 @@ $iconColor: #ffffff;
 .detail-media{
   float: left;
   margin: 10px;
+  background-color: #ffffff;
+  overflow: hidden;
   &-src{
     position: relative;
-    width: 320px;
-    height: 180px;
     &_img{
-      width: 320px;
-      height: 180px;
+      width: 100%;
       border: 0;
       cursor: pointer;
     }
@@ -93,10 +92,19 @@ $iconColor: #ffffff;
   &-info{
     width: 320px;
     box-sizing: border-box;
-    padding: 5px;
+    padding: 10px;
+    padding-top: 0px;
+    border-top: 1px solid #f0f0f0;
     & h3, h4{
-      line-height: 20px;
+      line-height: 30px;
+    }
+    &_name{
+      font-size: 15px;
+    }
+    &_time{
+      font-size: 12px;
     }
   }
 }
+
 </style>

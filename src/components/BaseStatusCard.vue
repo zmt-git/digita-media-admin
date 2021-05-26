@@ -1,7 +1,15 @@
+<!--
+ * @Description:
+ * @version: 1.0
+ * @Author: ZMT
+ * @Date: 2021-05-26 19:01:25
+ * @LastEditors: ZMT
+ * @LastEditTime: 2021-05-26 21:34:45
+-->
 <template>
-  <div class="base-status-card" :class="type">
+  <div class="base-status-card" :class="type" @mouseenter="onMouse(true)" @mouseleave="onMouse(false)">
     <template v-if="!empty">
-      <div class="base-status-card-left">
+      <div class="base-status-card-left" ref="icon">
         <i class="iconfont icon" :class="iconClass"></i>
       </div>
       <div class="base-status-card-right">
@@ -38,6 +46,17 @@ export default {
       type: Number,
       default: 0
     }
+  },
+
+  methods: {
+    onMouse (action) {
+      if (this.empty) return
+      if (action) {
+        this.$refs.icon.classList.add(`${this.type}-bg`)
+      } else {
+        this.$refs.icon.classList.remove(`${this.type}-bg`)
+      }
+    }
   }
 }
 </script>
@@ -57,6 +76,10 @@ export default {
   &-left{
     display: inline-block;
     width: 50px;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    transition: all 1s;
   }
   &-right{
     display: inline-block;
@@ -67,6 +90,12 @@ export default {
       font-size: 20px;
     }
   }
+}
+.base-status-card:hover{
+  transform: scale(1.01);
+}
+.base-status-card:hover .icon{
+  color: #fff;
 }
 .icon{
   font-size: 40px;

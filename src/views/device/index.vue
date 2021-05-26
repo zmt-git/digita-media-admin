@@ -4,7 +4,7 @@
  * @Author: ZMT
  * @Date: 2021-05-25 20:37:16
  * @LastEditors: ZMT
- * @LastEditTime: 2021-05-25 22:27:06
+ * @LastEditTime: 2021-05-26 21:38:15
 -->
 <template>
 <div>
@@ -25,7 +25,7 @@
       class="list"
       infinite-scroll-disabled="disabled"
     >
-      <detail-device :info='item' v-for="item in pageList" :key='item.id' @setup='setup'></detail-device>
+      <card-device :info='item' v-for="item in pageList" :key='item.id' @setup='setup'></card-device>
     </ul>
     <base-backtop :total='pageTotal' :currentNum='lengthList'></base-backtop>
     <base-page-loading :loading='pageLoading' :noMore='noMore'></base-page-loading>
@@ -33,7 +33,7 @@
 </div>
 </template>
 <script>
-import DetailDevice from '@/components/DetailDevice.vue'
+import CardDevice from '@/components/CardDevice.vue'
 import BaseBacktop from '@/components/BaseBacktop'
 import BasePageLoading from '@/components/BasePageLoading.vue'
 import BaseStatusCard from '@/components/BaseStatusCard.vue'
@@ -42,7 +42,7 @@ import page from '@/mixins/page'
 export default {
   name: 'device',
 
-  components: { DetailDevice, BaseBacktop, BasePageLoading, BaseStatusCard },
+  components: { CardDevice, BaseBacktop, BasePageLoading, BaseStatusCard },
 
   mixins: [page],
 

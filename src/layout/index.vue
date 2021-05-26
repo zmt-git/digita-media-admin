@@ -4,7 +4,7 @@
  * @Author: ZMT
  * @Date: 2021-04-20 10:29:05
  * @LastEditors: ZMT
- * @LastEditTime: 2021-04-25 11:55:33
+ * @LastEditTime: 2021-05-26 21:22:33
 -->
 <template>
   <el-container class="layout">
@@ -81,7 +81,7 @@ export default {
     bottom: 50px;
     box-sizing: border-box;
     padding: 5px;
-    background-color: #f0f2f5;
+    background-color: #f0f0f0;
   }
 }
 </style>

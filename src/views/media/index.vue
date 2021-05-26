@@ -4,7 +4,7 @@
  * @Author: ZMT
  * @Date: 2021-05-25 20:37:16
  * @LastEditors: ZMT
- * @LastEditTime: 2021-05-25 21:53:27
+ * @LastEditTime: 2021-05-26 21:38:40
 -->
 <template>
   <div class="infinite-list-wrapper" style="overflow:auto">
@@ -12,20 +12,20 @@
       class="list"
       :infinite-scroll-disabled="disabled"
     >
-      <detail-media @play='play' v-for="item in pageList" :key="item.id" :info='item'></detail-media>
+      <card-media @play='play' v-for="item in pageList" :key="item.id" :info='item'></card-media>
       <base-page-loading :loading='pageLoading' :noMore='noMore'></base-page-loading>
     </ul>
   </div>
 </template>
 <script>
-import DetailMedia from '@/components/DetailMedia.vue'
+import CardMedia from '@/components/CardMedia.vue'
 import BasePageLoading from '@/components/BasePageLoading.vue'
 import { listMedia } from '@/api/media'
 import page from '@/mixins/page'
 export default {
   name: 'media',
 
-  components: { DetailMedia, BasePageLoading },
+  components: { CardMedia, BasePageLoading },
 
   mixins: [page],
 
