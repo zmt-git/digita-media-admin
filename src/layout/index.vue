@@ -81,6 +81,7 @@ export default {
     bottom: 50px;
     box-sizing: border-box;
     padding: 5px;
+    background-color: #f0f2f5;
   }
 }
 </style>

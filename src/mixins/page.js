@@ -1,8 +1,8 @@
 export default {
   data () {
     return {
-      pageSize: 20,
       pageCurrent: 1,
+      pageLimit: 20,
       pageList: [],
       pageRequest: null,
       pageLoading: false,
@@ -11,20 +11,26 @@ export default {
   },
 
   computed: {
+    lengthList () {
+      return this.pageList.length
+    },
     noMore () {
       return this.pageList.length >= this.pageTotal
     },
     disabled () {
-      return this.loading || this.noMore
+      return this.pageLoading || this.noMore
     }
   },
 
   methods: {
     async pageLoad () {
       this.pageLoading = true
-      await this.pageRequest({ page: this.pageSize, limit: this.pageCurrent })
+      await this.pageRequest({ page: this.pageCurrent, limit: this.pageLimit })
         .then(res => {
-          this.pageSize++
+          this.pageTotal = res.page.totalCount
+          this.pageSize = res.page.currPage
+          this.pageSize < res.page.totalPage && this.pageSize++
+          this.pageList = res.page.list
         })
         .catch(e => {
           console.log(e)

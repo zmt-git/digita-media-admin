@@ -8,6 +8,6 @@
  */
 import 'element-ui/lib/theme-chalk/index.css'
 import 'video.js/dist/video-js.css'
-import './reset.scss'
 import 'animate.css'
 import './resetAnimate.scss'
+import './reset.scss'

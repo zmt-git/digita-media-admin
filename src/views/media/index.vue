@@ -13,19 +13,19 @@
       :infinite-scroll-disabled="disabled"
     >
       <detail-media @play='play' v-for="item in pageList" :key="item.id" :info='item'></detail-media>
-      <page-loading :loading='pageLoading' :noMore='noMore'></page-loading>
+      <base-page-loading :loading='pageLoading' :noMore='noMore'></base-page-loading>
     </ul>
   </div>
 </template>
 <script>
 import DetailMedia from '@/components/DetailMedia.vue'
-import PageLoading from '@/components/PageLoading.vue'
+import BasePageLoading from '@/components/BasePageLoading.vue'
 import { listMedia } from '@/api/media'
 import page from '@/mixins/page'
 export default {
   name: 'media',
 
-  components: { DetailMedia, PageLoading },
+  components: { DetailMedia, BasePageLoading },
 
   mixins: [page],
 
@@ -44,7 +44,7 @@ export default {
 
   methods: {
     play (info) {
-      this.$router.push({ path: '/media/player', query: { info: info } })
+      this.$router.push({ path: '/media/detail', query: { info: info } })
     }
   }
 }

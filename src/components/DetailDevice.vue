@@ -7,24 +7,30 @@
  * @LastEditTime: 2021-05-25 23:33:29
 -->
 <template>
-  <div class="detail-device">
-    <span class="detail-device_status outer_status" :class="stateClass" :title="title">
-    </span>
-    <span class="detail-device_status" :class="stateClassBg"></span>
-
-    <img class="detail-device_img" src="../assets/test/device.png" alt="设备图片">
-    <div class="detail-device-info">
-      <h3>名称</h3>
-      <h3>在线</h3>
-      <el-tag effect="dark" size="small">高温</el-tag>
-      <el-tag effect="dark" size="small">存储将满</el-tag>
-      <el-tag effect="dark" size="small">休眠</el-tag>
+  <li class="detail-device box-shadow radius-10">
+    <!-- <div class="mask" v-if="this.info.stateOnline !== 1"></div> -->
+    <div class="detail-device-status">
+      <img class="detail-device-status_img" src="../assets/test/device.png" alt="设备图片">
+      <div class="detail-device-status_right">
+        <base-dot :ripple='workStatus' :borderClass='stateClass' :bgClass='stateClassBg' :title="title"></base-dot>
+        <i class="iconfont icon-wenduji icon" :style="{ color: highTemp ? '#f56c6c' : '#67c23a' }" :title="tempTitle"></i>
+        <i class="iconfont icon-shezhi icon set-icon primary" title="设置" @click="setup"></i>
+      </div>
     </div>
-  </div>
+    <div class="detail-device-info">
+      <base-storage :info='info'></base-storage>
+      <h3 class="detail-device-info_name ellipsis-1" :title="name">{{name}}</h3>
+      <h3 class="detail-device-info_location ellipsis-1" :title="location">{{location}}</h3>
+    </div>
+  </li>
 </template>
 <script>
+import BaseStorage from './BaseStorage.vue'
+import BaseDot from './BaseDot'
 export default {
   name: 'detail-device',
+
+  components: { BaseStorage, BaseDot },
 
   props: {
     info: {
@@ -35,13 +41,38 @@ export default {
 
   computed: {
     title () {
-      return this.info.stateOnline === 1 ? '在线' : '离线'
+      if (this.info.stateOnline === 1) {
+        return this.info.stateWork === 1 ? '工作' : '待机'
+      } else {
+        return '离线'
+      }
     },
     stateClass () {
       return this.info.stateOnline === 1 ? 'online' : 'offline'
     },
     stateClassBg () {
       return this.info.stateOnline === 1 ? 'online-bg' : 'offline-bg'
+    },
+    workStatus () {
+      return !!(this.info.stateOnline && this.info.stateWork)
+    },
+    name () {
+      return this.info.name ? this.info.name : ''
+    },
+    location () {
+      return this.info.location ? this.info.location : ''
+    },
+    highTemp () {
+      return this.info.alarm && this.info.alarm.includes('2001')
+    },
+    tempTitle () {
+      return this.highTemp ? '设备高温' : '温度正常'
+    }
+  },
+
+  methods: {
+    setup () {
+      this.$emit('setup', this.info)
     }
   }
 }
@@ -53,55 +84,60 @@ export default {
   box-sizing: border-box;
   padding: 5px;
   margin: 5px;
-  border-radius: 10px;
-  box-shadow: 0px 3px 8px 3px #f0f0f0f0;
   position: relative;
-  &_status {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    border: 1px solid transparent;
-  }
-  &_img{
+  overflow: hidden;
+  background-color: #fff;
+  &-status{
+    &:after{
+      content:'';
+      clear:both;
+      display:block;
+      height:0;
+      overflow:hidden;
+      visibility:hidden;
+    }
+    &_img{
     width: 100px;
     height: 100px;
-    display: inline-block;
+    float: left;
+    }
+    &_right{
+      float: right;
+      height: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+  &-info{
+    color: #999999;
+    width: 130px;
+    line-height: 1.8;
+    &_name{
+      font-size: 15px;
+    }
+    &_location{
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
   }
 }
-.outer_status{
-  border: 1px solid transparent;
-  background-color: transparent;
+.icon{
+  font-size: 26px;
 }
-.online-bg{
-  background-color: #67c23a;
+.set-icon{
+  cursor: pointer;
+  font-size: 20px;
 }
-.offline-bg{
-  background-color: #909399;
-}
-.online{
-  border-color: #67c23a;
-  animation: zoom 1s infinite;
-}
-.offline{
-  border-color: #909399;
-  border: 1px solid #909399;
-}
-
-@keyframes zoom {
-  0% { transform: scale(1); }
-  10% { transform: scale(1.1); }
-  20% { transform: scale(1.2); }
-  30% { transform: scale(1.3); }
-  40% { transform: scale(1.4); }
-  50% { transform: scale(1.5); }
-  60% { transform: scale(1.4); }
-  70% { transform: scale(1.3); }
-  80% { transform: scale(1.2); }
-  90% { transform: scale(1.1); }
-  100% { transform: scale(1); }
+.mask{
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
 }
 </style>

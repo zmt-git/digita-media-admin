@@ -13,9 +13,19 @@ export function deleteDevice (params) {
 
 // /device/device/direction/{devid}
 // 设置屏幕播放方向
-export function directionDevice (params, devid) {
+export function directionDevice (devid, params) {
   return http({
     url: `/device/device/direction/${devid}`,
+    method: 'POST',
+    params
+  })
+}
+
+// /device/device/info/{devid}
+// 设置信息提示
+export function infoDevicePost (id, params) {
+  return http({
+    url: `/device/device/info/${id}`,
     method: 'POST',
     params
   })
@@ -34,7 +44,7 @@ export function infoDevice (id) {
 // 设置光源
 export function lightDevice (params, devid) {
   return http({
-    url: `/device/device/info/${devid}`,
+    url: `/device/device/light/${devid}`,
     method: 'POST',
     params
   })
@@ -70,12 +80,52 @@ export function unpublishDevice (params) {
   })
 }
 
+// /device/device/logo/{devid}
+// 设置开机动画
+export function logoDevice (devid, params) {
+  return http({
+    url: `/device/device/logo/${devid}`,
+    method: 'POST',
+    params
+  })
+}
+
+// /device/device/rebootAll/{devid}
+// 重启智能终端
+export function rebootAllDevice (devid, params) {
+  return http({
+    url: `/device/device/rebootAll/${devid}`,
+    method: 'POST',
+    params
+  })
+}
+
+// /device/device/rebootApp/{devid}
+// 重启核心程序
+export function rebootAppDevice (devid, params) {
+  return http({
+    url: `/device/device/rebootApp/${devid}`,
+    method: 'POST',
+    params
+  })
+}
+
 // /device/device/register/check/{code}
 // 终端注册码验证
 export function registerDevice (params, code) {
   return http({
     url: `/device/device/register/check/${code}`,
     method: 'GET'
+  })
+}
+
+// /device/device/reset/{devid}
+// 恢复出厂设置
+export function resetDevice (devid, params) {
+  return http({
+    url: `/device/device/reset/${devid}`,
+    method: 'POST',
+    params
   })
 }
 
@@ -100,10 +150,30 @@ export function statisticsDevice () {
 
 // /device/device/time/{devid}
 // 设置设备时间，时间格式HH:mm
-export function timeDevice (params, devid) {
+export function timeDevice (devid, params) {
   return http({
     url: `/device/device/time/${devid}`,
     method: 'GET',
+    params
+  })
+}
+
+// /device/device/uploadLog/{devid}
+// 上传工作日志
+export function uploadLogDevice (devid, params) {
+  return http({
+    url: `/device/device/uploadLog/${devid}`,
+    method: 'POST',
+    params
+  })
+}
+
+// /device/device/volume/{devid}
+// 设置媒体音量
+export function volumeDevice (devid, params) {
+  return http({
+    url: `/device/device/volume/${devid}`,
+    method: 'POST',
     params
   })
 }

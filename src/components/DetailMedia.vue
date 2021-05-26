@@ -1,5 +1,5 @@
 <template>
-  <li class="detail-media">
+  <li class="detail-media box-shadow radius-10">
     <div class="detail-media-src" @mouseleave="showPlay(false)" @mouseenter="showPlay(true)">
       <img
         class="detail-media-src_img"
@@ -59,8 +59,6 @@ $iconColor: #ffffff;
 .detail-media{
   float: left;
   margin: 10px;
-  border-radius: 10px;
-  box-shadow: 0px 3px 8px 3px #f0f0f0f0;
   &-src{
     position: relative;
     width: 320px;

@@ -72,8 +72,8 @@ export default {
   data () {
     return {
       loginForm: {
-        mobile: '',
-        password: '',
+        mobile: '15353711275',
+        password: '123456',
         freeLogin: false
       },
       loginRules: {

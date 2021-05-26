@@ -58,13 +58,13 @@ export const stableRoutes = [
       },
       {
         name: 'player',
-        path: '/media/player',
+        path: '/media/detail',
         hidden: true,
         meta: {
           title: '媒体播放',
           icon: 'icon-meitiliebiao'
         },
-        component: () => lazyComponent(import('@/views/media/mediaPlayer.vue'))
+        component: () => lazyComponent(import('@/views/media/mediaDetail.vue'))
       }
     ]
   },
@@ -86,6 +86,25 @@ export const stableRoutes = [
           icon: 'icon-touyingyi1'
         },
         component: () => lazyComponent(import('@/views/device/index.vue'))
+      },
+      {
+        name: 'detail',
+        path: '/device/detail',
+        hidden: true,
+        meta: {
+          title: '设备详情',
+          icon: 'icon-meitiliebiao'
+        },
+        component: () => lazyComponent(import('@/views/device/deviceDetail.vue'))
+      },
+      {
+        name: 'add',
+        path: '/device/add',
+        hidden: true,
+        meta: {
+          title: '设备添加'
+        },
+        component: () => lazyComponent(import('@/views/device/deviceAdd.vue'))
       }
     ]
   },

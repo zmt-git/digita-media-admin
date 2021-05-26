@@ -7,9 +7,9 @@
  * @LastEditTime: 2021-05-25 21:19:17
  */
 import { createProgress } from './progressGuard'
-// import { createPermission } from './permissionGuard'
+import { createPermission } from './permissionGuard'
 
 export function setupGuard (router) {
-  // createPermission(router)
+  createPermission(router)
   createProgress(router)
 }

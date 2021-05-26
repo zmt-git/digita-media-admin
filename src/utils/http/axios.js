@@ -18,7 +18,7 @@ let axiosResultStatus = 1
 let cancel
 
 const service = axios.create({
-  baseURL: '/api' /* window.globalConfig.api_url */,
+  baseURL: window.globalConfig.api_url,
   CancelToken: new CancelToken(function executor (c) {
     cancel = c
   })
@@ -47,8 +47,6 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   response => {
-    // eslint-disable-next-line no-debugger
-    debugger
     const code = response.data.code
     if (code === 200) {
       axiosResultStatus = 1
