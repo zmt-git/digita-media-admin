@@ -34,3 +34,14 @@ export function timestampToTime (timestamp, type) {
     return Y + M + D + h + m + s
   }
 }
+
+export function secondFormat (second, num = 2) {
+  if (typeof (second) !== 'number') return '00:00'
+  let hh = parseInt(second / 3600) >= 10 ? parseInt(second / 3600) + ':' : '0' + parseInt(second / 3600) + ':'
+  const mm = parseInt((second % 3600) / 60) >= 10 ? parseInt((second % 3600) / 60) + ':' : '0' + parseInt((second % 3600) / 60) + ':'
+  const ss = parseInt((second % 3600) % 60) >= 10 ? parseInt((second % 3600) % 60) : '0' + parseInt((second % 3600) % 60)
+  if (hh === '00:' && num === 2) {
+    hh = ''
+  }
+  return hh + mm + ss
+}

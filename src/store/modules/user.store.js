@@ -1,4 +1,4 @@
-import { pwdLogin, logout } from '@/api/system/login'
+import { login, logout } from '@/api/system/login'
 import { removeToken, setToken } from '@/utils/cache/cacheToken'
 
 export default {
@@ -15,9 +15,9 @@ export default {
   actions: {
     loginActions ({ commit }, params) {
       return new Promise((resolve, reject) => {
-        pwdLogin(params)
+        login(params)
           .then(res => {
-            setToken(res.data.token)
+            setToken(res.token)
             commit('set_user', res.data)
             resolve(res)
           })

@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm" v-loading='loading'>
+  <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
     <el-form-item label="设备名称" prop="name">
       <el-input v-model="ruleForm.name" autocomplete="off"></el-input>
     </el-form-item>
@@ -9,7 +9,7 @@
     <el-form-item label="设备编码" prop="code">
       <el-input v-model="ruleForm.code"></el-input>
     </el-form-item>
-    <el-form-item label-width="0">
+    <el-form-item>
       <slot>
         <el-button class="btn" type="primary" @click="submitForm">添加设备</el-button>
       </slot>
@@ -19,8 +19,9 @@
 
 <script>
 import { saveDevice } from '@/api/device'
+import prompt from '@/mixins/prompt'
 export default {
-  name: 'device-form',
+  name: 'device-form-info',
 
   props: {
     isAdd: {
@@ -30,12 +31,17 @@ export default {
     dataForm: {
       type: Object,
       default: () => {}
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
 
+  mixins: [prompt],
+
   data () {
     return {
-      loading: false,
       ruleForm: {
         name: '',
         location: '',
@@ -62,17 +68,18 @@ export default {
     submitForm () {
       this.$refs.ruleForm.validate(async valid => {
         if (valid) {
-          this.loading = true
+          this.$emit('update:loading', true)
           await saveDevice(this.ruleForm)
             .then(res => {
-              this.$emit('submit', res.data)
+              this.prompt(res.state)
+              if (res.state === 1) {
+                this.$emit('submit', res.data)
+              }
             })
             .catch(e => {
               console.log(e)
             })
-          this.$emit('submit', {})
-
-          this.loading = false
+          this.$emit('update:loading', false)
         } else {
           console.log('error submit')
         }

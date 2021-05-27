@@ -23,3 +23,15 @@
     background-color: themed($color);
   }
 }
+
+@mixin color ($color) {
+  @include theme {
+    color: themed($color);
+  }
+}
+
+@mixin border-color ($color) {
+  @include theme {
+    border-color: themed($color);
+  }
+}

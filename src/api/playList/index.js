@@ -21,7 +21,7 @@ export function deletePlaylist (params) {
 
 // /device/playlist/list/{devid}
 // 分页查询播放列表，只返回list不返回page信息
-export function listPlaylist (params, devid) {
+export function listPlaylist (devid, params) {
   return http({
     url: `/device/playlist/list/${devid}`,
     method: 'GET',
@@ -31,7 +31,7 @@ export function listPlaylist (params, devid) {
 
 // /device/playlist/update/sort/{id}
 // 修改播放列表排序
-export function updatePlaylist (params, id) {
+export function updatePlaylist (id, params) {
   return http({
     url: `/device/playlist/update/sort/${id}`,
     method: 'POST',
@@ -51,9 +51,9 @@ export function updateSortsPlaylist (params) {
 
 // /device/playlist/update/state/{id}
 // 修改播放列表状态
-export function updateStatePlaylist (params) {
+export function updateStatePlaylist (params, id) {
   return http({
-    url: '/device/playlist/update/sorts',
+    url: `device/playlist/update/state/${id}`,
     method: 'POST',
     params
   })

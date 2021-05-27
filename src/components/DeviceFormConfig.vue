@@ -1,15 +1,17 @@
 <template>
   <div>
-    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm" v-loading='loading'>
-      <el-form-item label="启用休眠" prop="timeControl">
+    <el-form :model="ruleForm" status-icon ref="ruleForm" label-width="100px" class="demo-ruleForm">
+      <el-form-item label="启用休眠" prop="timeControl" style="text-align: right;">
         <el-switch
+          :disabled='disabled'
           v-model="ruleForm.timeControl"
+          @change="setTimeControl"
           active-color="#13ce66"
           inactive-color="#ff4949">
         </el-switch>
       </el-form-item>
       <el-form-item label="画面方向" prop="stateOrient">
-        <el-select v-model="ruleForm.stateOrient" placeholder="请选择">
+        <el-select v-model="ruleForm.stateOrient" placeholder="请选择" :style="style" :disabled='disabled' @change="setStateOrient">
           <el-option
             v-for="item in orientOptions"
             :key="item.value"
@@ -19,51 +21,59 @@
         </el-select>
       </el-form-item>
       <el-form-item label="休眠时间" prop="timeClose">
-        <el-time-picker v-model="ruleForm.timeClose" placeholder="任意时间点"></el-time-picker>
+        <el-time-picker v-model="ruleForm.timeClose" @change="setTimeClose"  placeholder="请选择休眠时间" :style="style" :disabled='disabled || disabledTime'></el-time-picker>
       </el-form-item>
       <el-form-item label="唤醒时间" prop="timeOpen">
-        <el-time-picker v-model="ruleForm.timeOpen" placeholder="任意时间点"></el-time-picker>
+        <el-time-picker v-model="ruleForm.timeOpen" @change="setTimeOpen" placeholder="请选择唤醒时间" :style="style" :disabled='disabled || disabledTime'></el-time-picker>
       </el-form-item>
       <el-form-item label="媒体音量" prop="stateVolume">
         <el-slider
+          :disabled='disabled'
           v-model="ruleForm.stateVolume"
           :max='15'
           :step="1"
+          @change="setTimeOpen"
           show-stops>
-      </el-slider>
-      </el-form-item>
-      <el-form-item label-width="0">
-        <slot>
-          <el-button class="btn" type="primary" @click="next">下一步
-            <i class="iconfont icon-youhuaxiangyougengduo"></i>
-          </el-button>
-        </slot>
+        </el-slider>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
-import { infoDevice, timeDevice, volumeDevice, directionDevice } from '@/api/device'
+import { timeDevice, volumeDevice, directionDevice } from '@/api/device'
+import prompt from '@/mixins/prompt'
 export default {
-  name: 'device-form',
+  name: 'device-form-config',
+
+  mixins: [prompt],
 
   props: {
     info: {
       type: Object,
       default: () => {}
+    },
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: true
     }
   },
 
   computed: {
     id () {
       return this.info.id ? this.info.id : undefined
+    },
+    disabledTime () {
+      return !!this.ruleForm.timeControl
     }
   },
 
   data () {
     return {
-      loading: false,
       ruleForm: {
         timeControl: '',
         timeClose: '',
@@ -75,21 +85,20 @@ export default {
         stateLogo: '',
         stateInfo: ''
       },
-      rules: {
-      },
       orientOptions: [
         { value: 0, label: '横屏向右' },
         { value: 1, label: '竖屏向上' },
         { value: 8, label: '横屏向左' },
         { value: 9, label: '竖屏向下' }
-      ]
+      ],
+      style: {
+        width: '300px'
+      }
     }
   },
 
   async mounted () {
-    this.loading = true
-    await this.getDeviceDetail()
-    this.loading = false
+    this.assginFormData(this.info)
   },
 
   methods: {
@@ -98,76 +107,57 @@ export default {
         this.ruleForm[key] = obj[key]
       })
     },
-    getDeviceDetail () {
-      return infoDevice(this.id)
-        .then(res => {
-          this.assginFormData(res.data)
-        })
-        .catch(e => {
-          this.$refs.ruleForm.resetFields()
-        })
-    },
 
     async setTimeControl () {
-      this.loading = true
+      this.$emit('update:loading', true)
       await this.setTime()
-      await this.getDeviceDetail()
-      this.loading = false
+      this.$emit('updateInfo')
     },
 
     async setStateOrient () {
-      this.loading = true
+      this.$emit('update:loading', true)
+
       await directionDevice(this.id, this.ruleForm)
         .then(res => {
-          this.message()
+          this.prompt(res.state)
         })
         .catch(e => console.log(e))
-      await this.getDeviceDetail()
-      this.loading = false
+      this.$emit('updateInfo')
     },
 
     async setTimeClose () {
-      this.loading = true
+      this.$emit('update:loading', true)
       await this.setTime()
-      await this.getDeviceDetail()
-      this.loading = false
+      this.$emit('updateInfo')
     },
 
     async setTimeOpen () {
-      this.loading = true
+      this.$emit('update:loading', true)
       await this.setTime()
-      await this.getDeviceDetail()
-      this.loading = false
+      this.$emit('updateInfo')
     },
 
     async setStateVolume () {
-      this.loading = true
+      this.$emit('update:loading', true)
       await volumeDevice(this.id, this.ruleForm)
         .then(res => {
-          this.message()
+          this.prompt(res.state)
         })
         .catch(e => console.log(e))
-      await this.getDeviceDetail()
-      this.loading = false
+      this.$emit('updateInfo')
     },
 
     setTime () {
       return timeDevice(this.id, this.ruleForm)
         .then(res => {
-          this.message()
+          this.prompt(res.state)
         })
         .catch(e => console.log())
-    },
-
-    message () {
-      this.$message({
-        message: '设置成功',
-        type: 'success'
-      })
-    },
-
-    next () {
-      this.$emit('next')
+    }
+  },
+  watch: {
+    info (n, o) {
+      this.assginFormData(n)
     }
   }
 }

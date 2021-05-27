@@ -71,11 +71,10 @@ export function resetCode (params, mobile) {
 
 // /sys/code/{time}
 // captcha
-export function timeCode (params, time) {
+export function timeCode (time) {
   return http({
-    url: `/mobile/code/${time}`,
-    method: 'GET',
-    params
+    url: `/sys/code/${time}`,
+    method: 'GET'
   })
 }
 

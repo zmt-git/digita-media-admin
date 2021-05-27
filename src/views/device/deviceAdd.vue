@@ -7,40 +7,35 @@
  * @LastEditTime: 2021-05-26 22:22:00
 -->
 <template>
-  <div class="device-add">
+  <div class="device-add"  v-loading='loading'>
     <el-steps :active="active" simple>
-      <el-step title="添加设备" icon="el-icon-edit">
-        <i slot="icon" class="iconfont icon-del"></i>
-      </el-step>
-      <el-step title="设置参数" icon="el-icon-upload">
-        <i slot="icon" class="iconfont icon-peizhi"></i>
-      </el-step>
-      <el-step title="设置系统" icon="el-icon-upload">
-        <i slot="icon" class="iconfont icon-shezhi"></i>
-      </el-step>
-      <el-step title="设置播放列表" icon="el-icon-picture">
-        <i slot="icon" class="iconfont icon-duomeit"></i>
+      <el-step :title="item.title" :icon="item.icon" v-for="item in steps" :key="item.title">
+        <i slot="icon" class="iconfont" :class="item.icon"></i>
       </el-step>
     </el-steps>
-      <div class="step-content">
-        <transition
-          enter-active-class="animate__fadeInRight animate__animated"
-          leave-active-class="animate__fadeOutLeft animate__animated"
-        >
-          <div class="step-content-form" v-if="active === 0">
-            <device-form-info @submit='submit'></device-form-info>
-          </div>
-          <div class="step-content-form" v-if="active === 1">
-            <device-form-config :info='info' @next='next'></device-form-config>
-          </div>
-          <div  class="step-content-system" v-if="active === 2">
-            <device-form-system :info='info' @next='next'></device-form-system>
-          </div>
-          <div  class="step-content-list" v-if="active === 3">
-            <device-form-play-list :info='info' @next='next'></device-form-play-list>
-          </div>
-        </transition>
-      </div>
+    <div class="step-content">
+      <transition
+        enter-active-class="animate__fadeInRight animate__animated"
+        leave-active-class="animate__fadeOutLeft animate__animated"
+      >
+        <div class="step-content-form" v-if="active === 0">
+          <device-form-info @submit='submit' :loading.sync='loading'></device-form-info>
+        </div>
+        <div class="step-content-form" v-if="active === 1">
+          <device-form-config :info='info' @next='next' @updateInfo='updateInfo' :loading.sync='loading' :disabled='disabled'></device-form-config>
+        </div>
+        <div  class="step-content-system" v-if="active === 2">
+          <device-form-system :info='info' @next='next' @updateInfo='updateInfo' :loading.sync='loading' :disabled='disabled'></device-form-system>
+        </div>
+        <div  class="step-content-list" v-if="active === 3">
+          <device-form-play-list ref="playlist" :info='info' @next='next' @updateInfo='updateInfo' :loading.sync='loading' :disabled='disabled'></device-form-play-list>
+        </div>
+      </transition>
+    </div>
+    <div class="btn-box" v-if="active !== 0">
+      <el-button size="small" type="primary" @click="next">{{active !== 3 ? '跳过' : '返回首页'}}</el-button>
+      <el-button v-if="active === 3" size="small" type="success" @click="carryOut">发布</el-button>
+    </div>
   </div>
 </template>
 
@@ -49,15 +44,25 @@ import DeviceFormInfo from '@/components/DeviceFormInfo'
 import DeviceFormConfig from '@/components/DeviceFormConfig'
 import DeviceFormSystem from '@/components/DeviceFormSystem'
 import DeviceFormPlayList from '@/components/DeviceFormPlayList'
+import { infoDevice } from '@/api/device'
+import { steps } from '@/data/common'
 export default {
   name: 'device-add',
 
   components: { DeviceFormInfo, DeviceFormConfig, DeviceFormSystem, DeviceFormPlayList },
 
+  computed: {
+    disabled () {
+      return !this.info.stateOnline
+    }
+  },
+
   data () {
     return {
       active: 3,
-      info: {}
+      info: {},
+      loading: false,
+      steps: steps
     }
   },
 
@@ -68,6 +73,28 @@ export default {
     },
     next () {
       this.active++
+      if (this.active > 3) {
+        this.$router.back()
+      }
+    },
+    async carryOut () {
+      const result = await this.$refs.playlist.updateList()
+      if (result) {
+        this.$router.back()
+      }
+    },
+    getDeviceDetail () {
+      return infoDevice(this.id)
+        .then(res => {
+          this.info = res.data
+        })
+        .catch(e => {
+          this.$refs.ruleForm.resetFields()
+        })
+    },
+    async updateInfo () {
+      await this.getDeviceDetail()
+      this.loading = false
     }
   }
 }
@@ -82,6 +109,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: auto;
   &-form{
     width: 400px;
     padding: 20px;
@@ -97,5 +125,11 @@ export default {
     height: 100%;
   }
 }
-
+.btn-box{
+  margin-top: 10px;
+  text-align: center;
+  & button{
+    width: 150px;
+  }
+}
 </style>

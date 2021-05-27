@@ -10,53 +10,150 @@
   <ul class="device-form-system">
     <li class="device-form-system-item">
       <span class="device-form-system-item_name">开机动画</span>
-      <el-switch v-model="info.stateLogo" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+      <el-switch v-model="dataForm.stateLogo" :disabled='disabled' active-color="#13ce66" inactive-color="#ff4949" @change="setLogo"></el-switch>
     </li>
     <li class="device-form-system-item">
       <span class="device-form-system-item_name">信息提示</span>
-      <el-switch v-model="info.stateInfo" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+      <el-switch v-model="dataForm.stateInfo" :disabled='disabled' active-color="#13ce66" inactive-color="#ff4949" @change="setInfo"></el-switch>
     </li>
     <li class="device-form-system-item">
-      <span class="device-form-system-item_name">重启只能终端</span>
-      <el-button type="primary" size="mini">重启</el-button>
+      <span class="device-form-system-item_name">重启智能终端</span>
+      <el-button type="primary" size="mini" :disabled='disabled' @click="rebootDevice">重启</el-button>
     </li>
     <li class="device-form-system-item">
       <span class="device-form-system-item_name">重启核心程序</span>
-      <el-button type="primary" size="mini">重启</el-button>
+      <el-button type="primary" size="mini" :disabled='disabled' @click="rebootApp">重启</el-button>
     </li>
     <li class="device-form-system-item">
       <span class="device-form-system-item_name">上传工作日志</span>
-      <el-button type="primary" size="mini">重启</el-button>
+      <el-button type="primary" size="mini" :disabled='disabled' @click="uploadLog">重启</el-button>
     </li>
     <li class="device-form-system-item">
       <span class="device-form-system-item_name">恢复出厂设置</span>
-      <el-button type="danger" size="mini">恢复</el-button>
-    </li>
-    <li class="device-form-system-item">
-      <el-button class="btn" type="primary" size="mini" @click="next">下一步</el-button>
+      <el-button type="danger" size="mini" :disabled='disabled' @click="reset">恢复</el-button>
     </li>
   </ul>
 </template>
 
 <script>
+import { logoDevice, infoDevicePost, rebootAllDevice, rebootAppDevice, uploadLogDevice, resetDevice } from '@/api/device'
+import prompt from '@/mixins/prompt'
 export default {
-  name: 'device-form',
+  name: 'device-form-system',
+
+  mixins: [prompt],
 
   props: {
     info: {
       type: Object,
       default: () => {}
+    },
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: true
+    }
+  },
+
+  computed: {
+    id () {
+      return this.info.id ? this.info.id : undefined
     }
   },
 
   data () {
     return {
-      loading: false
+      dataForm: {
+        timeControl: '',
+        timeClose: '',
+        timeOpen: '',
+        lightControl: 0,
+        lightBrightness: '100',
+        stateOrient: '',
+        stateVolume: 10,
+        stateLogo: '',
+        stateInfo: ''
+      }
     }
   },
+
+  mounted () {
+    this.assginFormData(this.info)
+  },
+
   methods: {
-    next () {
-      this.$emit('next')
+    assginFormData (obj) {
+      Object.keys(this.dataForm).forEach(key => {
+        this.dataForm[key] = obj[key]
+      })
+    },
+
+    setLogo () {
+      this.$emit('update:loading', true)
+      logoDevice(this.id, this.dataForm)
+        .then(res => {
+          this.prompt(res.state)
+        })
+        .catch(e => console.log(e))
+      this.$emit('updateInfo')
+    },
+
+    setInfo () {
+      this.$emit('update:loading', true)
+      infoDevicePost(this.id, this.dataForm)
+        .then(res => {
+          this.prompt(res.state)
+        })
+        .catch(e => console.log(e))
+      this.$emit('updateInfo')
+    },
+
+    rebootDevice () {
+      this.$emit('update:loading', true)
+      rebootAllDevice(this.id, this.dataForm)
+        .then(res => {
+          this.prompt(res.state)
+        })
+        .catch(e => console.log(e))
+      this.$emit('updateInfo')
+    },
+
+    rebootApp () {
+      this.$emit('update:loading', true)
+      rebootAppDevice(this.id, this.dataForm)
+        .then(res => {
+          this.prompt(res.state)
+        })
+        .catch(e => console.log(e))
+      this.$emit('updateInfo')
+    },
+
+    uploadLog () {
+      this.$emit('update:loading', true)
+      uploadLogDevice(this.id, this.dataForm)
+        .then(res => {
+          this.prompt(res.state)
+        })
+        .catch(e => console.log(e))
+      this.$emit('updateInfo')
+    },
+
+    reset () {
+      this.$emit('update:loading', true)
+      resetDevice(this.id, this.dataForm)
+        .then(res => {
+          this.prompt(res.state)
+        })
+        .catch(e => console.log(e))
+      this.$emit('updateInfo')
+    }
+  },
+  watch: {
+    info (n, o) {
+      this.assginFormData(n)
     }
   }
 }
