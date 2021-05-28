@@ -116,6 +116,10 @@ export default {
     }
   },
 
+  created () {
+
+  },
+
   methods: {
     handleSelectionChange () {},
 
