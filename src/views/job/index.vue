@@ -3,7 +3,7 @@
     <el-button-group class="btn-box">
       <el-button type="danger" @click="clean" size="mini">清空任务</el-button>
     </el-button-group>
-    <div class="infinite-list" v-infinite-scroll="pageLoad" style="overflow:auto">
+    <div class="infinite-list" v-infinite-scroll="pageLoad" :infinite-scroll-disabled="scrollDisabled" style="overflow:auto">
       <el-timeline>
         <el-timeline-item :timestamp="item.timeCreate" placement="top" v-for="item in pageList" :key="item.id" >
           <card-task

@@ -20,10 +20,9 @@
       </div>
     </base-status-card>
   </div>
-  <div class="infinite-list-wrapper" style="overflow:auto">
+  <div class="infinite-list-wrapper" style="overflow:auto" :infinite-scroll-disabled="scrollDisabled">
     <ul
       class="list"
-      infinite-scroll-disabled="disabled"
     >
       <card-device :info='item' v-for="item in pageList" :key='item.id' @setup='setup'></card-device>
     </ul>
@@ -54,7 +53,6 @@ export default {
   },
 
   created () {
-    this.pageLoad()
     this.getStatisticsDevice()
   },
 

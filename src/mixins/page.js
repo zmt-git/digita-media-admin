@@ -17,9 +17,13 @@ export default {
     noMore () {
       return this.pageList.length >= this.pageTotal
     },
-    disabled () {
+    scrollDisabled () {
       return this.pageLoading || this.noMore
     }
+  },
+
+  created () {
+    this.pageLoad()
   },
 
   methods: {

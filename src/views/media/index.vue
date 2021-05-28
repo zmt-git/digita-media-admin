@@ -10,7 +10,7 @@
   <div class="infinite-list-wrapper" style="overflow:auto">
     <ul
       class="list"
-      :infinite-scroll-disabled="disabled"
+      :infinite-scroll-disabled="scrollDisabled"
     >
       <el-upload
         class="avatar-uploader"
@@ -49,10 +49,6 @@ export default {
         oldSize: 0
       }
     }
-  },
-
-  created () {
-    this.pageLoad()
   },
 
   methods: {
