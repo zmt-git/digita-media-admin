@@ -1,3 +1,5 @@
+@import './handler.scss';
+
 /* 设置滚动条样式 (不支持火狐)*/
 ::-webkit-scrollbar {
   width: 8px;
@@ -99,4 +101,10 @@
 }
 .font-color{
   color: #999999;
+}
+.head-style{
+  @include bg-color('info-plain')
+}
+.el-button--micro{
+  padding: 5px 8px;
 }

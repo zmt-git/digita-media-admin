@@ -45,7 +45,7 @@ import DeviceFormConfig from '@/components/DeviceFormConfig'
 import DeviceFormSystem from '@/components/DeviceFormSystem'
 import DeviceFormPlayList from '@/components/DeviceFormPlayList'
 import { infoDevice } from '@/api/device'
-import { steps } from '@/data/common'
+import { deviceAddSteps } from '@/data/common'
 export default {
   name: 'device-add',
 
@@ -59,10 +59,10 @@ export default {
 
   data () {
     return {
-      active: 3,
+      active: 0,
       info: {},
       loading: false,
-      steps: steps
+      steps: deviceAddSteps
     }
   },
 

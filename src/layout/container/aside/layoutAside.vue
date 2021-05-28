@@ -24,7 +24,7 @@
       <template v-for="route in routes">
         <el-submenu v-if="!route.hidden" :key="route.path" :index="route.path">
           <template slot="title">
-            <i class="iconfont menu-icon" :class="route.meta.icon"></i>
+            <i class="iconfont menu-icon" :class="route.meta.icon ? route.meta.icon : ''"></i>
             <span>{{route.meta.title}}</span>
           </template>
           <template v-if="route.children && route.children.length > 0">
@@ -40,7 +40,7 @@
                   :index='route.path + subRoute.path'
                 >
                   <template #title>
-                    <i class="iconfont menu-icon" :class="subRoute.meta.icon"></i>
+                    <i class="iconfont menu-icon" :class="subRoute.meta.icon ? subRoute.meta.icon : ''"></i>
                     <span class="menu-title">{{subRoute.meta.title}}</span>
                   </template>
                 </el-menu-item>
@@ -54,8 +54,7 @@
 </template>
 
 <script>
-import { stableRoutes } from '@/router/routes/stableRoutes'
-
+import { mapGetters } from 'vuex'
 export default {
   name: 'layout-aside',
 
@@ -66,13 +65,22 @@ export default {
     }
   },
 
+  filters: {
+    filterAuth (auth) {
+      return auth.include(this.user.userType)
+    }
+  },
+
+  computed: {
+    ...mapGetters(['user', 'routes'])
+  },
+
   data () {
     return {
       width: '200px',
       defaultActive: null,
       textColor: '#ffffff',
-      timmer: null,
-      routes: stableRoutes
+      timmer: null
     }
   },
 

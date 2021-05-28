@@ -12,6 +12,14 @@
       class="list"
       :infinite-scroll-disabled="disabled"
     >
+      <el-upload
+        class="avatar-uploader"
+        action=""
+        :show-file-list="false"
+        :before-upload='beforeUpload'
+      >
+        <i class="el-icon-plus avatar-uploader-icon"></i>
+      </el-upload>
       <card-media @play='play' v-for="item in pageList" :key="item.id" :info='item'></card-media>
       <base-page-loading :loading='pageLoading' :noMore='noMore'></base-page-loading>
     </ul>
@@ -31,10 +39,15 @@ export default {
 
   data () {
     return {
+      window: window,
       pageRequest: listMedia,
-      pageList: [
-        { id: 1, name: 12 }
-      ]
+      mediaForm: {
+        addressOld: '',
+        length: 0,
+        mediaType: -1,
+        name: '',
+        oldSize: 0
+      }
     }
   },
 
@@ -45,6 +58,13 @@ export default {
   methods: {
     play (info) {
       this.$router.push({ path: '/media/detail', query: { info: info } })
+    },
+    add () {
+      this.$router.push({ path: '/media/add' })
+    },
+    beforeUpload (file) {
+      console.log(file)
+      return file
     }
   }
 }

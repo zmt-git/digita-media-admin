@@ -2,11 +2,11 @@ import http from '@/utils/http/axios'
 
 // /sys/user/delete
 // delete
-export function deleteUser (params) {
+export function deleteUser (data) {
   return http({
     url: '/sys/user/delete',
     method: 'POST',
-    params
+    data
   })
 }
 

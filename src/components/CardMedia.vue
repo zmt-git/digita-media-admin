@@ -1,35 +1,34 @@
 <template>
   <li class="detail-media box-shadow radius-10"  @mouseleave="showPlay(false)" @mouseenter="showPlay(true)">
-    <div class="detail-media-src">
-      <el-tag v-if="state && tag" class="state-btn"  effect="dark" :type="btnType" size="mini">{{btnName}}</el-tag>
-      <!-- <span class="iconfont media-type" :class="mediaType"></span> -->
-      <el-image
-        class="detail-media-src_img"
-        :src="img">
-      </el-image>
-      <transition
-        enter-active-class="animate__fadeIn animate__animated"
-        leave-active-class="animate__fadeOut animate__animated"
-      >
-        <div v-show="show" class="detail-media-src-mask" @click="play">
-          <i class="detail-media-src-mask_icon iconfont icon-bofang center"></i>
-        </div>
-      </transition>
-    </div>
-    <div class="detail-media-info">
-       <div class="detail-media-info-item">
-         <span class="detail-media-info_text font-color">{{mediaName}}</span>
-         <span class="detail-media-info_text font-color">{{mediaType}}</span>
-       </div>
-      <div class="detail-media-info-item">
-        <span class="detail-media-info_text font-color">
-          <span class="iconfont icon-length" :class="mediaIcon"></span>{{length}}
-        </span>
-        <transition enter-active-class="animate__fadeIn animate__animated " leave-active-class="animate__fadeOut animate__animated ">
-          <el-button v-show="deleteShow" class="btn" type="danger" size="mini" icon="el-icon-delete" @click="deleteMedia"></el-button>
+      <div class="detail-media-src">
+        <el-tag v-if="state && tag" class="state-btn"  effect="dark" :type="btnType" size="mini">{{btnName}}</el-tag>
+        <!-- <span class="iconfont media-type" :class="mediaType"></span> -->
+        <img
+          class="detail-media-src_img"
+          :src="img" />
+        <transition
+          enter-active-class="animate__fadeIn animate__animated"
+          leave-active-class="animate__fadeOut animate__animated"
+        >
+          <div v-show="show" class="detail-media-src-mask" @click="play">
+            <i class="detail-media-src-mask_icon iconfont icon-bofang center"></i>
+          </div>
         </transition>
       </div>
-    </div>
+      <div class="detail-media-info">
+        <div class="detail-media-info-item">
+          <span class="detail-media-info_text font-color">{{mediaName}}</span>
+          <span class="detail-media-info_text font-color">{{mediaType}}</span>
+        </div>
+        <div class="detail-media-info-item">
+          <span class="detail-media-info_text font-color">
+            <span class="iconfont icon-length" :class="mediaIcon"></span>{{oldSize}}
+          </span>
+          <transition enter-active-class="animate__fadeIn animate__animated " leave-active-class="animate__fadeOut animate__animated ">
+            <el-button v-show="deleteShow" class="btn" type="danger" size="mini" icon="el-icon-delete" @click="deleteMedia"></el-button>
+          </transition>
+        </div>
+      </div>
   </li>
 </template>
 
@@ -46,12 +45,16 @@ export default {
     tag: {
       type: Boolean,
       default: true
+    },
+    isAddCard: {
+      type: Boolean,
+      default: false
     }
   },
 
   computed: {
     img () {
-      return this.info.img ? this.info.img : require('../assets/layout/header/empty.png')
+      return this.info.addressOld ? this.info.addressOld : require('../assets/layout/header/empty.png')
     },
     mediaName () {
       return this.info.mediaType === 0 ? '视频媒体' : '图片媒体'
@@ -68,15 +71,11 @@ export default {
     mediaIcon () {
       return this.info.mediaType === 0 ? 'icon-icon_moments_mp4' : 'icon-tupian1'
     },
-    length () {
-      if (this.info.mediaType === 0) {
-        return this.getTime()
-      } else {
-        return this.info.length ? this.info.length + 'KB' : '0KB'
-      }
+    oldSize () {
+      return this.info.oldSize ? this.info.oldSize + 'KB' : '0KB'
     },
     state () {
-      return this.info.state !== 1
+      return this.info && this.info.state !== 1
     },
     btnType () {
       return this.getState(this.info.state).type
@@ -106,7 +105,10 @@ export default {
       this.$emit('delete', this.info)
     },
     getTime () {
-      return secondFormat(this.info.length)
+      return secondFormat(this.info.oldSize)
+    },
+    add () {
+      this.$emit('add')
     },
     getState (state) {
       // -1：删除，0，审核中，-2，审核失败，1：正常；
@@ -139,7 +141,7 @@ $iconColor: #ffffff;
     align-items: center;
     max-width: 320px;
     max-height: 180px;
-    /deep/ .el-image__inner{
+    &_img{
       max-width: 320px;
       max-height: 180px;
       border: 0;
@@ -167,7 +169,7 @@ $iconColor: #ffffff;
     }
   }
   &-info{
-    width: 100%;
+    width: 320px;
     box-sizing: border-box;
     padding: 0 10px 5px 10px;
     border-top: 1px solid #f0f0f0;
