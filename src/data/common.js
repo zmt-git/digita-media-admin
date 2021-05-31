@@ -26,3 +26,9 @@ export const tradeType = Object.freeze([
   { name: '银行保险', val: 12 },
   { name: '其他行业', val: 13 }
 ])
+
+export const mediaType = Object.freeze([
+  { type: 'video/mp4', mediaType: 0 },
+  { type: 'image/png', mediaType: 2 },
+  { type: 'image/jpeg', mediaType: 1 }
+])

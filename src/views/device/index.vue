@@ -7,7 +7,7 @@
  * @LastEditTime: 2021-05-26 21:38:15
 -->
 <template>
-<div>
+<div class="device">
   <div class="device-control">
     <base-status-card iconClass='icon-zx' title="在线" :number='statistics.online' type='primary'></base-status-card>
     <base-status-card iconClass='icon-shebeiyunhang' title="工作" :number='statistics.onwork' type='success'></base-status-card>
@@ -20,9 +20,11 @@
       </div>
     </base-status-card>
   </div>
-  <div class="infinite-list-wrapper" style="overflow:auto" :infinite-scroll-disabled="scrollDisabled">
+  <div class="infinite-list-wrapper device-list" style="overflow:auto">
     <ul
-      class="list"
+      class="list clear"
+      v-infinite-scroll="pageLoad"
+      infinite-scroll-disabled='scrollDisabled'
     >
       <card-device :info='item' v-for="item in pageList" :key='item.id' @setup='setup'></card-device>
     </ul>
@@ -83,12 +85,19 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.device{
+  display: flex;
+  flex-direction: column;
+}
 .device-control{
   width: 100%;
   border-radius: 10px;
   margin-bottom: 10px;
   display: flex;
   flex-flow: wrap;
+}
+.device-list{
+  flex: 1;
 }
 .add{
   width: 100%;

@@ -3,40 +3,6 @@ import layout from '@/layout/index.vue'
 
 export const asyncRoutes = [
   {
-    path: '/media',
-    hidden: false,
-    meta: {
-      title: '媒体',
-      auth: [0, 1, 2],
-      icon: 'icon-duomeit'
-    },
-    component: layout,
-    children: [
-      {
-        name: 'media',
-        path: '/',
-        hidden: false,
-        meta: {
-          title: '媒体',
-          auth: [0, 1, 2],
-          icon: 'icon-meitiliebiao'
-        },
-        component: () => lazyComponent(import('@/views/media/index.vue'))
-      },
-      {
-        name: 'player',
-        path: '/media/detail',
-        hidden: true,
-        meta: {
-          title: '媒体播放',
-          auth: [0, 1, 2],
-          icon: 'icon-meitiliebiao'
-        },
-        component: () => lazyComponent(import('@/views/media/mediaDetail.vue'))
-      }
-    ]
-  },
-  {
     path: '/device',
     hidden: false,
     meta: {
@@ -78,6 +44,40 @@ export const asyncRoutes = [
           icon: ''
         },
         component: () => lazyComponent(import('@/views/device/deviceAdd.vue'))
+      }
+    ]
+  },
+  {
+    path: '/media',
+    hidden: false,
+    meta: {
+      title: '媒体',
+      auth: [0, 1, 2],
+      icon: 'icon-duomeit'
+    },
+    component: layout,
+    children: [
+      {
+        name: 'media',
+        path: '/',
+        hidden: false,
+        meta: {
+          title: '媒体',
+          auth: [0, 1, 2],
+          icon: 'icon-meitiliebiao'
+        },
+        component: () => lazyComponent(import('@/views/media/index.vue'))
+      },
+      {
+        name: 'player',
+        path: '/media/detail',
+        hidden: true,
+        meta: {
+          title: '媒体播放',
+          auth: [0, 1, 2],
+          icon: 'icon-meitiliebiao'
+        },
+        component: () => lazyComponent(import('@/views/media/mediaDetail.vue'))
       }
     ]
   },

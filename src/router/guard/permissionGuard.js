@@ -17,7 +17,7 @@ export function createPermission (router) {
     if (getToken()) {
       if (store.getters.load) {
         if (to.path === 'login') {
-          next('/')
+          next({ path: '/' })
         } else {
           next()
         }
@@ -29,9 +29,11 @@ export function createPermission (router) {
           routes.forEach(route => {
             router.addRoute(route)
           })
-          next(to)
+          next({ path: to.path })
         } catch (e) {
           console.log(e)
+          removeToken()
+          store.commit('set_load', false)
           next('/login')
         }
       }
@@ -40,12 +42,10 @@ export function createPermission (router) {
         next()
       } else {
         await store.dispatch('logoutActions')
-          .then(res => {
-
-          })
           .catch(e => {
-            removeToken()
+            console.log(e)
           })
+        removeToken()
         next('/login')
       }
     }

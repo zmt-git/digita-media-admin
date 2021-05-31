@@ -1,6 +1,6 @@
 <template>
   <li class="detail-media box-shadow radius-10"  @mouseleave="showPlay(false)" @mouseenter="showPlay(true)">
-      <div class="detail-media-src">
+      <div class="detail-media-src" @click="play">
         <el-tag v-if="state && tag" class="state-btn"  effect="dark" :type="btnType" size="mini">{{btnName}}</el-tag>
         <!-- <span class="iconfont media-type" :class="mediaType"></span> -->
         <img
@@ -10,7 +10,7 @@
           enter-active-class="animate__fadeIn animate__animated"
           leave-active-class="animate__fadeOut animate__animated"
         >
-          <div v-show="show" class="detail-media-src-mask" @click="play">
+          <div v-show="show" class="detail-media-src-mask">
             <i class="detail-media-src-mask_icon iconfont icon-bofang center"></i>
           </div>
         </transition>
@@ -72,7 +72,7 @@ export default {
       return this.info.mediaType === 0 ? 'icon-icon_moments_mp4' : 'icon-tupian1'
     },
     oldSize () {
-      return this.info.oldSize ? this.info.oldSize + 'KB' : '0KB'
+      return this.info.oldSize ? Math.ceil(this.info.oldSize / 1024) + 'MB' : '0MB'
     },
     state () {
       return this.info && this.info.state !== 1
@@ -129,7 +129,7 @@ export default {
 $iconColor: #ffffff;
 .detail-media{
   float: left;
-  margin: 10px;
+  margin: 9px;
   background-color: #ffffff;
   overflow: hidden;
   border: 1px solid transparent;
@@ -139,8 +139,9 @@ $iconColor: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
-    max-width: 320px;
-    max-height: 180px;
+    width: 320px;
+    height: 180px;
+    cursor: pointer;
     &_img{
       max-width: 320px;
       max-height: 180px;

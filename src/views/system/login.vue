@@ -123,8 +123,7 @@ export default {
         if (valid) {
           this.loading = true
           this.$store.dispatch('loginActions', this.loginForm)
-            .then(async () => {
-              await this.$store.dispatch('infoUserActions')
+            .then(() => {
               this.$router.push({ path: '/device/' })
               this.loading = false
             })
