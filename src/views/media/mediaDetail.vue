@@ -109,7 +109,7 @@ export default {
 
     // 获取发布媒体设备列表
     getPublishDeviceList () {
-      publishDevice({ mediaid: this.info.id })
+      return publishDevice({ mediaid: this.info.id })
         .then(res => {
           this.deviceList = res.list
         })
@@ -118,7 +118,7 @@ export default {
 
     // 获取未发布媒体设备列表
     getUnpublishDeviceList () {
-      unpublishDevice({ mediaid: this.info.id })
+      return unpublishDevice({ mediaid: this.info.id })
         .then(res => {
           this.deviceList = res.list
           this.deviceList.forEach(item => {
