@@ -7,20 +7,20 @@
  * @LastEditTime: 2021-05-26 22:38:54
 -->
 <template>
-  <div class="play-list">
+  <div class="play-list clear">
     <div class="play-list-item">
-      <h3 class="play-list-item_title publish">已发布媒体</h3>
+      <base-title type='success'>已发布媒体</base-title>
       <draggable  v-model="publishList" @add='onAddPublish' chosenClass="chosen" forceFallback group="people" animation="1000" class="play-list-item-content">
         <template v-for="info in publishList">
-          <card-media v-if="info.state !== -1" :info='info' :tag='false' class="media-screen" :key='info.id'  @delete='deletePlaylistByIds'></card-media>
+          <card-media v-if="info.state !== -1" :info='info' :tag='false' :class="mediaClass" :key='info.id'  @delete='deletePlaylistByIds'></card-media>
         </template>
       </draggable>
     </div>
     <div class="play-list-item">
-      <h3 class="play-list-item_title unpublish">未发布媒体</h3>
+      <base-title type='error'>未发布媒体</base-title>
       <draggable  v-model="unpublishList" @add='onAddUnpublish'  chosenClass="chosen" forceFallback group="people" animation="1000" class="play-list-item-content">
         <template v-for="info in unpublishList">
-          <card-media v-if="info.state !== -1" :info='info' :tag='false' class="media-screen" :key='info.id' @delete='deletePlaylistByIds'></card-media>
+          <card-media v-if="info.state !== -1" :info='info' :tag='false' :class="mediaClass" :key='info.id' @delete='deletePlaylistByIds'></card-media>
         </template>
       </draggable>
     </div>
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import BaseTitle from './BaseTitle'
 import CardMedia from './CardMedia'
 import draggable from 'vuedraggable'
 import { allListPlaylist, deletePlaylist } from '@/api/playList'
@@ -47,12 +48,16 @@ export default {
     disabled: {
       type: Boolean,
       default: true
+    },
+    mediaClass: {
+      type: String,
+      default: 'media-screen'
     }
   },
 
   mixins: [prompt],
 
-  components: { CardMedia, draggable },
+  components: { CardMedia, draggable, BaseTitle },
 
   computed: {
     id () {
@@ -150,28 +155,19 @@ export default {
 .play-list{
   width: 100%;
   height: 100%;
+  flex: 1;
+  overflow: auto;
   display: flex;
   justify-content: space-between;
   &-item{
     width: calc(50% - 10px);
     height: 100%;
     margin: 0 5px;
+    box-sizing: border-box;
+    padding: 10px 0;
     background-color: #ffffff;
-    // overflow: auto;
     display: flex;
     flex-direction: column;
-    &_title{
-      line-height: 30px;
-      &::before{
-        content: '';
-        display: block;
-        width: 5px;
-        height: 30px;
-        float: left;
-        margin-left: 10px;
-        margin-right: 10px;
-      }
-    }
     &-content{
       flex: 1;
       overflow: auto;
@@ -183,20 +179,6 @@ export default {
       }
     }
   }
-}
-.play-list::after{
-  content: '';
-  display: block;
-  clear: both;
-  height: 0;
-  overflow: hidden;
-  visibility: hidden;
-}
-.publish::before{
-  @include bg-color('success');
-}
-.unpublish::before{
-  @include bg-color('danger');
 }
 .chosen{
   @include border-color('danger');

@@ -7,14 +7,14 @@
  * @LastEditTime: 2021-05-25 23:33:29
 -->
 <template>
-  <li class="detail-device box-shadow radius-10">
+  <li class="detail-device box-shadow radius-10" @click="setup">
     <!-- <div class="mask" v-if="this.info.stateOnline !== 1"></div> -->
     <div class="detail-device-status">
       <img class="detail-device-status_img" src="../assets/test/device.png" alt="设备图片">
       <div class="detail-device-status_right">
         <base-dot :ripple='workStatus' :borderClass='stateClass' :bgClass='stateClassBg' :title="title"></base-dot>
         <i class="iconfont icon-wenduji icon" :style="{ color: highTemp ? '#f56c6c' : '#67c23a' }" :title="tempTitle"></i>
-        <i class="iconfont icon-shezhi icon set-icon primary" title="设置" @click="setup"></i>
+        <i class="iconfont icon-shezhi icon set-icon primary" title="设置" ></i>
       </div>
     </div>
     <div class="detail-device-info">
@@ -87,6 +87,7 @@ export default {
   position: relative;
   overflow: hidden;
   background-color: #fff;
+  cursor: pointer;
   &-status{
     &:after{
       content:'';

@@ -168,7 +168,7 @@ export default {
     // border-bottom: 1px solid #f0f0f0;
     &_name{
       font-size: 14px;
-      color: #999999;
+      color: #606266;
     }
   }
 }

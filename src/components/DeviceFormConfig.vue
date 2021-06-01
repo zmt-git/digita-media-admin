@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model="ruleForm" status-icon ref="ruleForm" label-width="100px" class="demo-ruleForm">
+    <el-form :model="ruleForm" status-icon ref="ruleForm" label-width="70px" class="demo-ruleForm">
       <el-form-item label="启用休眠" prop="timeControl" style="text-align: right;">
         <el-switch
           :disabled='disabled'
@@ -92,7 +92,7 @@ export default {
         { value: 9, label: '竖屏向下' }
       ],
       style: {
-        width: '300px'
+        width: '100%'
       }
     }
   },
