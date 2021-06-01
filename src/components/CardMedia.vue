@@ -34,8 +34,12 @@
 
 <script>
 import { secondFormat } from '@/utils/tools/dateTool'
+import media from '@/mixins/media'
+
 export default {
   name: 'detail-media',
+
+  mixins: [media],
 
   props: {
     info: {
@@ -55,33 +59,6 @@ export default {
   computed: {
     img () {
       return this.info.addressOld ? this.info.addressOld : require('../assets/layout/header/empty.png')
-    },
-    mediaName () {
-      return this.info.mediaType === 0 ? '视频媒体' : '图片媒体'
-    },
-    mediaType () {
-      if (this.info.mediaType === 0) {
-        return 'MP4'
-      } else if (this.info.mediaType === 1) {
-        return 'JPG'
-      } else {
-        return 'PNG'
-      }
-    },
-    mediaIcon () {
-      return this.info.mediaType === 0 ? 'icon-icon_moments_mp4' : 'icon-tupian1'
-    },
-    oldSize () {
-      return this.info.oldSize ? Math.ceil(this.info.oldSize / 1024) + 'MB' : '0MB'
-    },
-    state () {
-      return this.info && this.info.state !== 1
-    },
-    btnType () {
-      return this.getState(this.info.state).type
-    },
-    btnName () {
-      return this.getState(this.info.state).name
     }
   },
 
@@ -109,17 +86,6 @@ export default {
     },
     add () {
       this.$emit('add')
-    },
-    getState (state) {
-      // -1：删除，0，审核中，-2，审核失败，1：正常；
-      let obj = { name: '审核中', type: 'primary' }
-      switch (state) {
-        case 0: obj = { name: '审核中', type: 'primary' }
-          break
-        case -2: obj = { name: '审核失败', type: 'warning' }
-          break
-      }
-      return obj
     }
   }
 }

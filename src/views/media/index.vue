@@ -18,7 +18,8 @@
         :multiple='true'
         :limit='10'
       >
-        <i class="el-icon-plus avatar-uploader-icon"></i>
+      <el-button size="small" type="primary">点击上传</el-button>
+        <!-- <i class="el-icon-plus avatar-uploader-icon"></i> -->
       </el-upload>
     </div>
     <div class="infinite-list-wrapper media-list" style="overflow:auto">
@@ -31,40 +32,29 @@
         <base-page-loading :loading='pageLoading' :noMore='noMore'></base-page-loading>
       </ul>
     </div>
-
-    <el-dialog
-      title="提示"
-      :visible.sync="dialogVisible"
-      @close='cancel'
-      width="30%">
-      <span>
-        <el-checkbox v-model="checked">该媒体将从所有智能终端中清除！</el-checkbox>
-      </span>
-      <span slot="footer" class="dialog-footer">
-        <el-button size="mini" @click="cancel">取 消</el-button>
-        <el-button size="mini" type="primary" @click="deleteConfirm">确 定</el-button>
-      </span>
-    </el-dialog>
+    <media-delete-dialog :visible.sync="dialogVisible" @confirm='deleteConfirm'></media-delete-dialog>
   </div>
 </template>
 <script>
 import CardMedia from '@/components/CardMedia.vue'
 import BasePageLoading from '@/components/BasePageLoading.vue'
-import { listMedia, saveMedia, deleteMedia } from '@/api/media'
+import MediaDeleteDialog from '@/components/MediaDeleteDialog.vue'
+import { listMedia, saveMedia } from '@/api/media'
 import { mediaType } from '@/data/common'
 import { getVideoDuration } from '@/utils/tools'
 import page from '@/mixins/page'
+import media from '@/mixins/media'
 import { mapGetters } from 'vuex'
 export default {
   name: 'media',
 
-  components: { CardMedia, BasePageLoading },
+  components: { CardMedia, BasePageLoading, MediaDeleteDialog },
 
   computed: {
     ...mapGetters(['user'])
   },
 
-  mixins: [page],
+  mixins: [page, media],
 
   data () {
     return {
@@ -89,34 +79,9 @@ export default {
     viewDetail (info) {
       this.$router.push({ path: '/media/detail', query: { info: info } })
     },
-    // 删除文件
-    cancel () {
-      this.checked = false
-      this.dialogVisible = false
-    },
     deleteMedia (info) {
       this.dialogVisible = true
       this.targetMedia = info
-    },
-    // 确认删除--》删除请求
-    async deleteConfirm () {
-      const params = {
-        id: this.targetMedia.id,
-        isDeletMedia: this.checked ? 1 : 0
-      }
-      this.loading = true
-      await deleteMedia(params)
-        .then(res => {
-          if (res.state === 1) {
-            this.$message({ message: '删除成功', type: 'success' })
-            this.dialogVisible = false
-            this.refresh()
-          } else {
-            this.$message({ message: '删除失败', type: 'error' })
-          }
-        })
-        .catch(e => console.log(e))
-      this.loading = false
     },
     // 上传文件前钩子
     beforeUpload (file) {

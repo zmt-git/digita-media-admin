@@ -35,7 +35,7 @@ export default {
 
   computed: {
     src () {
-      return this.info.url ? this.info.url : '../assets/video/oceans.mp4'
+      return this.info.addressOld ? this.info.addressOld : '../assets/video/oceans.mp4'
     }
   },
 
