@@ -4,13 +4,13 @@
  * @Author: ZMT
  * @Date: 2021-05-26 19:01:25
  * @LastEditors: ZMT
- * @LastEditTime: 2021-05-26 22:38:54
+ * @LastEditTime: 2021-06-02 22:19:50
 -->
 <template>
   <div class="play-list clear">
     <div class="play-list-item">
       <base-title type='success'>已发布媒体</base-title>
-      <draggable  v-model="publishList" @add='onAddPublish' chosenClass="chosen" forceFallback group="people" animation="1000" class="play-list-item-content">
+      <draggable  v-model="publishList" @add='onAddPublish' :disabled="disabled" chosenClass="chosen" forceFallback group="people" animation="1000" class="play-list-item-content">
         <template v-for="info in publishList">
           <card-media v-if="info.state !== -1" :info='info' :tag='false' :class="mediaClass" :key='info.id'  @delete='deletePlaylistByIds'></card-media>
         </template>
@@ -18,7 +18,7 @@
     </div>
     <div class="play-list-item">
       <base-title type='error'>未发布媒体</base-title>
-      <draggable  v-model="unpublishList" @add='onAddUnpublish'  chosenClass="chosen" forceFallback group="people" animation="1000" class="play-list-item-content">
+      <draggable  v-model="unpublishList" @add='onAddUnpublish' :disabled="disabled" chosenClass="chosen" forceFallback group="people" animation="1000" class="play-list-item-content">
         <template v-for="info in unpublishList">
           <card-media v-if="info.state !== -1" :info='info' :tag='false' :class="mediaClass" :key='info.id' @delete='deletePlaylistByIds'></card-media>
         </template>

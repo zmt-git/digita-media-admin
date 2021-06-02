@@ -4,7 +4,7 @@
  * @Author: ZMT
  * @Date: 2021-05-25 21:41:52
  * @LastEditors: ZMT
- * @LastEditTime: 2021-05-25 22:09:22
+ * @LastEditTime: 2021-06-02 22:23:07
 -->
 <template>
   <div class="media-detail" v-loading='loading'>
@@ -274,6 +274,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  background-color: #F5F7FA;
 }
 .info{
   height: 60px;

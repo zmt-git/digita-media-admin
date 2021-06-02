@@ -1,3 +1,11 @@
+<!--
+ * @Description:
+ * @version: 1.0
+ * @Author: ZMT
+ * @Date: 2021-05-28 19:38:15
+ * @LastEditors: ZMT
+ * @LastEditTime: 2021-06-02 21:55:27
+-->
 <template>
   <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
     <el-form-item label="设备名称" prop="name">
@@ -45,7 +53,7 @@ export default {
       ruleForm: {
         name: '',
         location: '',
-        code: ''
+        code: 'ELF'
       },
       rules: {
         name: [{ required: true, message: '请输入设备名称', trigger: 'blur' }],

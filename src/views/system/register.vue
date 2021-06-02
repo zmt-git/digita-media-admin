@@ -1,22 +1,22 @@
 <template>
-  <div class="register">
+  <div class="register" v-loading='loading'>
     <!-- 1.手机号获取验证码 -->
     <div class="register-item">
       <h3 class="title">欢迎注册数字媒体管家</h3>
-      <el-form v-show="currentStep === 0" v-loading='loading' :inline='false' size="small" :model="formMobile" ref="formMobile" class="form" :rules="rulesMobile">
+      <el-form v-show="currentStep === 0" :inline='false' size="small" :model="formMobile" ref="formMobile" class="form" :rules="rulesMobile">
         <el-form-item prop="mobile">
-          <el-input v-model="formMobile.mobile" placeholder="请输入手机号码">
+          <el-input v-model="formMobile.mobile" clearable placeholder="请输入手机号码">
             <i slot="prefix" class="iconfont icon-shoujihaoma prefix-icon"></i>
           </el-input>
         </el-form-item>
         <el-form-item prop="code">
-          <el-input v-model="formMobile.code" placeholder="请输入验证码">
+          <el-input v-model="formMobile.code" clearable placeholder="请输入验证码">
             <i slot="prefix" class="iconfont icon-duanxinyanzhengma prefix-icon"></i>
             <el-button slot="suffix" size="mini" :disabled='codeDisabled || hasMobile' :loading='codeLoading' @click="getCode">{{codeBtnName}}</el-button>
           </el-input>
         </el-form-item>
         <el-form-item prop="check">
-          <el-checkbox @change="change" v-model="check"> 同意<a>《服务条款》</a></el-checkbox>
+          <el-checkbox @change="change" clearable v-model="check"> 同意<a>《服务条款》</a></el-checkbox>
           <br/>
           <span class="error" v-show="checkPrompt">请先同意服务条款</span>
         </el-form-item>
@@ -25,7 +25,7 @@
         </el-form-item>
       </el-form>
       <!-- 2.用户信息 -->
-      <el-form v-show="currentStep === 1" v-loading='loading' :inline='false' size="small" :model="formInfo" ref="formInfo" class="form" :rules="rulesInfo">
+      <el-form v-show="currentStep === 1" :inline='false' size="small" :model="formInfo" ref="formInfo" class="form" :rules="rulesInfo">
         <el-form-item prop="mobile">
           <el-radio-group v-model="formInfo.userType" @change="onChangeType">
             <el-radio :label="1">企业</el-radio>
@@ -33,18 +33,19 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item prop="username">
-          <el-input v-model="formInfo.username" :placeholder="username">
+          <el-input clearable v-model="formInfo.username" :placeholder="username">
             <i slot="prefix" class="iconfont prefix-icon" :class="usernameIcon"></i>
           </el-input>
         </el-form-item>
         <el-form-item prop="isNumber">
-          <el-input v-model="formInfo.isNumber" :placeholder="isNumber">
+          <el-input clearable v-model="formInfo.isNumber" :placeholder="isNumber">
             <i slot="prefix" class="iconfont prefix-icon" :class="isNumberIcon"></i>
           </el-input>
         </el-form-item>
         <el-form-item prop="city">
-          <i class="iconfont icon-location prefix-icon city"></i>
+          <i class="iconfont icon-location prefix-icon icon"></i>
           <el-cascader
+            clearable
             size="large"
             :options="options"
             v-model="formInfo.city"
@@ -52,14 +53,25 @@
             @change="handleChange">
           </el-cascader>
         </el-form-item>
+        <el-form-item prop="tradeType">
+          <i class="iconfont icon-xingye prefix-icon icon"></i>
+          <el-select clearable v-model="formInfo.tradeType" filterable placeholder="行业">
+            <el-option
+              v-for="item in optionsTrade"
+              :key="item.val"
+              :label="item.name"
+              :value="item.val">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item prop="password">
-          <el-input v-model="formInfo.password" placeholder="密码">
+          <el-input clearable v-model="formInfo.password" type="password" placeholder="密码">
             <i slot="prefix" class="iconfont icon-mima prefix-icon"></i>
           </el-input>
         </el-form-item>
         <el-form-item>
           <el-button class="btn-half" @click="back">返回</el-button>
-          <el-button class="btn-half" type="primary">立即注册</el-button>
+          <el-button class="btn-half" type="primary" @click="registerUser">立即注册</el-button>
         </el-form-item>
       </el-form>
       <div class="login">
@@ -88,7 +100,7 @@
 import { provinceAndCityData } from 'element-china-area-data'
 import smsCode from '@/mixins/smsCode'
 import { registerCode, registerLogin, existMobile } from '@/api/system/login'
-import { telReg, codeReg, companyCodeReg, idCardReg } from '@/data/common'
+import { telReg, codeReg, companyCodeReg, idCardReg, tradeType } from '@/data/common'
 import { setToken } from '@/utils/cache/cacheToken'
 export default {
   name: 'register',
@@ -145,7 +157,7 @@ export default {
       if (value) {
         try {
           const result = await this.isOnlyMobile()
-          if (!result) {
+          if (result) {
             callback(new Error('手机号码已注册！'))
           } else {
             callback()
@@ -158,12 +170,13 @@ export default {
       }
     }
     return {
-      currentStep: 0,
+      currentStep: 1,
       loading: false,
       check: false,
       checkPrompt: false,
       dialogVisible: false,
       options: provinceAndCityData,
+      optionsTrade: tradeType,
       codeRequest: registerCode,
       formMobile: {
         mobile: '',
@@ -180,6 +193,7 @@ export default {
           { pattern: codeReg, message: '验证码格式错误' }
         ]
       },
+      cityCode: null,
       formInfo: {
         userType: 1,
         username: '',
@@ -205,7 +219,7 @@ export default {
       this.currentStep = 0
     },
     handleChange (val) {
-      this.city = val.pop()
+      this.cityCode = val[val.length - 1]
     },
     onChangeType () {
       this.$refs.formInfo.resetFields()
@@ -220,9 +234,9 @@ export default {
       this.checkPrompt = !this.check
     },
     isOnlyMobile () {
-      return existMobile(this.formMobile.mobile)
+      return existMobile({ mobile: this.formMobile.mobile })
         .then(res => {
-          return res.msg
+          return res.msg === 'true'
         })
         .catch(e => console.log(e))
     },
@@ -239,11 +253,13 @@ export default {
         }
       })
     },
-    register () {
-      this.$refs.formInfo.validate(valid => {
+    registerUser () {
+      this.$refs.formInfo.validate(async valid => {
         if (valid) {
+          this.loading = true
           const params = Object.assign(this.formMobile, this.formInfo)
-          registerLogin(params)
+          params.city = this.cityCode
+          await registerLogin(params)
             .then(res => {
               this.$store.commit('set_user', res.data)
               setToken(res.data.token)
@@ -252,6 +268,7 @@ export default {
             .catch(e => {
               console.log(e)
             })
+          this.loading = false
         } else {
           console.log('error submit')
         }
@@ -270,7 +287,7 @@ export default {
   background-color: #f0f0f0;
   &-item{
     width: 400px;
-    height: 460px;
+    height: 480px;
     padding: 0 45px;
     background-color: #ffffff;
     box-sizing: border-box;
@@ -281,6 +298,14 @@ export default {
     border-bottom: 1px solid #DCDFE6;
   }
   /deep/ .el-cascader{
+    width: 100%;
+    & .el-input__inner{
+      padding: 0 15px 0 30px;
+      box-sizing: border-box;
+      height: 32px;
+    }
+  }
+  /deep/ .el-select{
     width: 100%;
     & .el-input__inner{
       padding: 0 15px 0 30px;
@@ -319,7 +344,7 @@ export default {
 .prefix-icon{
   color: #C0C4CC;
 }
-.city{
+.icon{
   position: absolute;
   top: 2px;
   left: 4px;

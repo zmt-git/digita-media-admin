@@ -1,3 +1,11 @@
+<!--
+ * @Description:
+ * @version: 1.0
+ * @Author: ZMT
+ * @Date: 2021-05-28 19:38:15
+ * @LastEditors: ZMT
+ * @LastEditTime: 2021-06-02 21:59:58
+-->
 <template>
   <div class="job" v-loading='pageLoading'>
     <el-button-group class="btn-box">
@@ -61,18 +69,13 @@ export default {
   },
 
   methods: {
-    setLoading (state = true) {
-      this.loading = state
-    },
-
     async clean () {
-      this.setLoading()
       await cleanJob()
         .then(res => {
-
+          this.$message({ type: 'success', message: '清空任务成功' })
+          this.refresh()
         })
         .catch(e => console.log(e))
-      this.setLoading(false)
     }
   }
 }

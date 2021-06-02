@@ -4,7 +4,7 @@
  * @Author: ZMT
  * @Date: 2021-05-26 19:01:25
  * @LastEditors: ZMT
- * @LastEditTime: 2021-05-26 22:22:00
+ * @LastEditTime: 2021-06-02 22:21:28
 -->
 <template>
   <div class="device-add"  v-loading='loading'>
@@ -34,7 +34,7 @@
     </div>
     <div class="btn-box" v-if="active !== 0">
       <el-button size="small" type="primary" @click="next">{{active !== 3 ? '跳过' : '返回首页'}}</el-button>
-      <el-button v-if="active === 3" size="small" type="success" @click="carryOut">发布</el-button>
+      <el-button v-if="active === 3" size="small" type="success" @click="carryOut" :disabled='disabled'>发布</el-button>
     </div>
   </div>
 </template>
@@ -59,7 +59,7 @@ export default {
 
   data () {
     return {
-      active: 3,
+      active: 0,
       info: {},
       loading: false,
       steps: deviceAddSteps

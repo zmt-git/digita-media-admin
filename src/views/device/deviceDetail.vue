@@ -1,23 +1,24 @@
 <template>
   <div class="device-detail" v-loading='loading'>
     <div class="device-detail-info">
+      <h3 class="device-name">{{info.name}}</h3>
       <base-title type='primary'>运行状态</base-title>
       <div class="device-detail-info-control">
         <device-state :info='info' @updateInfo='updateInfo'></device-state>
       </div>
       <base-title type='primary'>参数设置</base-title>
       <div class="device-detail-info-control">
-        <device-form-config :info='info' @updateInfo='updateInfo' :loading.sync='loading'></device-form-config>
+        <device-form-config :info='info' @updateInfo='updateInfo' :loading.sync='loading' :disabled='disabled'></device-form-config>
       </div>
       <base-title type='primary'>系统设置</base-title>
       <div class="device-detail-info-control">
-        <device-form-system :info='info' @updateInfo='updateInfo' :loading.sync='loading'></device-form-system>
+        <device-form-system :info='info' @updateInfo='updateInfo' :loading.sync='loading' :disabled='disabled'></device-form-system>
       </div>
     </div>
     <div class="device-detail-playlist">
-      <device-form-play-list ref="playlist" class="device-detail-playlist-list" mediaClass='device-detail-screen' :loading.sync='loading' :info='info' @updateInfo='updateInfo'></device-form-play-list>
+      <device-form-play-list ref="playlist" class="device-detail-playlist-list" mediaClass='device-detail-screen' :loading.sync='loading' :info='info' @updateInfo='updateInfo' :disabled='disabled'></device-form-play-list>
       <div class="device-detail-playlist-btn">
-        <el-button size="small" type="primary" @click="publish">发布</el-button>
+        <el-button size="small" type="primary" @click="publish" :disabled='disabled'>发布</el-button>
       </div>
     </div>
   </div>
@@ -34,6 +35,12 @@ export default {
   name: 'device-detail',
 
   components: { BaseTitle, DeviceFormPlayList, DeviceFormConfig, DeviceFormSystem, DeviceState },
+
+  computed: {
+    disabled () {
+      return this.info.stateOnline === 0
+    }
+  },
 
   data () {
     return {
@@ -105,6 +112,18 @@ export default {
         width: 200px;
       }
     }
+  }
+}
+.device-name{
+  box-sizing: border-box;
+  padding: 5px 10px 15px 10px;
+  white-space: nowrap;
+  overflow: auto;
+  &::-webkit-scrollbar-thumb{
+    background-color: #d0d0d0;
+  }
+  &::-webkit-scrollbar{
+    height: 3px;
   }
 }
 </style>

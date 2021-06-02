@@ -4,24 +4,24 @@
  * @Author: ZMT
  * @Date: 2021-04-21 11:48:46
  * @LastEditors: ZMT
- * @LastEditTime: 2021-04-25 11:15:41
+ * @LastEditTime: 2021-06-02 22:25:21
 -->
 <template>
   <div class="reset-password">
     <el-form v-loading='loading' :inline='true' size="small" :model="form" ref="form" class="form" :rules="rules" label-width="80px">
       <el-form-item label="手机号码" required prop="mobile">
-        <el-input v-model="form.mobile" placeholder="请输入手机号码"></el-input>
+        <el-input v-model="form.mobile" clearable placeholder="请输入手机号码"></el-input>
       </el-form-item>
       <el-form-item label="验证码" required prop="code">
-        <el-input v-model="form.code" placeholder="请输入验证码">
+        <el-input v-model="form.code" clearable placeholder="请输入验证码">
           <el-button slot="suffix" size="mini" :disabled='codeDisabled || hasMobile' :loading='codeLoading' @click="getCode">{{codeBtnName}}</el-button>
         </el-input>
       </el-form-item>
       <el-form-item label="新密码" required prop="newPassword">
-        <el-input type="password" v-model="form.newPassword" placeholder="请输入新密码"></el-input>
+        <el-input type="password" clearable v-model="form.newPassword" placeholder="请输入新密码"></el-input>
       </el-form-item>
       <el-form-item label="确认密码" required prop="checkedPassword">
-        <el-input type="password" v-model="form.checkedPassword" placeholder="请确认新密码"></el-input>
+        <el-input type="password" clearable v-model="form.checkedPassword" placeholder="请确认新密码"></el-input>
       </el-form-item>
       <el-button type="primary" class="btn" size="small" @click="submit">确认</el-button>
     </el-form>

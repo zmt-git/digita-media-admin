@@ -44,12 +44,14 @@
       <el-table-column
         width="100"
         prop="storageUsed"
-        label="已用空间(MB)">
+        :formatter="formatterStorage"
+        label="已用空间(G)">
       </el-table-column>
       <el-table-column
         width="100"
         prop="storageTotal"
-        label="空间大小(MB)">
+        :formatter="formatterStorage"
+        label="空间大小(G)">
       </el-table-column>
       <el-table-column
         prop="timeCreate"
@@ -155,6 +157,9 @@ export default {
     },
     formatterCity (row, column, cellValue, index) {
       return province[row.city] ? province[row.city] : ''
+    },
+    formatterStorage (row, column, cellValue, index) {
+      return (cellValue / 1024).toFixed(2)
     }
   }
 }
