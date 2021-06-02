@@ -21,7 +21,13 @@
     <div class="user-content">
       <h3 class="user_title">基础信息</h3>
       <ul class="user-content-info">
-        <userinfo-list-item label='名称' :value='userinfo.name'></userinfo-list-item>
+        <userinfo-list-item label='用户名' :value='userinfo.username'></userinfo-list-item>
+        <userinfo-list-item label='手机号码' :value='userinfo.mobile'></userinfo-list-item>
+        <userinfo-list-item label='存储空间' :value='userinfo.storageTotal | filterStorage'></userinfo-list-item>
+        <userinfo-list-item label='已使用空间' :value='userinfo.storageUsed | filterStorage'></userinfo-list-item>
+        <userinfo-list-item label='用户类型' :value='userinfo.userType | filterUserType'></userinfo-list-item>
+        <userinfo-list-item label='账户创建时间' :value='userinfo.timeCreate'></userinfo-list-item>
+        <userinfo-list-item label='最后登录时间' :value='userinfo.timeLogin'></userinfo-list-item>
       </ul>
 
       <h3 class="user_title">修改密码</h3>
@@ -35,6 +41,7 @@
 <script>
 import userinfoListItem from './UserInfoListItem'
 import resetPassword from './resetPassword'
+import { isType } from '@/utils/tools/typeTool'
 export default {
   name: 'header-user-info',
 
@@ -50,6 +57,30 @@ export default {
     userinfo: {
       type: Object,
       default: () => {}
+    }
+  },
+
+  filters: {
+    filterUserType (val) {
+      let type = '用户'
+      switch (val) {
+        case 0 : type = '个人'
+          break
+        case 1 : type = '企业'
+          break
+        case 2 : type = '管理员'
+          break
+        default : type = '个人'
+      }
+      return type
+    },
+
+    filterStorage (val) {
+      if (isType(val, 'Number')) {
+        return (val / 1024).toFixed(2) + 'G'
+      } else {
+        return '0G'
+      }
     }
   },
 

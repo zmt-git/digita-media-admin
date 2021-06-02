@@ -21,6 +21,17 @@ export const stableRoutes = [
     component: () => lazyComponent(import('@/views/system/login.vue'))
   },
   {
+    name: 'register',
+    path: '/register',
+    hidden: true,
+    meta: {
+      title: '注册',
+      auth: [0, 1, 2],
+      icon: ''
+    },
+    component: () => lazyComponent(import('@/views/system/register.vue'))
+  },
+  {
     path: '/',
     hidden: true,
     meta: {

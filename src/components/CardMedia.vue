@@ -155,7 +155,7 @@ $iconColor: #ffffff;
 }
 .btn{
   font-size: 10px;
-  padding: 3px 5px;
+  padding: 2px 5px;
 }
 
 .state-btn{

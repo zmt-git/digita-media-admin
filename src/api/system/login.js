@@ -11,21 +11,10 @@ export function existMobile (params) {
 }
 // /mobile/login/code/{mobile}
 // 发送短信【登录】验证码
-export function codeLogin (params, mobile) {
+export function codeLogin (mobile) {
   return http({
     url: `/mobile/login/code/${mobile}`,
-    method: 'GET',
-    params
-  })
-}
-
-// /mobile/login/pwd
-// APP密码登录
-export function pwdLogin (params) {
-  return http({
-    url: '/mobile/login/pwd',
-    method: 'POST',
-    params
+    method: 'GET'
   })
 }
 
@@ -51,21 +40,19 @@ export function registerLogin (params) {
 
 // /mobile/register/code/{mobile}
 // 发送短信【注册】验证码
-export function registerCode (params, mobile) {
+export function registerCode (mobile) {
   return http({
     url: `/mobile/register/code/${mobile}`,
-    method: 'GET',
-    params
+    method: 'GET'
   })
 }
 
 // /mobile/reset/code/{mobile}
 // 发送短信【重置密码】验证码
-export function resetCode (params, mobile) {
+export function resetCode (mobile) {
   return http({
     url: `/mobile/reset/code/${mobile}`,
-    method: 'GET',
-    params
+    method: 'GET'
   })
 }
 
@@ -113,5 +100,15 @@ export function welcome () {
   return http({
     url: '/sys/welcome',
     method: 'GET'
+  })
+}
+
+// /sys/user/password/reset
+// 使用短信验证码重置用户密码
+export function reset (params) {
+  return http({
+    url: '/sys/user/password/reset',
+    method: 'POST',
+    params
   })
 }

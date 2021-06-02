@@ -68,17 +68,7 @@
       <template slot-scope="scope">
         <el-button-group>
           <el-button class="el-button--micro" v-hasButton='"编辑"' size="mini" type="info" icon="el-icon-edit"></el-button>
-
-          <el-popover
-            placement="top"
-            width="160"
-            trigger="click">
-            <p>确定删除该用户吗？</p>
-            <div style="text-align: right; margin: 0">
-              <el-button class="el-button--micro" type="primary" size="mini" @click="handleDelete(scope.row)">确定</el-button>
-            </div>
-            <el-button class="el-button--micro" slot="reference" v-hasButton='"删除"' size="mini" type="danger" icon="el-icon-delete"></el-button>
-          </el-popover>
+          <el-button class="el-button--micro" @click="handleDelete(scope.row)" v-hasButton='"删除"' size="mini" type="danger" icon="el-icon-delete"></el-button>
         </el-button-group>
       </template>
     </el-table-column>
@@ -123,16 +113,25 @@ export default {
       this.visible = true
     },
 
-    async handleDelete (row) {
-      this.visible = false
-      this.loading_PT = true
-      await deleteUser([row.userId])
-        .then(res => {
-          this.$message({ type: 'success', message: '删除成功' })
-        })
-        .catch(e => console.log(e))
-      this.getTableData()
-      this.loading_PT = false
+    handleDelete (row) {
+      this.$confirm('该操作将永久删除改用户， 是否继续？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: false
+      }).then(async () => {
+        this.visible = false
+        this.loading_PT = true
+        await deleteUser([row.userId])
+          .then(res => {
+            this.$message({ type: 'success', message: '删除成功' })
+          })
+          .catch(e => console.log(e))
+        this.getTableData()
+        this.loading_PT = false
+      }).catch(() => {
+        console.log('取消退出')
+      })
     },
 
     formatterUserType (row, column, cellValue, index) {

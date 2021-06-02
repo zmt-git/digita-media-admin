@@ -2534,6 +2534,11 @@ check-types@^8.0.3:
   resolved "https://registry.yarnpkg.com/check-types/-/check-types-8.0.3.tgz#3356cca19c889544f2d7a95ed49ce508a0ecf552"
   integrity sha512-YpeKZngUmG65rLudJ4taU7VLkOCTMhNl/u4ctNC56LQS/zJTyNH0Lrtwm1tfTsbLlwvlfsA2d1c8vCf/Kh2KwQ==
 
+china-area-data@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.npm.taobao.org/china-area-data/download/china-area-data-5.0.1.tgz#7943b83a0619f033bb5893da80cb46e52e44be66"
+  integrity sha1-eUO4OgYZ8DO7WJPagMtG5S5EvmY=
+
 chokidar@^2.1.8:
   version "2.1.8"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-2.1.8.tgz#804b3a7b6a99358c3c5c61e71d8728f041cff917"
@@ -3523,6 +3528,14 @@ electron-to-chromium@^1.3.723:
   version "1.3.736"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.736.tgz#f632d900a1f788dab22fec9c62ec5c9c8f0c4052"
   integrity sha512-DY8dA7gR51MSo66DqitEQoUMQ0Z+A2DSXFi7tK304bdTVqczCAfUuyQw6Wdg8hIoo5zIxkU1L24RQtUce1Ioig==
+
+element-china-area-data@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.npm.taobao.org/element-china-area-data/download/element-china-area-data-5.0.2.tgz#006c26594b8865cb619994063c732562e4583d30"
+  integrity sha1-AGwmWUuIZcthmZQGPHMlYuRYPTA=
+  dependencies:
+    china-area-data "^5.0.1"
+    lodash-es "^4.17.15"
 
 element-ui@^2.15.1:
   version "2.15.1"
@@ -5737,6 +5750,11 @@ locate-path@^5.0.0:
   integrity sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==
   dependencies:
     p-locate "^4.1.0"
+
+lodash-es@^4.17.15:
+  version "4.17.21"
+  resolved "https://registry.npm.taobao.org/lodash-es/download/lodash-es-4.17.21.tgz?cache=0&sync_timestamp=1613836838613&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Flodash-es%2Fdownload%2Flodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
+  integrity sha1-Q+YmxG5lkbd1C+srUBFzkMYJ4+4=
 
 lodash._reinterpolate@^3.0.0:
   version "3.0.0"

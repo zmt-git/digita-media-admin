@@ -36,7 +36,7 @@
         <i class="iconfont header-right_icon icon-tuichu" @click="logout"></i>
       </el-tooltip>
     </div>
-    <header-user-info :userDrawerVisible.sync='userDrawerVisible' :loading.sync='userLoading' :userinfo='userinfo'></header-user-info>
+    <header-user-info :userDrawerVisible.sync='userDrawerVisible' :loading.sync='userLoading' :userinfo='user'></header-user-info>
   </el-header>
 </template>
 
@@ -44,6 +44,7 @@
 import HeaderUserInfo from './HeaderUserInfo'
 import HeaderNotice from './HeaderNotice'
 import { useFullscreen } from '@/hooks/useFullscreen'
+import { mapGetters } from 'vuex'
 const { toggleFullscreen, isFullscreen } = useFullscreen()
 export default {
   name: 'layout-header',
@@ -67,6 +68,7 @@ export default {
   components: { HeaderUserInfo, HeaderNotice },
 
   computed: {
+    ...mapGetters(['user']),
     leftIconTitle () {
       let title = '导航收起'
       this.collapseIconClass === 'icon-daohangshouqi' ? title = '导航收起' : title = '导航展开'
@@ -85,7 +87,6 @@ export default {
       screenIcon: 'icon-fullscreen',
       isFullscreen: false,
       userDrawerVisible: false,
-      userinfo: {},
       userLoading: false
     }
   },
@@ -128,6 +129,7 @@ export default {
     async viewUserInfo () {
       this.userDrawerVisible = true
       this.userLoading = true
+      await this.$store.dispatch('infoUserActions')
       this.userLoading = false
     },
 

@@ -7,52 +7,75 @@
  * @LastEditTime: 2021-04-25 11:15:41
 -->
 <template>
-  <el-form v-loading='loading' :inline='true' size="small" :model="form" ref="form" class="form" :rules="rules" label-width="80px">
-    <el-form-item label="旧密码" required prop="oldPassWord">
-      <el-input type="password" v-model="form.oldPassWord" placeholder="请输入旧密码"></el-input>
-    </el-form-item>
-    <el-form-item label="新密码" required prop="newPassWord">
-      <el-input type="password" v-model="form.newPassWord" placeholder="请输入新密码"></el-input>
-    </el-form-item>
-    <el-form-item label="确认密码" required prop="checkedPassword">
-      <el-input type="password" v-model="form.checkedPassword" placeholder="请确认新密码"></el-input>
-    </el-form-item>
-    <el-button type="primary" class="btn" size="small" @click="submit">确认</el-button>
-  </el-form>
+  <div class="reset-password">
+    <el-form v-loading='loading' :inline='true' size="small" :model="form" ref="form" class="form" :rules="rules" label-width="80px">
+      <el-form-item label="手机号码" required prop="mobile">
+        <el-input v-model="form.mobile" placeholder="请输入手机号码"></el-input>
+      </el-form-item>
+      <el-form-item label="验证码" required prop="code">
+        <el-input v-model="form.code" placeholder="请输入验证码">
+          <el-button slot="suffix" size="mini" :disabled='codeDisabled || hasMobile' :loading='codeLoading' @click="getCode">{{codeBtnName}}</el-button>
+        </el-input>
+      </el-form-item>
+      <el-form-item label="新密码" required prop="newPassword">
+        <el-input type="password" v-model="form.newPassword" placeholder="请输入新密码"></el-input>
+      </el-form-item>
+      <el-form-item label="确认密码" required prop="checkedPassword">
+        <el-input type="password" v-model="form.checkedPassword" placeholder="请确认新密码"></el-input>
+      </el-form-item>
+      <el-button type="primary" class="btn" size="small" @click="submit">确认</el-button>
+    </el-form>
+  </div>
 </template>
 
 <script>
-import { passwordUser } from '@/api/user'
+import { resetCode, reset } from '@/api/system/login'
+import smsCode from '@/mixins/smsCode'
+import { telReg, codeReg } from '@/data/common'
 export default {
   name: 'reset-password',
+
+  mixins: [smsCode],
+
+  computed: {
+    hasMobile () {
+      return !telReg.test(this.form.mobile)
+    }
+  },
 
   data () {
     var validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请再次输入密码'))
-      } else if (value !== this.form.newPassWord) {
+      } else if (value !== this.form.newPassword) {
         callback(new Error('两次输入密码不一致!'))
       } else {
         callback()
       }
     }
     return {
+      codeRequest: resetCode,
       loading: false,
       form: {
-        oldPassWord: '',
-        newPassWord: '',
+        mobile: '',
+        code: '',
+        newPassword: '',
         checkedPassword: ''
       },
       rules: {
-        oldPassWord: [
-          { required: true, message: '请输入旧密码', trigger: 'blur' }
+        mobile: [
+          { required: true, message: '请输入手机号码', trigger: 'blur' },
+          { pattern: telReg, message: '手机号码格式错误' }
         ],
-        newPassWord: [
-          { required: true, message: '请输入新密码', trigger: 'blur' },
-          { pattern: /\w{6,15}/, message: '密码规则为6-15位字母数字下划线', trigger: 'blur' }
+        code: [
+          { required: true, message: '请输入验证码', trigger: 'blur' },
+          { pattern: codeReg, message: '验证码格式错误' }
+        ],
+        newPassword: [
+          { required: true, message: '请输入新密码', trigger: 'blur' }
         ],
         checkedPassword: [
-          { required: true, message: '请输入新密码', trigger: 'blur' },
+          { required: true, message: '请确认新密码', trigger: 'blur' },
           { validator: validatePass, trigger: 'blur' }
         ]
       }
@@ -72,7 +95,7 @@ export default {
       })
     },
     updatePassWord () {
-      return passwordUser(this.form)
+      return reset(this.form)
         .then(res => {
           this.$message({
             message: '修改密码成功',
@@ -80,6 +103,7 @@ export default {
           })
           this.$store.dispatch('logoutActions')
             .then(res => {
+              this.$store.dispatch('logoutActions')
               this.$router.push('/login')
               location.reload()
             })
@@ -87,6 +111,10 @@ export default {
         .catch(e => {
           console.log(e)
         })
+    },
+
+    getCode () {
+      this.getMobileCode(this.form.mobile)
     }
   }
 }
@@ -98,6 +126,12 @@ export default {
   }
   /deep/ .el-form-item{
     margin-bottom: 5px;
+  }
+  /deep/ .el-input__inner{
+    border: 0;
+    border-radius: 0;
+    border-bottom: 1px solid #DCDFE6;
+    width: 220px;
   }
 }
 .btn{

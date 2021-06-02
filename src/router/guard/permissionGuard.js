@@ -10,7 +10,7 @@ import { getToken, removeToken } from '@/utils/cache/cacheToken'
 import { asyncRoutes } from '@/router/routes/asyncRouters'
 import { routesFilter } from '@/utils/auth'
 import store from '@/store'
-const WHITE_LIST = ['/login', '/404', '/401', '/500']
+const WHITE_LIST = ['/login', '/404', '/401', '/500', '/register']
 
 export function createPermission (router) {
   router.beforeEach(async (to, from, next) => {

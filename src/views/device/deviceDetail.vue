@@ -3,21 +3,21 @@
     <div class="device-detail-info">
       <base-title type='primary'>运行状态</base-title>
       <div class="device-detail-info-control">
-        <device-state :info='info'></device-state>
+        <device-state :info='info' @updateInfo='updateInfo'></device-state>
       </div>
       <base-title type='primary'>参数设置</base-title>
       <div class="device-detail-info-control">
-        <device-form-config></device-form-config>
+        <device-form-config :info='info' @updateInfo='updateInfo' :loading.sync='loading'></device-form-config>
       </div>
       <base-title type='primary'>系统设置</base-title>
       <div class="device-detail-info-control">
-        <device-form-system></device-form-system>
+        <device-form-system :info='info' @updateInfo='updateInfo' :loading.sync='loading'></device-form-system>
       </div>
     </div>
     <div class="device-detail-playlist">
-      <device-form-play-list class="device-detail-playlist-list" mediaClass='device-detail-screen' :info='info'></device-form-play-list>
+      <device-form-play-list ref="playlist" class="device-detail-playlist-list" mediaClass='device-detail-screen' :loading.sync='loading' :info='info' @updateInfo='updateInfo'></device-form-play-list>
       <div class="device-detail-playlist-btn">
-        <el-button size="small" type="primary">发布</el-button>
+        <el-button size="small" type="primary" @click="publish">发布</el-button>
       </div>
     </div>
   </div>
@@ -55,6 +55,15 @@ export default {
           this.info = res.data
         })
         .catch(e => console.log(e))
+    },
+
+    async updateInfo () {
+      await this.getDeviceDetail()
+      this.loading = false
+    },
+
+    publish () {
+      this.$refs.playlist.updateList()
     }
   }
 }

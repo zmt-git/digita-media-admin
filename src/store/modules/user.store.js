@@ -1,4 +1,4 @@
-import { login, logout } from '@/api/system/login'
+import { login, logout, smsLogin } from '@/api/system/login'
 import { infoUser } from '@/api/user'
 import { removeToken, setToken } from '@/utils/cache/cacheToken'
 
@@ -41,6 +41,17 @@ export default {
           .then(res => {
             setToken(res.token)
             resolve(res)
+          })
+          .catch(e => reject(e))
+      })
+    },
+
+    loginCodeActions ({ commit }, params) {
+      return new Promise((resolve, reject) => {
+        smsLogin(params)
+          .then(res => {
+            setToken(res.data.token)
+            resolve(res.data)
           })
           .catch(e => reject(e))
       })

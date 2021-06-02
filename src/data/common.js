@@ -4,6 +4,12 @@ export const deviceAddSteps = Object.freeze([
   { title: '设置系统', icon: 'icon-shezhi' },
   { title: '设置播放列表', icon: 'icon-duomeit' }
 ])
+
+export const telReg = /^1[3-9]\d{9}$/
+export const codeReg = /^\d{4}$/
+export const companyCodeReg = /[A-Z0-9]{8}-[A-Z0-9]$|[A-Z0-9]{8}-[A-Z0-9]-[0-9]{2}$/
+export const idCardReg = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
+
 export const jobState = Object.freeze([
   { type: 'error', name: '失败', state: -1 },
   { type: 'success', name: '成功', state: 1 },

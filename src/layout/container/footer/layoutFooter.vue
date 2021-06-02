@@ -42,7 +42,7 @@ $white: #ffffff;
   @include bg-color('baseBg');
   line-height: 50px;
   overflow: hidden;
-  z-index: 10;
+  z-index: 1;
   & span{
     color: $white;
     font-size: 12px;
