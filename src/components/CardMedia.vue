@@ -2,7 +2,6 @@
   <li class="detail-media box-shadow radius-10"  @mouseleave="showPlay(false)" @mouseenter="showPlay(true)">
       <div class="detail-media-src" @click="play">
         <el-tag v-if="state && tag" class="state-btn"  effect="dark" :type="btnType" size="mini">{{btnName}}</el-tag>
-        <!-- <span class="iconfont media-type" :class="mediaType"></span> -->
         <img
           class="detail-media-src_img"
           :src="img" />

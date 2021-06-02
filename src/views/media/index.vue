@@ -4,7 +4,7 @@
  * @Author: ZMT
  * @Date: 2021-05-25 20:37:16
  * @LastEditors: ZMT
- * @LastEditTime: 2021-05-26 21:38:40
+ * @LastEditTime: 2021-06-02 22:39:33
 -->
 <template>
   <div class="media" v-loading='loading'>
@@ -28,7 +28,7 @@
         v-infinite-scroll="pageLoad"
         infinite-scroll-disabled="scrollDisabled"
       >
-        <card-media @play='viewDetail' v-for="item in pageList" :key="item.id" :info='item' @delete='deleteMedia'></card-media>
+        <card-media @play='viewDetail' v-for="item in pageList" :key="item.id" :info='item' :tag='true' @delete='deleteMedia'></card-media>
         <base-page-loading :loading='pageLoading' :noMore='noMore'></base-page-loading>
       </ul>
     </div>

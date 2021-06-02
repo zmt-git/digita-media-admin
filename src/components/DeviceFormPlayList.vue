@@ -4,11 +4,11 @@
  * @Author: ZMT
  * @Date: 2021-05-26 19:01:25
  * @LastEditors: ZMT
- * @LastEditTime: 2021-06-02 22:19:50
+ * @LastEditTime: 2021-06-02 22:46:05
 -->
 <template>
   <div class="play-list clear">
-    <div class="play-list-item">
+    <div class="play-list-item" :class="disabled ? 'disabled-bg' : ''">
       <base-title type='success'>已发布媒体</base-title>
       <draggable  v-model="publishList" @add='onAddPublish' :disabled="disabled" chosenClass="chosen" forceFallback group="people" animation="1000" class="play-list-item-content">
         <template v-for="info in publishList">
@@ -16,7 +16,7 @@
         </template>
       </draggable>
     </div>
-    <div class="play-list-item">
+    <div class="play-list-item" :class="disabled ? 'disabled-bg' : ''">
       <base-title type='error'>未发布媒体</base-title>
       <draggable  v-model="unpublishList" @add='onAddUnpublish' :disabled="disabled" chosenClass="chosen" forceFallback group="people" animation="1000" class="play-list-item-content">
         <template v-for="info in unpublishList">
@@ -164,6 +164,7 @@ export default {
     height: 100%;
     margin: 0 5px;
     box-sizing: border-box;
+    border: 1px solid #fff;
     padding: 10px 0;
     background-color: #ffffff;
     display: flex;
@@ -182,6 +183,9 @@ export default {
 }
 .chosen{
   @include border-color('danger');
+}
+.disabled-bg{
+  background-color: #fafafa;
 }
 </style>
 <style lang="scss">
