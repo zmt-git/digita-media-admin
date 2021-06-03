@@ -1,3 +1,11 @@
+/*
+ * @Description:
+ * @version: 1.0
+ * @Author: ZMT
+ * @Date: 2021-06-03 20:48:23
+ * @LastEditors: ZMT
+ * @LastEditTime: 2021-06-03 21:10:59
+ */
 import http from '@/utils/http/axios'
 
 // /device/media/delete 删除媒体信息
@@ -69,10 +77,10 @@ export function saveMedia (data) {
 }
 
 // sys/oss/upload
-export function uploadMedia (formData) {
+export function uploadMedia (data) {
   return http({
     url: '/sys/oss/upload',
     method: 'POST',
-    formData
+    data
   })
 }

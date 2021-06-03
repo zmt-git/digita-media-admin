@@ -4,12 +4,12 @@
  * @Author: ZMT
  * @Date: 2021-05-26 19:01:25
  * @LastEditors: ZMT
- * @LastEditTime: 2021-05-26 21:34:45
+ * @LastEditTime: 2021-06-03 21:35:58
 -->
 <template>
-  <div class="base-status-card" :class="type" @mouseenter="onMouse(true)" @mouseleave="onMouse(false)">
+  <div class="base-status-card" :class="type">
     <template v-if="!empty">
-      <div class="base-status-card-left" ref="icon">
+      <div class="base-status-card-left" :class="'icon-box-' + type">
         <i class="iconfont icon" :class="iconClass"></i>
       </div>
       <div class="base-status-card-right">
@@ -46,22 +46,12 @@ export default {
       type: Number,
       default: 0
     }
-  },
-
-  methods: {
-    onMouse (action) {
-      if (this.empty) return
-      if (action) {
-        this.$refs.icon.classList.add(`${this.type}-bg`)
-      } else {
-        this.$refs.icon.classList.remove(`${this.type}-bg`)
-      }
-    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+@import '~@/styles/handler.scss';
 .base-status-card{
   background-color: #fff;
   box-sizing: border-box;
@@ -99,6 +89,23 @@ export default {
 }
 .icon{
   font-size: 40px;
+}
+.base-status-card:hover {
+  & .icon-box-success{
+    @include bg-color('success')
+  }
+  & .icon-box-primary{
+    @include bg-color('primary')
+  }
+  & .icon-box-info{
+    @include bg-color('info')
+  }
+  & .icon-box-warning{
+    @include bg-color('warning')
+  }
+  & .icon-box-error{
+    @include bg-color('danger')
+  }
 }
 @media screen and (max-width: 1280px) {
   .base-status-card{

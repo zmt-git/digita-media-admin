@@ -4,7 +4,7 @@
  * @Author: ZMT
  * @Date: 2021-05-25 20:37:16
  * @LastEditors: ZMT
- * @LastEditTime: 2021-06-02 22:39:33
+ * @LastEditTime: 2021-06-03 21:12:25
 -->
 <template>
   <div class="media" v-loading='loading'>
@@ -95,6 +95,7 @@ export default {
     },
     // 上传媒体文件
     async uploadMedia (config) {
+      this.loading = true
       // 获取存储空间
       await this.$store.dispatch('infoUserActions')
 
@@ -126,6 +127,7 @@ export default {
           this.refresh()
         }
       }
+      this.loading = false
     },
     // 获取媒体文件请求参数
     getSaveParams (res, file) {
