@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { saveDevice } from '@/api/device'
+import { saveDevice, registerDevice } from '@/api/device'
 import prompt from '@/mixins/prompt'
 export default {
   name: 'device-form-info',
@@ -49,6 +49,23 @@ export default {
   mixins: [prompt],
 
   data () {
+    const validateCode = async (rule, value, callback) => {
+      if (value) {
+        try {
+          const result = await this.registerDevice(value)
+          if (result) {
+            callback(new Error('设备未注册'))
+          } else {
+            callback()
+          }
+        } catch (e) {
+          callback(new Error(e))
+        }
+      } else {
+        callback()
+      }
+    }
+
     return {
       ruleForm: {
         name: '',
@@ -58,7 +75,10 @@ export default {
       rules: {
         name: [{ required: true, message: '请输入设备名称', trigger: 'blur' }],
         location: [{ required: true, message: '请输入安装位置', trigger: 'blur' }],
-        code: [{ required: true, pattern: /^(e|E)(l|L)(f|F)/, message: '设备编码应以elf开头' }]
+        code: [
+          { required: true, pattern: /^(e|E)(l|L)(f|F)/, message: '设备编码应以elf开头' },
+          { validator: validateCode, trigger: 'blur', required: true }
+        ]
       }
     }
   },
@@ -72,7 +92,19 @@ export default {
       })
     }
   },
+
   methods: {
+    registerDevice (code) {
+      return registerDevice(code)
+        .then(res => {
+          return res.msg === 'false'
+        })
+        .catch(e => {
+          console.log(e)
+          return false
+        })
+    },
+
     submitForm () {
       this.$refs.ruleForm.validate(async valid => {
         if (valid) {

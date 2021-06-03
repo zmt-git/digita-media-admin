@@ -39,12 +39,12 @@
 import CardMedia from '@/components/CardMedia.vue'
 import BasePageLoading from '@/components/BasePageLoading.vue'
 import MediaDeleteDialog from '@/components/MediaDeleteDialog.vue'
-import { listMedia, saveMedia } from '@/api/media'
 import { mediaType } from '@/data/common'
 import { getVideoDuration } from '@/utils/tools'
 import page from '@/mixins/page'
 import media from '@/mixins/media'
 import { mapGetters } from 'vuex'
+import { listMedia, saveMedia, uploadMedia } from '@/api/media'
 export default {
   name: 'media',
 
@@ -107,19 +107,24 @@ export default {
         return
       }
       // todo 上传媒体到视频服务器， 成功后将媒体信息上传到服务器
-      const res = { addressOld: '123' }
+      const formData = new FormData()
 
-      this.getSaveParams(res, file)
+      formData.append('file', file)
 
-      if (file.type === 'video/mp4') {
-        getVideoDuration(file, async (video) => {
-          this.mediaForm.length = video.duration
+      const res = await this.uploadMediaFile(formData)
+      if (res) {
+        this.getSaveParams(res, file)
+
+        if (file.type === 'video/mp4') {
+          getVideoDuration(file, async (video) => {
+            this.mediaForm.length = video.duration
+            await this.saveMediaRequest(file)
+            this.refresh()
+          })
+        } else {
           await this.saveMediaRequest(file)
           this.refresh()
-        })
-      } else {
-        await this.saveMediaRequest(file)
-        this.refresh()
+        }
       }
     },
     // 获取媒体文件请求参数
@@ -129,6 +134,13 @@ export default {
       this.mediaForm.mediaType = mediaType.find(item => item.type === file.type).mediaType
       this.mediaForm.addressOld = res.addressOld
       this.mediaForm.length = 10
+    },
+    uploadMediaFile (formData) {
+      return uploadMedia(formData)
+        .then(res => {
+          return res.data
+        })
+        .catch(e => console.log(e))
     },
     // 上传媒体文件请求
     saveMediaRequest (file) {

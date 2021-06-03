@@ -8,7 +8,7 @@
 -->
 <template>
   <video ref="videoPlayer"
-    class="video-js vjs-default-skin vjs-big-play-centered"
+    class="video-js vjs-default-skin vjs-big-play-centered video-player"
     preload='auto'
     autoplay
     muted
@@ -51,7 +51,8 @@ export default {
         bigPlayButton: true,
         textTrackDisplay: false,
         posterImage: true,
-        errorDisplay: false
+        errorDisplay: false,
+        language: 'zh'
       }
     }
   },
@@ -63,6 +64,20 @@ export default {
   methods: {
     init () {
       const options = Object.assign(this.defaultOptions, this.options)
+      videojs.addLanguage('zh', {
+        Play: '播放',
+        Pause: '暂停',
+        Duration: '时长',
+        Replay: '重播',
+        Fullscreen: '全屏',
+        Unmute: '静音',
+        Mute: '音量',
+        'Non-Fullscreen': '退出全屏',
+        'Picture-in-Picture': '画中画',
+        'Current Time': '当前时间',
+        'Remaining Time': '剩余时间 '
+      })
+
       this.player = videojs(this.$refs.videoPlayer, options, () => {
         this.play()
       })
@@ -100,5 +115,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.video-player{
+  width: 100%;
+  height: 100%;
+}
 </style>

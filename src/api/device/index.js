@@ -112,7 +112,7 @@ export function rebootAppDevice (devid, params) {
 
 // /device/device/register/check/{code}
 // 终端注册码验证
-export function registerDevice (params, code) {
+export function registerDevice (code) {
   return http({
     url: `/device/device/register/check/${code}`,
     method: 'GET'

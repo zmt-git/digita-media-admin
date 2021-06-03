@@ -67,3 +67,12 @@ export function saveMedia (data) {
     data
   })
 }
+
+// sys/oss/upload
+export function uploadMedia (formData) {
+  return http({
+    url: '/sys/oss/upload',
+    method: 'POST',
+    formData
+  })
+}

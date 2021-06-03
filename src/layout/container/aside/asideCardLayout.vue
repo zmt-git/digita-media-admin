@@ -1,0 +1,50 @@
+<template>
+  <div class="aside-card">
+    <span class="plate-img"></span>
+    <base-aside-card :active='route.path === $route.path' v-for="route in routesChildren" :path='route.path' :key='route.path' :title="route.meta.title" :icon='route.meta.icon'></base-aside-card>
+  </div>
+</template>
+
+<script>
+import BaseAsideCard from '@/components/BaseAsideCard.vue'
+import { mapGetters } from 'vuex'
+
+export default {
+  name: 'aside-card',
+
+  components: { BaseAsideCard },
+
+  computed: {
+    ...mapGetters(['routes']),
+    routesChildren () {
+      let routesChildren = []
+      this.routes.forEach(route => {
+        route.children && route.children.length > 0 ? routesChildren.push(...route.children) : routesChildren.push(route)
+      })
+      routesChildren = routesChildren.filter(route => !route.hidden)
+      return routesChildren
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import '~@/styles/handler.scss';
+.aside-card{
+  width: 100px;
+  @include bg-color('baseBg');
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.plate-img{
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background-size: 100%;
+  // background-image: url('../../../assets/layout/aside/plate.png');
+  background-image: url('../../../assets/layout/aside/logo.png');
+  vertical-align: middle;
+  margin: 5px;
+}
+</style>

@@ -16,7 +16,7 @@
           </el-input>
         </el-form-item>
         <el-form-item prop="check">
-          <el-checkbox @change="change" clearable v-model="check"> 同意<a>《服务条款》</a></el-checkbox>
+          <el-checkbox @change="change" clearable v-model="check"> 同意<span class="user-agreement primary" @click.self="toUserAgreement">《服务条款》</span></el-checkbox>
           <br/>
           <span class="error" v-show="checkPrompt">请先同意服务条款</span>
         </el-form-item>
@@ -170,7 +170,7 @@ export default {
       }
     }
     return {
-      currentStep: 1,
+      currentStep: 0,
       loading: false,
       check: false,
       checkPrompt: false,
@@ -213,6 +213,9 @@ export default {
   },
 
   methods: {
+    toUserAgreement () {
+      this.$router.push('/userAgreement')
+    },
     back () {
       this.$refs.formInfo.resetFields()
       this.$refs.formMobile.resetFields()
@@ -278,6 +281,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import '~@/styles/handler.scss';
 .register{
   width: 100%;
   height: 100%;
@@ -349,5 +353,9 @@ export default {
   top: 2px;
   left: 4px;
   z-index: 2;
+}
+.user-agreement{
+  @include color('primary');
+  margin: 0 10px;
 }
 </style>

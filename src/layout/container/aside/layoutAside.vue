@@ -66,14 +66,8 @@ export default {
     }
   },
 
-  filters: {
-    filterAuth (auth) {
-      return auth.include(this.user.userType)
-    }
-  },
-
   computed: {
-    ...mapGetters(['user', 'routes'])
+    ...mapGetters(['routes'])
   },
 
   data () {

@@ -231,6 +231,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import '~@/styles/handler.scss';
 .media-detail{
   display: flex;
   background: #ffffff;
@@ -275,6 +276,13 @@ export default {
   justify-content: center;
   align-items: flex-start;
   background-color: #F5F7FA;
+  overflow: auto;
+  &::-webkit-scrollbar-thumb{
+    @include bg-color('danger')
+  }
+  &::-webkit-scrollbar{
+    width: 3px;
+  }
 }
 .info{
   height: 60px;

@@ -10,6 +10,7 @@
   <div class="play-list clear">
     <div class="play-list-item" :class="disabled ? 'disabled-bg' : ''">
       <base-title type='success'>已发布媒体</base-title>
+      <base-empty v-if="publishList.length === 0"></base-empty>
       <draggable  v-model="publishList" @add='onAddUnpublish' @update='update("publish")' :disabled="disabled" chosenClass="chosen" forceFallback group="people" animation="1000" class="play-list-item-content">
         <template v-for="info in publishList">
           <card-media :index='info.sort' v-if="info.state !== -1" :info='info' :tag='false' :class="mediaClass" :key='info.id'  @delete='deletePlaylistByIds'></card-media>
@@ -18,6 +19,7 @@
     </div>
     <div class="play-list-item" :class="disabled ? 'disabled-bg' : ''">
       <base-title type='error'>未发布媒体</base-title>
+      <base-empty v-if="unpublishList.length === 0"></base-empty>
       <draggable  v-model="unpublishList" @add='onAddPublish' @update='update("unpublish")' :disabled="disabled" chosenClass="chosen" forceFallback group="people" animation="1000" class="play-list-item-content">
         <template v-for="info in unpublishList">
           <card-media :index='info.sort' v-if="info.state !== -1" :info='info' :tag='false' :class="mediaClass" :key='info.id' @delete='deletePlaylistByIds'></card-media>
@@ -33,6 +35,7 @@ import CardMedia from './CardMedia'
 import draggable from 'vuedraggable'
 import { allListPlaylist, deletePlaylist } from '@/api/playList'
 import prompt from '@/mixins/prompt'
+import BaseEmpty from './BaseEmpty.vue'
 export default {
   name: 'device-form-play-list',
 
@@ -57,7 +60,7 @@ export default {
 
   mixins: [prompt],
 
-  components: { CardMedia, draggable, BaseTitle },
+  components: { CardMedia, draggable, BaseTitle, BaseEmpty },
 
   computed: {
     id () {

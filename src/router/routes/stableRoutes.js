@@ -32,6 +32,17 @@ export const stableRoutes = [
     component: () => lazyComponent(import('@/views/system/register.vue'))
   },
   {
+    name: 'userAgreement',
+    path: '/userAgreement',
+    hidden: true,
+    meta: {
+      title: '用户协议',
+      auth: [0, 1, 2],
+      icon: ''
+    },
+    component: () => lazyComponent(import('@/views/system/userAgreement.vue'))
+  },
+  {
     path: '/suggestAdd',
     hidden: true,
     meta: {
@@ -44,7 +55,7 @@ export const stableRoutes = [
       {
         name: 'suggestAdd',
         path: '/system/suggest/add',
-        hidden: false,
+        hidden: true,
         meta: {
           title: '提交意见建议',
           icon: 'icon-jianyi1',
@@ -60,7 +71,7 @@ export const stableRoutes = [
     hidden: true,
     meta: {
       auth: [0, 1, 2],
-      title: '首页',
+      title: '设备',
       icon: ''
     },
     component: layout,
@@ -71,10 +82,10 @@ export const stableRoutes = [
         hidden: true,
         meta: {
           auth: [0, 1, 2],
-          title: '首页',
+          title: '设备',
           icon: ''
         },
-        component: () => lazyComponent(import('@/views/index.vue'))
+        component: () => lazyComponent(import('@/views/device/index.vue'))
       }
     ]
   }

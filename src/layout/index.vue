@@ -8,7 +8,8 @@
 -->
 <template>
   <el-container class="layout">
-    <layout-aside :collapse='collapse'></layout-aside>
+    <aside-card-layout :collapse='collapse'></aside-card-layout>
+    <!-- <layout-aside :collapse='collapse'></layout-aside> -->
     <el-container>
       <el-main class="main">
         <layout-header :collapse.sync="collapse"></layout-header>
@@ -31,7 +32,8 @@
 <script>
 import layoutHeader from './container/header/layoutHeader'
 import layoutFooter from './container/footer/layoutFooter'
-import layoutAside from './container/aside/layoutAside'
+// import layoutAside from './container/aside/layoutAside'
+import asideCardLayout from './container/aside/asideCardLayout'
 import TagView from './container/tagView/tagView.vue'
 
 import { useTheme } from '@/hooks/useTheme'
@@ -39,7 +41,7 @@ import { setCollapse, getCollapse } from '@/utils/cache/cacheCollapse'
 export default {
   name: 'layout',
 
-  components: { layoutAside, layoutHeader, layoutFooter, TagView },
+  components: { /* layoutAside */ asideCardLayout, layoutHeader, layoutFooter, TagView },
 
   data () {
     return {
