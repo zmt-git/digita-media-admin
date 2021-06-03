@@ -1,5 +1,6 @@
 <template>
   <li class="detail-media box-shadow radius-10"  @mouseleave="showPlay(false)" @mouseenter="showPlay(true)">
+      <span v-if="index" class="index">{{index}}</span>
       <div class="detail-media-src" @click="play">
         <el-tag v-if="state && tag" class="state-btn"  effect="dark" :type="btnType" size="mini">{{btnName}}</el-tag>
         <img
@@ -52,6 +53,10 @@ export default {
     isAddCard: {
       type: Boolean,
       default: false
+    },
+    index: {
+      index: Number,
+      default: 0
     }
   },
 
@@ -99,6 +104,7 @@ $iconColor: #ffffff;
   overflow: hidden;
   border: 1px solid transparent;
   transition: border-color .5s;
+  position: relative;
   &-src{
     position: relative;
     display: flex;
@@ -165,5 +171,19 @@ $iconColor: #ffffff;
 .icon-length{
   margin-right: 5px;
   font-size: 20px;
+}
+.index{
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  line-height: 15px;
+  text-align: center;
+  font-size: 12px;
+  border-radius: 50%;
+  @include color('danger');
+  @include bg-color('info-plain')
 }
 </style>

@@ -38,3 +38,10 @@ export const mediaType = Object.freeze([
   { type: 'image/png', mediaType: 2 },
   { type: 'image/jpeg', mediaType: 1 }
 ])
+
+export const SuggestType = Object.freeze([
+  { value: 1, title: '产品建议', des: '请输入您对XX智能产品在XX场景下的改进建议或体验类问题' },
+  { value: 2, title: '功能缺陷', des: '请输入您在使用智能产品过程中遇到的阻断或影响正常使用的缺陷类问题' },
+  { value: 3, title: '软件BUG', des: '请输入您在使用软件平台或APP过程中遇到的无法正常显示或无法正常控制智能产品等问题' },
+  { value: 4, title: '其他', des: '请输入使用智能产品过程中的咨询类问题，如账号、云空间等相关问题' }
+])

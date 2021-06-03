@@ -32,6 +32,30 @@ export const stableRoutes = [
     component: () => lazyComponent(import('@/views/system/register.vue'))
   },
   {
+    path: '/suggestAdd',
+    hidden: true,
+    meta: {
+      auth: [0, 1, 2],
+      title: '首页',
+      icon: ''
+    },
+    component: layout,
+    children: [
+      {
+        name: 'suggestAdd',
+        path: '/system/suggest/add',
+        hidden: false,
+        meta: {
+          title: '提交意见建议',
+          icon: 'icon-jianyi1',
+          auth: [0, 1, 2],
+          btn: ['删除']
+        },
+        component: () => lazyComponent(import('@/views/suggest/suggestAdd.vue'))
+      }
+    ]
+  },
+  {
     path: '/',
     hidden: true,
     meta: {

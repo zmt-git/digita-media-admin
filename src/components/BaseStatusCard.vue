@@ -51,13 +51,11 @@ export default {
   methods: {
     onMouse (action) {
       if (this.empty) return
-      this.$nextTick(() => {
-        if (action) {
-          this.$refs.icon.classList.add(`${this.type}-bg`)
-        } else {
-          this.$refs.icon.classList.remove(`${this.type}-bg`)
-        }
-      })
+      if (action) {
+        this.$refs.icon.classList.add(`${this.type}-bg`)
+      } else {
+        this.$refs.icon.classList.remove(`${this.type}-bg`)
+      }
     }
   }
 }

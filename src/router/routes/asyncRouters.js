@@ -14,7 +14,7 @@ export const asyncRoutes = [
     children: [
       {
         name: 'device',
-        path: '/',
+        path: '/device/',
         hidden: false,
         meta: {
           title: '设备',
@@ -59,7 +59,7 @@ export const asyncRoutes = [
     children: [
       {
         name: 'media',
-        path: '/',
+        path: '/media/',
         hidden: false,
         meta: {
           title: '媒体',
@@ -93,7 +93,7 @@ export const asyncRoutes = [
     children: [
       {
         name: 'task',
-        path: '/',
+        path: '/task/',
         hidden: false,
         meta: {
           title: '任务',
@@ -105,18 +105,18 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: '/user',
+    path: '/system',
     hidden: false,
     meta: {
-      title: '用户',
-      icon: 'icon-yonghu',
+      title: '系统',
+      icon: 'icon-xitongpeizhi',
       auth: [2]
     },
     component: layout,
     children: [
       {
         name: 'user',
-        path: '/',
+        path: '/system/user',
         hidden: false,
         meta: {
           title: '用户',
@@ -125,6 +125,18 @@ export const asyncRoutes = [
           btn: ['删除']
         },
         component: () => lazyComponent(import('@/views/user/index.vue'))
+      },
+      {
+        name: 'suggest',
+        path: '/system/suggest',
+        hidden: false,
+        meta: {
+          title: '意见建议',
+          icon: 'icon-jianyi',
+          auth: [2],
+          btn: ['删除']
+        },
+        component: () => lazyComponent(import('@/views/suggest/index.vue'))
       }
     ]
   }

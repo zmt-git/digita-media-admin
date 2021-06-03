@@ -37,12 +37,9 @@ $white: #ffffff;
 .footer{
   height: 50px;
   width: 100%;
-  position: absolute;
-  bottom: 0;
   @include bg-color('baseBg');
   line-height: 50px;
   overflow: hidden;
-  z-index: 1;
   & span{
     color: $white;
     font-size: 12px;

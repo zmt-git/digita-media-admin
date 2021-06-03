@@ -38,7 +38,7 @@ export default {
       this.pageRequest_PT(this.params_PT)
         .then(res => {
           const list = res.page
-          this.pageList_PT = list.list
+          this.pageList_PT = this.dataProcessing ? this.dataProcessing(list.list) : list.list
           this.page_PT = list.currPage
           this.pageTotal_PT = list.totalCount
         })

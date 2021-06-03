@@ -4,7 +4,7 @@
       v-loading='loading_PT'
       :data="pageList_PT"
       border
-      tooltip-effect="dark"
+      tooltip-effect="light"
       style="width: 100%"
       size='mini'
       header-cell-class-name='head-style'

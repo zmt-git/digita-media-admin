@@ -12,6 +12,7 @@
     <el-container>
       <el-main class="main">
         <layout-header :collapse.sync="collapse"></layout-header>
+        <tag-view></tag-view>
         <transition
           appear
           mode="out-in"
@@ -31,13 +32,14 @@
 import layoutHeader from './container/header/layoutHeader'
 import layoutFooter from './container/footer/layoutFooter'
 import layoutAside from './container/aside/layoutAside'
+import TagView from './container/tagView/tagView.vue'
 
 import { useTheme } from '@/hooks/useTheme'
 import { setCollapse, getCollapse } from '@/utils/cache/cacheCollapse'
 export default {
   name: 'layout',
 
-  components: { layoutAside, layoutHeader, layoutFooter },
+  components: { layoutAside, layoutHeader, layoutFooter, TagView },
 
   data () {
     return {
@@ -72,16 +74,22 @@ export default {
   padding: 0;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
   &-view{
+    flex: 1;
     width: 100%;
     box-sizing: border-box;
     overflow: auto;
-    position: absolute;
-    top: 50px;
-    bottom: 50px;
     box-sizing: border-box;
     padding: 5px;
     background-color: #f0f0f0;
+    &::-webkit-scrollbar-thumb{
+    background-color: #d0d0d0;
+    }
+    &::-webkit-scrollbar{
+      width: 3px;
+    }
   }
 }
 </style>

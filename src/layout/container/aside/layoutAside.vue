@@ -8,10 +8,11 @@
 -->
 <template>
   <el-aside class="aside" :width='width'>
-    <router-link class="plate" to="/">
-      <span ref="plateImg" style="backgroundPositionY: 0px" class="plate-img" @mouseover="translate(true)" @mouseout="translate(false)"></span>
+    <router-link class="plate" to="/device/">
+      <!-- <span ref="plateImg" style="backgroundPositionY: 0px" class="plate-img" @mouseover="translate(true)" @mouseout="translate(false)"></span> -->
+      <span class="plate-img"></span>
       <transition enter-active-class="animate__animated animate__animated" leave-active-class="animate__animated animate__fadeOut"></transition>
-      <span v-show="!collapse">平台</span>
+      <span v-show="!collapse">数字媒体管理平台</span>
     </router-link>
     <el-menu
       class="el-menu-vertical-demo"
@@ -33,11 +34,11 @@
             >
               <router-link
                 v-if="!subRoute.hidden"
-                :to='route.path + subRoute.path'
-                :key="route.path + subRoute.path"
+                :to='subRoute.path'
+                :key="subRoute.path"
               >
                 <el-menu-item
-                  :index='route.path + subRoute.path'
+                  :index='subRoute.path'
                 >
                   <template #title>
                     <i class="iconfont menu-icon" :class="subRoute.meta.icon ? subRoute.meta.icon : ''"></i>
@@ -171,11 +172,13 @@ export default {
   display: table-cell;
 }
 .plate-img{
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   display: inline-block;
   background-size: 100%;
-  background-image: url('../../../assets/layout/aside/plate.png');
+  // background-image: url('../../../assets/layout/aside/plate.png');
+  background-image: url('../../../assets/layout/aside/logo.png');
   vertical-align: middle;
+  margin: 5px;
 }
 </style>

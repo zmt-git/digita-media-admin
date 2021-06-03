@@ -14,7 +14,7 @@
       </el-tooltip>
     </div>
     <div class="header-right">
-      <el-tooltip content="通知" placement="bottom" effect="light">
+      <!-- <el-tooltip content="通知" placement="bottom" effect="light">
         <el-popover
           placement="bottom"
           width="360"
@@ -22,6 +22,9 @@
           <header-notice></header-notice>
           <i slot="reference" class="iconfont header-right_icon icon-tongzhi" @click="notice"></i>
         </el-popover>
+      </el-tooltip> -->
+      <el-tooltip content="我要建议" placement="bottom" effect="light">
+        <i class="iconfont header-right_icon icon-edit" @click="toSuggest"></i>
       </el-tooltip>
 
       <el-tooltip :content="screenTitle" placement="bottom" effect="light">
@@ -42,7 +45,7 @@
 
 <script>
 import HeaderUserInfo from './HeaderUserInfo'
-import HeaderNotice from './HeaderNotice'
+// import HeaderNotice from './HeaderNotice'
 import { useFullscreen } from '@/hooks/useFullscreen'
 import { mapGetters } from 'vuex'
 const { toggleFullscreen, isFullscreen } = useFullscreen()
@@ -65,7 +68,7 @@ export default {
     event: 'change'
   },
 
-  components: { HeaderUserInfo, HeaderNotice },
+  components: { HeaderUserInfo /* HeaderNotice */ },
 
   computed: {
     ...mapGetters(['user']),
@@ -133,6 +136,10 @@ export default {
       this.userLoading = false
     },
 
+    toSuggest () {
+      this.$router.push('/system/suggest/add')
+    },
+
     logout () {
       this.$confirm('退出当前该用户, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -161,11 +168,8 @@ export default {
   width: 100%;
   height: 50px;
   box-sizing: border-box;
-  position: absolute;
-  top: 0;
-  border-bottom: 1px solid #d6d5d5;
+  border-bottom: 1px solid #f0f0f0;
   padding: 0 10px;
-  z-index: 10;
   & div {
     line-height: 50px;
     height: 100%;

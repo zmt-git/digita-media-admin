@@ -10,17 +10,17 @@
   <div class="play-list clear">
     <div class="play-list-item" :class="disabled ? 'disabled-bg' : ''">
       <base-title type='success'>已发布媒体</base-title>
-      <draggable  v-model="publishList" @add='onAddPublish' :disabled="disabled" chosenClass="chosen" forceFallback group="people" animation="1000" class="play-list-item-content">
+      <draggable  v-model="publishList" @add='onAddUnpublish' @update='update("publish")' :disabled="disabled" chosenClass="chosen" forceFallback group="people" animation="1000" class="play-list-item-content">
         <template v-for="info in publishList">
-          <card-media v-if="info.state !== -1" :info='info' :tag='false' :class="mediaClass" :key='info.id'  @delete='deletePlaylistByIds'></card-media>
+          <card-media :index='info.sort' v-if="info.state !== -1" :info='info' :tag='false' :class="mediaClass" :key='info.id'  @delete='deletePlaylistByIds'></card-media>
         </template>
       </draggable>
     </div>
     <div class="play-list-item" :class="disabled ? 'disabled-bg' : ''">
       <base-title type='error'>未发布媒体</base-title>
-      <draggable  v-model="unpublishList" @add='onAddUnpublish' :disabled="disabled" chosenClass="chosen" forceFallback group="people" animation="1000" class="play-list-item-content">
+      <draggable  v-model="unpublishList" @add='onAddPublish' @update='update("unpublish")' :disabled="disabled" chosenClass="chosen" forceFallback group="people" animation="1000" class="play-list-item-content">
         <template v-for="info in unpublishList">
-          <card-media v-if="info.state !== -1" :info='info' :tag='false' :class="mediaClass" :key='info.id' @delete='deletePlaylistByIds'></card-media>
+          <card-media :index='info.sort' v-if="info.state !== -1" :info='info' :tag='false' :class="mediaClass" :key='info.id' @delete='deletePlaylistByIds'></card-media>
         </template>
       </draggable>
     </div>
@@ -62,14 +62,17 @@ export default {
   computed: {
     id () {
       return this.info.id ? this.info.id : undefined
+    },
+    length () {
+      return this.publishList.length
     }
   },
 
   data () {
     return {
       ids: [],
-      publishList: [{ id: 11, state: 1, mediaType: 0, length: '45:33' }, { id: 12, state: 1, mediaType: 2 }, { id: 13, state: 1, mediaType: 1 }, { id: 14, state: 1 }, { id: 15, state: 1 }],
-      unpublishList: [{ id: 21, state: 0 }, { id: 22, state: 0 }, { id: 23, state: 0 }, { id: 24, state: 0 }, { id: 25, state: 0 }]
+      publishList: [],
+      unpublishList: []
     }
   },
 
@@ -80,14 +83,24 @@ export default {
   },
 
   methods: {
-    onAddPublish (item) {
-      const target = this.publishList[item.newIndex]
-      target.state = 0
+    update (type) {
+      if (type === 'publish') {
+        this.changeSort(this.publishList)
+      } else {
+        this.changeSort(this.unpublishList, this.length)
+      }
     },
 
     onAddUnpublish (item) {
+      const target = this.publishList[item.newIndex]
+      target.state = 0
+      this.changeSort(this.publishList)
+    },
+
+    onAddPublish (item) {
       const target = this.unpublishList[item.newIndex]
       target.state = 1
+      this.changeSort(this.unpublishList, this.length)
     },
 
     changeSort (arr, accumulator = 0) {

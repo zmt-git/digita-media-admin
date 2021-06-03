@@ -19,7 +19,7 @@
     @close='changeuserDrawerVisible(false)'
     >
     <div class="user-content">
-      <h3 class="user_title">基础信息</h3>
+      <h3 class="user_title"><span>基础信息</span></h3>
       <ul class="user-content-info">
         <userinfo-list-item label='用户名' :value='userinfo.username'></userinfo-list-item>
         <userinfo-list-item label='手机号码' :value='userinfo.mobile'></userinfo-list-item>
@@ -30,7 +30,7 @@
         <userinfo-list-item label='最后登录时间' :value='userinfo.timeLogin'></userinfo-list-item>
       </ul>
 
-      <h3 class="user_title">修改密码</h3>
+      <h3 class="user_title"><span>修改密码</span></h3>
       <div class="user-content-info">
         <reset-password></reset-password>
       </div>
@@ -118,6 +118,9 @@ export default {
     font-size: 15px;
     font-weight: 600;
     line-height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   &-content{
     padding:0 10px;
@@ -125,5 +128,10 @@ export default {
       border-bottom: 1px solid #d6d5d5;
     }
   }
+}
+.icon{
+  font-size: 14px;
+  color: #d6d5d5;
+  cursor: pointer;
 }
 </style>
