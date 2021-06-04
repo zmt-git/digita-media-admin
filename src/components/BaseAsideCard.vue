@@ -39,6 +39,7 @@ export default {
 .base-aside-card{
   width: 90px;
   height: 90px;
+  margin: 0 5px;
   background: linear-gradient(135deg, transparent 5px, #4d638d 0) top left,
     linear-gradient(45deg, transparent 5px, #4d638d 0) bottom left,
     linear-gradient(-45deg, transparent 5px, #4d638d 0) bottom right,

@@ -98,7 +98,7 @@ export default {
 @import '~@/styles/handler.scss';
 $iconColor: #ffffff;
 .detail-media{
-  float: left;
+  display: inline-block;
   margin: 9px;
   background-color: #ffffff;
   overflow: hidden;
