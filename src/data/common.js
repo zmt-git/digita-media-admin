@@ -1,3 +1,11 @@
+/*
+ * @Description:
+ * @version: 1.0
+ * @Author: ZMT
+ * @Date: 2021-06-03 20:48:24
+ * @LastEditors: ZMT
+ * @LastEditTime: 2021-06-06 22:18:55
+ */
 export const deviceAddSteps = Object.freeze([
   { title: '添加设备', icon: 'icon-del' },
   { title: '设置参数', icon: 'icon-peizhi' },
@@ -34,7 +42,7 @@ export const tradeType = Object.freeze([
 ])
 
 export const mediaType = Object.freeze([
-  { type: 'video/mp4', mediaType: 0 },
+  // { type: 'video/mp4', mediaType: 0 },
   { type: 'image/png', mediaType: 2 },
   { type: 'image/jpeg', mediaType: 1 }
 ])
@@ -44,4 +52,48 @@ export const SuggestType = Object.freeze([
   { value: 2, title: '功能缺陷', des: '请输入您在使用智能产品过程中遇到的阻断或影响正常使用的缺陷类问题' },
   { value: 3, title: '软件BUG', des: '请输入您在使用软件平台或APP过程中遇到的无法正常显示或无法正常控制智能产品等问题' },
   { value: 4, title: '其他', des: '请输入使用智能产品过程中的咨询类问题，如账号、云空间等相关问题' }
+])
+
+export const deviceType = Object.freeze([
+  { value: 'ELF-A', label: 'ELF-A' },
+  { value: 'ELF-T1-W', label: 'ELF-T1-W' },
+  { value: 'ELF-T1-RG', label: 'ELF-T1-RG' },
+  { value: 'ELF-T2-W', label: 'ELF-T2-W' },
+  { value: 'ELF-T2-RG', label: 'ELF-T2-RG' }
+])
+
+export const orientOptions = Object.freeze([
+  { value: 0, label: '横屏向右' },
+  { value: 1, label: '竖屏向上' },
+  { value: 8, label: '横屏向左' },
+  { value: 9, label: '竖屏向下' }
+])
+
+export const scenesOptions = Object.freeze([
+  { value: 0, label: '横屏向右' },
+  { value: 1, label: '竖屏向上' },
+  { value: 8, label: '横屏向左' },
+  { value: 9, label: '竖屏向下' }
+])
+
+export const playlistType = Object.freeze([
+  { type: 'sunny', title: '默认场景', des: '适用于一般情况下的播放列表' },
+  { type: 'cloudy', title: '多云天气', des: '适用于一般情况下的播放列表' },
+  { type: 'shade', title: '阴天天气', des: '适用于一般情况下的播放列表' },
+  { type: 'rain', title: '雨天天气', des: '适用于一般情况下的播放列表' },
+  { type: 'thundershower', title: '雷阵雨天气', des: '适用于一般情况下的播放列表' },
+  { type: 'thundershower-hail', title: '雷阵雨冰雹天气', des: '适用于一般情况下的播放列表' },
+  { type: 'rain-hail', title: '雨加冰雹天气', des: '适用于一般情况下的播放列表' },
+  { type: 'freezing-rain', title: '冻雨天气', des: '适用于一般情况下的播放列表' },
+  { type: 'snow', title: '雪天天气', des: '适用于一般情况下的播放列表' },
+  { type: 'rain-snow', title: '雨夹雪天气', des: '适用于一般情况下的播放列表' },
+  { type: 'fog', title: '浓雾天气', des: '适用于一般情况下的播放列表' },
+  { type: 'heat', title: '高温天气', des: '适用于一般情况下的播放列表' },
+  { type: 'cold', title: '低温天气', des: '适用于一般情况下的播放列表' },
+  { type: 'gale', title: '大风天气', des: '适用于一般情况下的播放列表' },
+  { type: 'hail', title: '冰雹天气', des: '适用于一般情况下的播放列表' },
+  { type: 'sandstorm', title: '沙尘暴天气', des: '适用于一般情况下的播放列表' },
+  { type: 'haze', title: '雾霾天气', des: '适用于一般情况下的播放列表' },
+  { type: 'smoke', title: '浓烟天气', des: '适用于一般情况下的播放列表' },
+  { type: 'unknown', title: '未知', des: '适用于一般情况下的播放列表' }
 ])

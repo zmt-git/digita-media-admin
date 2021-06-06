@@ -4,30 +4,33 @@
  * @Author: ZMT
  * @Date: 2021-05-25 20:37:16
  * @LastEditors: ZMT
- * @LastEditTime: 2021-06-03 21:12:25
+ * @LastEditTime: 2021-06-06 17:51:43
 -->
 <template>
   <div class="media" v-loading='loading'>
-    <div class="media-control">
-      <el-upload
-        class="avatar-uploader"
-        action=""
-        :show-file-list="false"
-        :before-upload='beforeUpload'
-        :http-request='uploadMedia'
-        :multiple='true'
-        :limit='10'
-      >
-      <el-button size="small" type="primary">点击上传</el-button>
-        <!-- <i class="el-icon-plus avatar-uploader-icon"></i> -->
-      </el-upload>
-    </div>
     <div class="infinite-list-wrapper media-list" style="overflow:auto">
       <ul
         class="list"
         v-infinite-scroll="pageLoad"
         infinite-scroll-disabled="scrollDisabled"
       >
+        <card-media isAddCard>
+          <el-upload
+            class="avatar-uploader"
+            action=""
+            drag
+            accept='image/png, image/jpeg'
+            :show-file-list="false"
+            :before-upload='beforeUpload'
+            :http-request='uploadMedia'
+            :multiple='true'
+            :limit='10'
+          >
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+            <div class="el-upload__text" style="margin-top: 10px">只能上传jpg/png文件</div>
+          </el-upload>
+        </card-media>
         <card-media @play='viewDetail' v-for="item in pageList" :key="item.id" :info='item' :tag='true' @delete='deleteMedia'></card-media>
         <base-page-loading :loading='pageLoading' :noMore='noMore'></base-page-loading>
       </ul>
@@ -89,7 +92,7 @@ export default {
         return type.type === file.type
       })
       if (!res) {
-        this.$message({ type: 'warning', message: '媒体格式只能是MP4、PNG和JPEG' })
+        this.$message({ type: 'warning', message: '媒体格式只能是PNG和JPG' })
       }
       return res
     },
@@ -162,6 +165,13 @@ export default {
   flex-direction: column;
   &-list{
     flex: 1;
+  }
+  /deep/ .el-upload-dragger{
+    width: 340px;
+    height: 238px;
+    & .el-icon-upload {
+      margin-top: 70px;
+    }
   }
 }
 </style>

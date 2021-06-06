@@ -4,7 +4,7 @@
  * @Author: ZMT
  * @Date: 2021-05-25 21:22:19
  * @LastEditors: ZMT
- * @LastEditTime: 2021-05-25 21:54:11
+ * @LastEditTime: 2021-06-06 12:19:35
 -->
 <template>
   <video ref="videoPlayer"

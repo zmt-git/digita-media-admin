@@ -4,33 +4,43 @@
  * @Author: ZMT
  * @Date: 2021-05-25 22:10:54
  * @LastEditors: ZMT
- * @LastEditTime: 2021-05-25 23:33:29
+ * @LastEditTime: 2021-06-06 16:38:58
 -->
 <template>
   <li class="detail-device box-shadow radius-10" @click="setup">
     <!-- <div class="mask" v-if="this.info.stateOnline !== 1"></div> -->
     <div class="detail-device-status">
       <img class="detail-device-status_img" src="../assets/test/device.png" alt="设备图片">
+      <div class="detail-device-info">
+        <!-- <base-storage :info='info'></base-storage> -->
+        <div class="detail-device-info-item" :title="type">
+          <span class="detail-device-info-item_icon iconfont icon-cpu"></span>
+          <p class="detail-device-info-item_value ellipsis-1">{{type}}</p>
+        </div>
+        <div class="detail-device-info-item" :title="location">
+          <span class="detail-device-info-item_icon iconfont icon-location"></span>
+          <p class="detail-device-info-item_value ellipsis-1">{{location}}</p>
+        </div>
+        <div class="detail-device-info-item" :title="name">
+          <span class="detail-device-info-item_icon iconfont icon-video"></span>
+          <p class="detail-device-info-item_value ellipsis-1">{{name}}</p>
+        </div>
+      </div>
       <div class="detail-device-status_right">
         <base-dot :ripple='workStatus' :borderClass='stateClass' :bgClass='stateClassBg' :title="title"></base-dot>
         <i class="iconfont icon-wenduji icon" :style="{ color: highTemp ? '#f56c6c' : '#67c23a' }" :title="tempTitle"></i>
         <i class="iconfont icon-shezhi icon set-icon primary" title="设置" ></i>
       </div>
     </div>
-    <div class="detail-device-info">
-      <base-storage :info='info'></base-storage>
-      <h3 class="detail-device-info_name ellipsis-1" :title="name">{{name}}</h3>
-      <h3 class="detail-device-info_location ellipsis-1" :title="location">{{location}}</h3>
-    </div>
   </li>
 </template>
 <script>
-import BaseStorage from './BaseStorage.vue'
+// import BaseStorage from './BaseStorage.vue'
 import BaseDot from './BaseDot'
 export default {
   name: 'detail-device',
 
-  components: { BaseStorage, BaseDot },
+  components: { /* BaseStorage */ BaseDot },
 
   props: {
     info: {
@@ -62,6 +72,9 @@ export default {
     location () {
       return this.info.location ? this.info.location : ''
     },
+    type () {
+      return this.info.type ? this.info.type : ''
+    },
     highTemp () {
       return this.info.alarm && this.info.alarm.includes('2001')
     },
@@ -80,7 +93,7 @@ export default {
 
 <style lang="scss" scoped>
 .detail-device{
-  float: left;
+  display: inline-block;
   box-sizing: border-box;
   padding: 5px;
   margin: 5px;
@@ -88,22 +101,17 @@ export default {
   overflow: hidden;
   background-color: #fff;
   cursor: pointer;
+  width:  calc(33.33% - 10px);
   &-status{
-    &:after{
-      content:'';
-      clear:both;
-      display:block;
-      height:0;
-      overflow:hidden;
-      visibility:hidden;
-    }
+    display: flex;
+    width: 100%;
     &_img{
     width: 100px;
     height: 100px;
     float: left;
     }
     &_right{
-      float: right;
+      width: 26px;
       height: 100px;
       display: flex;
       flex-direction: column;
@@ -113,15 +121,23 @@ export default {
   }
   &-info{
     color: #999999;
-    width: 130px;
-    line-height: 1.8;
-    &_name{
-      font-size: 15px;
-    }
-    &_location{
-      font-size: 12px;
-      white-space: nowrap;
-      overflow: hidden;
+    flex: 1;
+    box-sizing: border-box;
+    padding: 0 5px;
+    &-item{
+      height: 33px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      &_icon{
+        font-size: 24px;
+        padding: 0 20px;
+      }
+      &_value{
+        flex: 1;
+        width: 100px;
+        font-size: 15px;
+      }
     }
   }
 }

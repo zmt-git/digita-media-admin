@@ -1,5 +1,6 @@
 <template>
   <li class="detail-media box-shadow radius-10"  @mouseleave="showPlay(false)" @mouseenter="showPlay(true)">
+    <template v-if="!isAddCard">
       <span v-if="index" class="index">{{index}}</span>
       <div class="detail-media-src" @click="play">
         <el-tag v-if="state && tag" class="state-btn"  effect="dark" :type="btnType" size="mini">{{btnName}}</el-tag>
@@ -29,6 +30,10 @@
           </transition>
         </div>
       </div>
+    </template>
+    <template>
+      <slot></slot>
+    </template>
   </li>
 </template>
 
@@ -62,7 +67,7 @@ export default {
 
   computed: {
     img () {
-      return this.info.addressOld ? this.info.addressOld : require('../assets/layout/header/empty.png')
+      return !this.isAddCard && this.info.addressOld ? this.info.addressOld : require('../assets/layout/header/empty.png')
     }
   },
 
@@ -75,6 +80,7 @@ export default {
 
   methods: {
     showPlay (show) {
+      if (this.isAddCard) return
       this.deleteShow = show
       if (this.info.mediaType !== 0) return
       this.show = show
@@ -99,7 +105,7 @@ export default {
 $iconColor: #ffffff;
 .detail-media{
   display: inline-block;
-  margin: 9px;
+  margin: 10px;
   background-color: #ffffff;
   overflow: hidden;
   border: 1px solid transparent;
@@ -110,6 +116,7 @@ $iconColor: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 5px 10px;
     width: 320px;
     height: 180px;
     cursor: pointer;

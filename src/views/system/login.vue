@@ -4,115 +4,125 @@
  * @Author: ZMT
  * @Date: 2021-04-20 10:28:47
  * @LastEditors: ZMT
- * @LastEditTime: 2021-05-25 21:12:21
+ * @LastEditTime: 2021-06-06 19:36:52
 -->
 <template>
   <div class="login">
-    <div class="login-contanier">
-      <!-- 登录+验证码 -->
-      <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-        <el-menu-item index="0">密码登录</el-menu-item>
-        <el-menu-item index="1">验证码登录</el-menu-item>
-      </el-menu>
-      <div class="form-box">
-        <transition-group
-          enter-active-class="animate__animated animate__fadeIn"
-          leave-active-class="animate__animated animate__fadeOut"
-        >
-          <div class="p" key="pwd" v-if="activeIndex === '0'">
-            <el-form class="login-contanier-form" :model="loginForm" ref="loginForm" :rules="loginRules">
-              <el-form-item class="login-contanier-form__item" prop="username">
-                <el-input
-                  prefix-icon
-                  class="login-contanier-form__input"
-                  clearable
-                  ref="username"
-                  placeholder="请输入用户名"
-                  tabindex='1'
-                  v-model="loginForm.username"
-                  @keyup.enter.native="handleLogin"
-                >
-                  <i slot="prefix" class="iconfont icon-denglu1 prefix-icon"></i>
-                </el-input>
-              </el-form-item>
-
-              <el-form-item class="login-contanier-form__item" prop="password">
-                <el-input
-                  prefix-icon
-                  class="login-contanier-form__input"
-                  clearable
-                  ref="password"
-                  tabindex='2'
-                  placeholder="请输入密码"
-                  type="password"
-                  v-model="loginForm.password"
-                  show-password
-                  @keyup.enter.native="handleLogin"
-                >
-                  <i slot="prefix" class="iconfont icon-mima prefix-icon"></i>
-                </el-input>
-              </el-form-item>
-              <el-form-item class="login-contanier-form__item" prop="randomStr" :style="style">
-                <el-input
-                  prefix-icon
-                  class="login-contanier-form__input"
-                  clearable
-                  ref="randomStr"
-                  placeholder="请输入验证码"
-                  tabindex='1'
-                  v-model="loginForm.randomStr"
-                  @keyup.enter.native="handleLogin"
-                >
-                  <i slot="prefix" class="iconfont icon-yanzhengma1 prefix-icon"></i>
-                </el-input>
-              </el-form-item>
-              <el-form-item>
-              <div class="code">
-                <img :src="codeImgSrc" alt="验证码">
-                <el-button @click="getCodeImg" size="small">点击刷新</el-button>
-              </div>
-              </el-form-item>
-              <el-button type="primary" class="login-contanier-form__btn" :disabled='btnDisabled' :loading='loading' @click="handleLogin">登录</el-button>
-            </el-form>
-          </div>
-          <!-- 短信验证码登录 -->
-          <div class="p" key="code" v-if="activeIndex === '1'">
-            <el-form class="login-contanier-form" :model="codeForm" ref="codeForm" :rules="codeRules">
-              <el-form-item class="login-contanier-form__item" prop="mobile">
-                <el-input
-                  prefix-icon
-                  class="login-contanier-form__input"
-                  clearable
-                  tabindex='1'
-                  placeholder="请输入手机号码"
-                  v-model="codeForm.mobile"
-                  @keyup.enter.native="handleLoginCode"
-                >
-                  <i slot="prefix" class="iconfont icon-shoujihaoma prefix-icon"></i>
-                </el-input>
-              </el-form-item>
-              <el-form-item class="login-contanier-form__item" prop="code">
-                <el-input
-                  prefix-icon
-                  class="login-contanier-form__input"
-                  clearable
-                  tabindex='2'
-                  placeholder="请输入短信验证码"
-                  v-model="codeForm.code"
-                  @keyup.enter.native="handleLoginCode"
-                >
-                  <i slot="prefix" class="iconfont icon-duanxinyanzhengma prefix-icon"></i>
-                  <el-button slot="suffix" size="mini" :disabled='codeDisabled || hasMobile' :loading='codeLoading' @click="getCode">{{codeBtnName}}</el-button>
-                </el-input>
-              </el-form-item>
-              <el-button type="primary" class="login-contanier-form__btn" :disabled='btnDisabledCode' :loading='loading' @click="handleLoginCode">登录</el-button>
-
-            </el-form>
-          </div>
-        </transition-group>
+    <div class="login-box center">
+      <div class="login-box-left">
+        <h3 class="login-box-left_title">
+          云智能交通标记综合管理平台
+        </h3>
+        <p class="login-box-left_des"><span>智能互联</span><span class="point"></span><span>科技赋能</span></p>
+        <div class="login-box-left-progress">
+        </div>
       </div>
-      <div class="register primary" key="register">
-        <span @click="toRegister">注册账号</span>
+      <div class="login-contanier">
+        <!-- 登录+验证码 -->
+        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+          <el-menu-item index="0">密码登录</el-menu-item>
+          <el-menu-item index="1">验证码登录</el-menu-item>
+        </el-menu>
+        <div class="form-box">
+          <transition-group
+            enter-active-class="animate__animated animate__fadeIn"
+            leave-active-class="animate__animated animate__fadeOut"
+          >
+            <div class="p" key="pwd" v-if="activeIndex === '0'">
+              <el-form class="login-contanier-form" :model="loginForm" ref="loginForm" :rules="loginRules">
+                <el-form-item class="login-contanier-form__item" prop="username">
+                  <el-input
+                    prefix-icon
+                    class="login-contanier-form__input"
+                    clearable
+                    ref="username"
+                    placeholder="请输入用户名"
+                    tabindex='1'
+                    v-model="loginForm.username"
+                    @keyup.enter.native="handleLogin"
+                  >
+                    <i slot="prefix" class="iconfont icon-denglu1 prefix-icon"></i>
+                  </el-input>
+                </el-form-item>
+
+                <el-form-item class="login-contanier-form__item" prop="password">
+                  <el-input
+                    prefix-icon
+                    class="login-contanier-form__input"
+                    clearable
+                    ref="password"
+                    tabindex='2'
+                    placeholder="请输入密码"
+                    type="password"
+                    v-model="loginForm.password"
+                    show-password
+                    @keyup.enter.native="handleLogin"
+                  >
+                    <i slot="prefix" class="iconfont icon-mima prefix-icon"></i>
+                  </el-input>
+                </el-form-item>
+                <el-form-item class="login-contanier-form__item" prop="randomStr" :style="style">
+                  <el-input
+                    prefix-icon
+                    class="login-contanier-form__input"
+                    clearable
+                    ref="randomStr"
+                    placeholder="请输入验证码"
+                    tabindex='1'
+                    v-model="loginForm.randomStr"
+                    @keyup.enter.native="handleLogin"
+                  >
+                    <i slot="prefix" class="iconfont icon-yanzhengma1 prefix-icon"></i>
+                  </el-input>
+                </el-form-item>
+                <el-form-item>
+                <div class="code">
+                  <img :src="codeImgSrc" alt="验证码">
+                  <el-button @click="getCodeImg" size="small">点击刷新</el-button>
+                </div>
+                </el-form-item>
+                <el-button type="primary" class="login-contanier-form__btn" :disabled='btnDisabled' :loading='loading' @click="handleLogin">登录</el-button>
+              </el-form>
+            </div>
+            <!-- 短信验证码登录 -->
+            <div class="p" key="code" v-if="activeIndex === '1'">
+              <el-form class="login-contanier-form" :model="codeForm" ref="codeForm" :rules="codeRules">
+                <el-form-item class="login-contanier-form__item" prop="mobile">
+                  <el-input
+                    prefix-icon
+                    class="login-contanier-form__input"
+                    clearable
+                    tabindex='1'
+                    placeholder="请输入手机号码"
+                    v-model="codeForm.mobile"
+                    @keyup.enter.native="handleLoginCode"
+                  >
+                    <i slot="prefix" class="iconfont icon-shoujihaoma prefix-icon"></i>
+                  </el-input>
+                </el-form-item>
+                <el-form-item class="login-contanier-form__item" prop="code">
+                  <el-input
+                    prefix-icon
+                    class="login-contanier-form__input"
+                    clearable
+                    tabindex='2'
+                    placeholder="请输入短信验证码"
+                    v-model="codeForm.code"
+                    @keyup.enter.native="handleLoginCode"
+                  >
+                    <i slot="prefix" class="iconfont icon-duanxinyanzhengma prefix-icon"></i>
+                    <el-button slot="suffix" size="mini" :disabled='codeDisabled || hasMobile' :loading='codeLoading' @click="getCode">{{codeBtnName}}</el-button>
+                  </el-input>
+                </el-form-item>
+                <el-button type="primary" class="login-contanier-form__btn" :disabled='btnDisabledCode' :loading='loading' @click="handleLoginCode">登录</el-button>
+
+              </el-form>
+            </div>
+          </transition-group>
+        </div>
+        <div class="register primary" key="register">
+          <span @click="toRegister">注册账号</span>
+        </div>
       </div>
     </div>
   </div>
@@ -279,20 +289,56 @@ $color: #f9ffff;
   box-sizing: border-box;
   padding: 0 .1rem;
   background-color: #000000;
+  background-image: url('../../assets/login/bg.jpg');
+  background-size: 100% 100%;
   & *::selection{
     user-select: none;
   }
+  &-box{
+    width: 1430px;
+    height: 467px;
+    border-radius: 12px;
+    background-image: url('../../assets/login/form_bg.png');
+    background-size: 100% 100%;
+    display: flex;
+    justify-content: space-between;
+    &-left{
+      flex: 1;
+      height: 100%;
+      box-sizing: border-box;
+      padding-left: 70px;
+      &_title{
+        font-size: 50px;
+        margin-top: 60px;
+        margin-bottom: 220px;
+        color: #0036a5;
+        letter-spacing: 5px;
+        font-weight: 600;
+      }
+      &_des{
+        color: #508aff;
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: 4px;
+        & span{
+          line-height: 20px;
+        }
+      }
+      &-progress{
+        width: 557px;
+        height: 20px;
+        margin-top: 40px;
+        overflow: hidden;
+        background-image: url('../../assets/login/progress.png');
+        animation: progress-bar-stripes 2s linear infinite;
+      }
+    }
+  }
   &-contanier{
     width: 370px;
-    height: 465px;
-    background-color: #fff;
+    height: 100%;
+    background-color: #ffffffdb;
     box-sizing: border-box;
-    border: 1px solid $border-color;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 180px;
-    margin: auto;
     border-radius: 5px;
     overflow: hidden;
     display: flex;
@@ -300,6 +346,9 @@ $color: #f9ffff;
     align-items: center;
     /deep/ .el-menu{
       width: 100%;
+    }
+    /deep/ .el-menu{
+      background-color: #ffffffdb;
     }
     /deep/ .el-menu-item{
       width: 50%;
@@ -356,19 +405,6 @@ $color: #f9ffff;
     flex: 1;
   }
 }
-@media screen and (max-width: 750px) {
-  .login-contanier{
-    width: calc(100% - 2rem);
-    box-sizing: border-box;
-    right: 0;
-    left: 0;
-    padding: 0 1.5rem;
-    padding-top: 1.5rem;
-    &__img{
-      height: 1.8rem;
-    }
-  }
-}
 .close{
   cursor: pointer;
 }
@@ -386,5 +422,23 @@ $color: #f9ffff;
   padding: 0 45px;
   font-size: 12px;
   cursor: pointer;
+}
+.point{
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #508aff;
+  position: relative;
+  top: -4px;
+  margin: 0 17px;
+}
+@keyframes progress-bar-stripes {
+  0% {
+    background-position: 43px 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
 }
 </style>

@@ -21,6 +21,14 @@ export function directionDevice (devid, params) {
   })
 }
 
+export function scenesDevice (devid, params) {
+  return http({
+    url: `/device/device/scenes/${devid}`,
+    method: 'POST',
+    params
+  })
+}
+
 // /device/device/info/{devid}
 // 设置信息提示
 export function infoDevicePost (id, params) {

@@ -1,10 +1,17 @@
+<!--
+ * @Description:
+ * @version: 1.0
+ * @Author: ZMT
+ * @Date: 2021-06-01 14:51:19
+ * @LastEditors: ZMT
+ * @LastEditTime: 2021-06-06 17:41:51
+-->
 <template>
   <ul class="device-state">
     <li class="device-state-item">
       <span class="device-state-item_name">在线状态</span>
       <span class="device-state-item_value" :class="this.info.stateOnline ? 'success' : 'info'">{{stateOnline}}</span>
     </li>
-
     <li class="device-state-item">
       <span class="device-state-item_name">工作状态</span>
       <span class="device-state-item_value" :class="this.info.stateWork ? 'success' : 'primary'">{{stateWork}}</span>
@@ -15,10 +22,10 @@
       <span class="device-state-item_value" :class="highTemp ? 'error' : 'success'">{{temperature}}</span>
     </li>
 
-    <li class="device-state-item">
+    <!-- <li class="device-state-item">
       <span class="device-state-item_name">内存使用</span>
       <span class="device-state-item_value" :class="fillStorage ? 'error' : 'success'">{{storage}}</span>
-    </li>
+    </li> -->
   </ul>
 </template>
 <script>
@@ -80,7 +87,7 @@ export default {
 .device-state{
   &-item{
     display: flex;
-    height: 50px;
+    height: 40px;
     justify-content: space-between;
     align-items: center;
     &_name{

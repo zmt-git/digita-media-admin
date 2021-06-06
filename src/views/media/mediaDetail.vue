@@ -4,7 +4,7 @@
  * @Author: ZMT
  * @Date: 2021-05-25 21:41:52
  * @LastEditors: ZMT
- * @LastEditTime: 2021-06-02 22:23:07
+ * @LastEditTime: 2021-06-06 12:16:16
 -->
 <template>
   <div class="media-detail" v-loading='loading'>
@@ -36,7 +36,7 @@
       </div>
     </div>
     <!-- 发布设备 -->
-    <div class="media-detail-device" v-loading='listLoading'>
+    <div v-if="false" class="media-detail-device" v-loading='listLoading'>
       <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
         <el-menu-item index="1">已发布终端</el-menu-item>
         <el-menu-item index="2">发布终端</el-menu-item>
