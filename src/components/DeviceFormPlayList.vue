@@ -9,33 +9,51 @@
 <template>
   <div class="play-list">
     <div class="play-list-header">
-      <span class="scenes-img" :class="type"></span>
+      <span class="scenes-img" :class="[type, scenes]"></span>
       <div class="scenes-info">
         <h3 class="scenes-info_title ellipsis-1">{{title}}</h3>
         <p class="scenes-info_des ellipsis-2">{{des}}</p>
       </div>
     </div>
     <div class="play-list-content clear">
-      <card-play-list
-        :info='item'
-        v-for="item in playlist"
-        :key='item.id'
-        @deleteMedia='deleteMedia'
-      ></card-play-list>
+      <draggable v-model="publishList"
+        ref="draggable"
+        animation="1000"
+        chosenClass="chosen"
+        forceFallback
+        :disabled="disabled"
+        :group="type"
+        :touchStartThreshold='0'
+      >
+        <card-play-list
+          v-for="item in publishList"
+          :info='item'
+          :key='item.id'
+          :length.sync='item.length'
+          @deleteMedia='deleteMedia'
+          @move='move'
+          @setLength='setLength'
+        ></card-play-list>
+      </draggable>
       <card-play-list
         isAdd
-        @add='addPlaylist'
+        @add='showDrawer'
       ></card-play-list>
     </div>
+    <base-drawer-media :visible.sync='visible' :playlist="unpublishList" @add='addPlaylist'></base-drawer-media>
   </div>
 </template>
 
 <script>
 import CardPlayList from './CardPlayList.vue'
-import { playlistType } from '@/data/common'
+import BaseDrawerMedia from './BaseDrawerMedia.vue'
 
+import { playlistType } from '@/data/common'
+import draggable from 'vuedraggable'
+import { lengthMedia } from '@/api/media'
+import { allListPlaylist, deletePlaylist } from '@/api/playList'
 export default {
-  components: { CardPlayList },
+  components: { CardPlayList, draggable, BaseDrawerMedia },
 
   name: 'play-lsit',
 
@@ -54,49 +72,147 @@ export default {
     },
     type: {
       type: String,
+      default: ''
+    },
+    scenes: {
+      type: String,
       default: '',
       validator: (val) => {
-        return playlistType.find(item => item.type === val)
+        return !!playlistType[val]
       }
     }
   },
 
   computed: {
     title () {
-      return playlistType.find(item => item.type === this.type).title
+      return playlistType[this.scenes].find(item => item.type === this.type).title
     },
     des () {
-      return playlistType.find(item => item.type === this.type).des
+      return playlistType[this.scenes].find(item => item.type === this.type).des
+    },
+    length () {
+      return this.publishList.length
+    },
+    id () {
+      return this.info.id
     }
   },
 
   data () {
     return {
-      playlist: [{ src: '', length: 60 },
-        { src: '', length: 60 },
-        { src: '', length: 60 },
-        { src: '', length: 60 },
-        { src: '', length: 60 },
-        { src: '', length: 60 },
-        { src: '', length: 60 },
-        { src: '', length: 60 }
+      visible: false,
+      target: null,
+      publishList: [{ src: '', length: 61 },
+        { src: '', length: 62 },
+        { src: '', length: 63 },
+        { src: '', length: 64 },
+        { src: '', length: 65 },
+        { src: '', length: 66 },
+        { src: '', length: 67 },
+        { src: '', length: 68 }
+      ],
+      unpublishList: [
+        { id: 1, src: '', length: 61, mediaType: 1, oldSize: 30 },
+        { id: 2, src: '', length: 61, mediaType: 0, oldSize: 30 }
       ]
     }
   },
 
+  mounted () {
+    this.getPlayList()
+  },
+
   methods: {
     deleteMedia (info) {
+      this.$confirm('在播放列表中删除该媒体吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        info.state = -1
+      }).catch(() => {
 
+      })
     },
-    addPlaylist () {},
+
+    showDrawer () {
+      this.visible = true
+    },
+
+    addPlaylist (publishList, unpublishList) {
+      this.publishList = this.publishList.concat(publishList)
+      this.unpublishList = unpublishList
+    },
 
     updateInfo () {
       this.$emit('updateInfo', this.info)
+    },
+
+    getPlayList () {
+      return allListPlaylist(this.id)
+        .then(res => {
+          this.publishList = res.list.filter(item => item.state === 1).sort((a, b) => a.sort - b.sort)
+          this.unpublishList = res.list.filter(item => item.state === 0)
+        })
+    },
+
+    async setLength (target, value) {
+      this.$emit('update:loading', true)
+      await lengthMedia({ id: target.id, length: value })
+        .then(res => {
+          this.$message({ type: 'success', message: '设置成功' })
+        })
+        .catch(e => console.log(e))
+      this.$emit('update:loading', false)
+    },
+
+    getSortParams () {
+      const arr = this.publishList.concat(this.unpublishList)
+
+      const params = []
+
+      arr.forEach(item => {
+        const obj = {}
+        obj.id = item.id
+        obj.sort = item.sorts
+        obj.state = item.state
+        params.push(obj)
+      })
+
+      return JSON.stringify(params).slice(1, -1)
+    },
+
+    async updateList (info) {
+      const params = this.getSortParams()
+      this.$emit('update:loading', true)
+      await deletePlaylist({ playlistArr: params })
+        .then(res => {
+          this.prompt(res.state)
+          return true
+        })
+        .catch(e => {
+          console.log(e)
+          return false
+        })
+      this.$emit('update:loading', false)
+    },
+
+    move (direction, target) {
+      const currentIndex = this.publishList.indexOf(target)
+      if (direction === 'right' && currentIndex < this.length) {
+        const nextItem = this.publishList[currentIndex + 1]
+        this.publishList.splice(currentIndex, 2, nextItem, target)
+      } else if (direction === 'left' && currentIndex !== 0) {
+        const nextItem = this.publishList[currentIndex - 1]
+        this.publishList.splice(currentIndex - 1, 2, target, nextItem)
+      }
     }
   }
 }
 </script>
 <style lang="scss" scoped>
+@import '~@/styles/handler.scss';
+@import '~@/styles/scenes.scss';
 .play-list{
   border: 1px solid #cecece;
   border-radius: 10px;
@@ -124,7 +240,6 @@ export default {
     display: inline-block;
     width: 55px;
     height: 55px;
-    background-image: url('../assets/common/weather.jpg');
     background-size: 190px;
     background-repeat: no-repeat;
   }
@@ -143,61 +258,7 @@ export default {
     }
   }
 }
-.sunny{
-  background-position: -7px -5px;
-}
-.cloudy{
-  background-position: -67px -5px;
-}
-.shade{
-  background-position: -127px -5px;
-}
-.rain{
-  background-position: -7px -66px;
-}
-.thundershower{
-  background-position: -67px -66px;
-}
-.thundershower-hail{
-  background-position: -127px -66px;
-}
-.rain-hail{
-  background-position: -7px -128px;
-}
-.freezing-rain{
-  background-position: -67px -128px;
-}
-.snow{
-  background-position: -127px -128px;
-}
-.rain-snow{
-  background-position: -7px -189px;
-}
-.fog{
-  background-position: -67px -189px;
-}
-.heat{
-  background-position: -127px -189px;
-}
-.cold{
-  background-position: -7px -250px;
-}
-.gale{
-  background-position: -67px -250px;
-}
-.hail{
-  background-position: -127px -250px;
-}
-.sandstorm{
-  background-position: -7px -312px;
-}
-.haze{
-  background-position: -67px -312px;
-}
-.smoke{
-  background-position: -127px -312px;
-}
-.unknown{
-  background-position: -7px -382px;
+.chosen{
+  @include border-color('danger');
 }
 </style>

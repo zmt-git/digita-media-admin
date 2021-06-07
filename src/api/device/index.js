@@ -50,7 +50,7 @@ export function infoDevice (id) {
 
 // /device/device/light/{devid}
 // 设置光源
-export function lightDevice (params, devid) {
+export function lightDevice (devid, params) {
   return http({
     url: `/device/device/light/${devid}`,
     method: 'POST',

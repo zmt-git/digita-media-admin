@@ -5,6 +5,7 @@
  * @Date: 2021-05-25 20:37:16
  * @LastEditors: ZMT
  * @LastEditTime: 2021-06-06 17:51:43
+
 -->
 <template>
   <div class="media" v-loading='loading'>
@@ -31,7 +32,7 @@
             <div class="el-upload__text" style="margin-top: 10px">只能上传jpg/png文件</div>
           </el-upload>
         </card-media>
-        <card-media @play='viewDetail' v-for="item in pageList" :key="item.id" :info='item' :tag='true' @delete='deleteMedia'></card-media>
+        <card-media v-for="item in pageList" :key="item.id" :info='item' :tag='true' @delete='deleteMedia'></card-media>
         <base-page-loading :loading='pageLoading' :noMore='noMore'></base-page-loading>
       </ul>
     </div>
@@ -78,10 +79,6 @@ export default {
   },
 
   methods: {
-    // 查看详情
-    viewDetail (info) {
-      this.$router.push({ path: '/media/detail', query: { info: info } })
-    },
     deleteMedia (info) {
       this.dialogVisible = true
       this.targetMedia = info
@@ -118,7 +115,6 @@ export default {
       const res = await this.uploadMediaFile(formData)
       if (res) {
         this.getSaveParams(res, file)
-
         if (file.type === 'video/mp4') {
           getVideoDuration(file, async (video) => {
             this.mediaForm.length = video.duration

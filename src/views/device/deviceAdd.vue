@@ -8,11 +8,11 @@
 -->
 <template>
   <div class="device-add"  v-loading='loading'>
-    <el-steps :active="active" simple>
+    <!-- <el-steps :active="active" simple>
       <el-step :title="item.title" :icon="item.icon" v-for="item in steps" :key="item.title">
         <i slot="icon" class="iconfont" :class="item.icon"></i>
       </el-step>
-    </el-steps>
+    </el-steps> -->
     <div class="step-content">
       <transition
         enter-active-class="animate__fadeInRight animate__animated"
@@ -21,7 +21,7 @@
         <div class="step-content-form" v-if="active === 0">
           <device-form-info @submit='submit' :loading.sync='loading'></device-form-info>
         </div>
-        <div class="step-content-form" v-if="active === 1">
+        <!-- <div class="step-content-form" v-if="active === 1">
           <device-form-config :info='info' @next='next' @updateInfo='updateInfo' :loading.sync='loading' :disabled='disabled'></device-form-config>
         </div>
         <div  class="step-content-system" v-if="active === 2">
@@ -29,7 +29,7 @@
         </div>
         <div  class="step-content-list" v-if="active === 3">
           <device-form-play-list ref="playlist" :info='info' @next='next' @updateInfo='updateInfo' :loading.sync='loading' :disabled='disabled'></device-form-play-list>
-        </div>
+        </div> -->
       </transition>
     </div>
     <div class="btn-box" v-if="active !== 0">
@@ -41,15 +41,15 @@
 
 <script>
 import DeviceFormInfo from '@/components/DeviceFormInfo'
-import DeviceFormConfig from '@/components/DeviceFormConfig'
-import DeviceFormSystem from '@/components/DeviceFormSystem'
-import DeviceFormPlayList from '@/components/DeviceFormPlayList'
+// import DeviceFormConfig from '@/components/DeviceFormConfig'
+// import DeviceFormSystem from '@/components/DeviceFormSystem'
+// import DeviceFormPlayList from '@/components/DeviceFormPlayList'
 import { infoDevice } from '@/api/device'
 import { deviceAddSteps } from '@/data/common'
 export default {
   name: 'device-add',
 
-  components: { DeviceFormInfo, DeviceFormConfig, DeviceFormSystem, DeviceFormPlayList },
+  components: { DeviceFormInfo /* DeviceFormConfig, DeviceFormSystem, DeviceFormPlayList */ },
 
   computed: {
     disabled () {
@@ -69,7 +69,8 @@ export default {
   methods: {
     submit (info) {
       this.info = info
-      this.next()
+      // this.next()
+      this.$router.back()
     },
     next () {
       this.active++

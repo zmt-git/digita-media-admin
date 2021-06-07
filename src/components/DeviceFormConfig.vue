@@ -6,8 +6,10 @@
           :disabled='disabled'
           active-text="手动控制"
           inactive-text="时间控制"
-          v-model="ruleForm.timeControl"
-          @change="setTimeControl"
+          :active-value='1'
+          :inactive-value='0'
+          v-model="ruleForm.lightControl"
+          @change="switchLight"
           active-color="#13ce66"
           inactive-color="#ff4949">
         </el-switch>
@@ -15,10 +17,12 @@
       <el-form-item label="光源开关" prop="timeControl" style="text-align: right;">
         <el-switch
           :disabled='disabled'
-          active-text="NO"
-          inactive-text="OFF  "
-          v-model="ruleForm.timeControl"
-          @change="setTimeControl"
+          active-text="ON"
+          inactive-text="OFF"
+          :active-value='100'
+          :inactive-value='-1'
+          v-model="ruleForm.lightBrightness"
+          @change="modelLight"
           active-color="#13ce66"
           inactive-color="#ff4949">
         </el-switch>
@@ -44,7 +48,7 @@
 </template>
 
 <script>
-import { timeDevice, volumeDevice } from '@/api/device'
+import { timeDevice, volumeDevice, lightDevice } from '@/api/device'
 import prompt from '@/mixins/prompt'
 export default {
   name: 'device-form-config',
@@ -139,6 +143,26 @@ export default {
           this.prompt(res.state)
         })
         .catch(e => console.log())
+    },
+
+    async switchLight () {
+      this.$emit('update:loading', true)
+      await this.setLight()
+      this.$emit('updateInfo')
+    },
+
+    async modelLight () {
+      this.$emit('update:loading', true)
+      await this.setLight()
+      this.$emit('updateInfo')
+    },
+
+    setLight () {
+      return lightDevice(this.id, this.ruleForm)
+        .then(res => {
+          this.prompt(res.state)
+        })
+        .catch(e => console.log(e))
     }
   },
   watch: {

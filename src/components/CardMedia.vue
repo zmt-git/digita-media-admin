@@ -2,16 +2,22 @@
   <li class="detail-media box-shadow radius-10"  @mouseleave="showPlay(false)" @mouseenter="showPlay(true)">
     <template v-if="!isAddCard">
       <span v-if="index" class="index">{{index}}</span>
-      <div class="detail-media-src" @click="play">
-        <el-tag v-if="state && tag" class="state-btn"  effect="dark" :type="btnType" size="mini">{{btnName}}</el-tag>
-        <img
+      <div class="detail-media-src">
+        <el-tag v-if="state && tag" class="state-btn" effect="dark" :type="btnType" size="mini">{{btnName}}</el-tag>
+        <el-image
+          v-if="info.mediaType !== 0"
           class="detail-media-src_img"
-          :src="img" />
+          :src="img"
+          :preview-src-list="[img]">
+        </el-image>
+        <template v-else>
+          <video-player :info='info' :autoplay='false' :options='{ autoplay: false, controls: false}'></video-player>
+        </template>
         <transition
           enter-active-class="animate__fadeIn animate__animated"
           leave-active-class="animate__fadeOut animate__animated"
         >
-          <div v-show="show" class="detail-media-src-mask">
+          <div v-show="show" class="detail-media-src-mask" @click="showDialog">
             <i class="detail-media-src-mask_icon iconfont icon-bofang center"></i>
           </div>
         </transition>
@@ -34,14 +40,28 @@
     <template>
       <slot></slot>
     </template>
+    <template v-if="dialogVisible">
+      <el-dialog
+        title="视频媒体"
+        :visible.sync="dialogVisible"
+        @close='close'
+        @open='open'
+        width="640px">
+        <span>
+          <video-player ref='videoPlayer' :info='info'></video-player>
+        </span>
+      </el-dialog>
+    </template>
   </li>
 </template>
 
 <script>
 import { secondFormat } from '@/utils/tools/dateTool'
 import media from '@/mixins/media'
+import VideoPlayer from './VideoPlayer.vue'
 
 export default {
+  components: { VideoPlayer },
   name: 'detail-media',
 
   mixins: [media],
@@ -67,18 +87,29 @@ export default {
 
   computed: {
     img () {
-      return !this.isAddCard && this.info.addressOld ? this.info.addressOld : require('../assets/layout/header/empty.png')
+      return !this.isAddCard && this.info.addressOld ? this.info.addressOld : require('../assets/device/empty.png')
     }
   },
 
   data () {
     return {
       show: false,
-      deleteShow: false
+      deleteShow: false,
+      dialogVisible: false
     }
   },
 
   methods: {
+    close () {
+      this.$refs.videoPlayer.dispose()
+    },
+
+    open () {
+      this.$nextTick(() => {
+        this.$refs.videoPlayer.init()
+      })
+    },
+
     showPlay (show) {
       if (this.isAddCard) return
       this.deleteShow = show
@@ -96,6 +127,10 @@ export default {
     },
     add () {
       this.$emit('add')
+    },
+
+    showDialog () {
+      this.dialogVisible = true
     }
   }
 }

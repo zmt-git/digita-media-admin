@@ -441,4 +441,9 @@ $color: #f9ffff;
     background-position: 0 0;
   }
 }
+@media screen and (max-width: 1430px) {
+  .login-box{
+    width: 100%;
+  }
+}
 </style>

@@ -85,10 +85,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.device{
-  // display: flex;
-  // flex-direction: column;
-}
 .device-control{
   width: 100%;
   border-radius: 10px;

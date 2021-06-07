@@ -55,11 +55,11 @@ export const SuggestType = Object.freeze([
 ])
 
 export const deviceType = Object.freeze([
-  { value: 'ELF-A', label: 'ELF-A' },
-  { value: 'ELF-T1-W', label: 'ELF-T1-W' },
-  { value: 'ELF-T1-RG', label: 'ELF-T1-RG' },
-  { value: 'ELF-T2-W', label: 'ELF-T2-W' },
-  { value: 'ELF-T2-RG', label: 'ELF-T2-RG' }
+  { value: 'ELF-A', label: 'ELF-A', scenes: { weatherScenes: ['sunny'] } },
+  { value: 'ELF-T1-W', label: 'ELF-T1-W', scenes: { weatherScenes: ['sunny', 'fog', 'rain-snow'], roadScenes: ['construction', 'trafficAccident'], customizeScenes: ['customize1', 'customize2'] } },
+  { value: 'ELF-T1-RG', label: 'ELF-T1-RG', scenes: { lightScenes: ['red', 'green'] } },
+  { value: 'ELF-T2-W', label: 'ELF-T2-W', scenes: { weatherScenes: ['sunny', 'fog', 'rain-snow'], roadScenes: ['construction', 'trafficAccident'], customizeScenes: ['customize1', 'customize2'] } },
+  { value: 'ELF-T2-RG', label: 'ELF-T2-RG', scenes: { lightScenes: ['red', 'green'] } }
 ])
 
 export const orientOptions = Object.freeze([
@@ -76,7 +76,7 @@ export const scenesOptions = Object.freeze([
   { value: 9, label: '竖屏向下' }
 ])
 
-export const playlistType = Object.freeze([
+const weatherScenes = Object.freeze([
   { type: 'sunny', title: '默认场景', des: '适用于一般情况下的播放列表' },
   { type: 'cloudy', title: '多云天气', des: '适用于一般情况下的播放列表' },
   { type: 'shade', title: '阴天天气', des: '适用于一般情况下的播放列表' },
@@ -86,8 +86,8 @@ export const playlistType = Object.freeze([
   { type: 'rain-hail', title: '雨加冰雹天气', des: '适用于一般情况下的播放列表' },
   { type: 'freezing-rain', title: '冻雨天气', des: '适用于一般情况下的播放列表' },
   { type: 'snow', title: '雪天天气', des: '适用于一般情况下的播放列表' },
-  { type: 'rain-snow', title: '雨夹雪天气', des: '适用于一般情况下的播放列表' },
-  { type: 'fog', title: '浓雾天气', des: '适用于一般情况下的播放列表' },
+  { type: 'rain-snow', title: '雨夹雪天气', des: '适用于雨雪天气下的播放列表' },
+  { type: 'fog', title: '浓雾天气', des: '适用于浓雾天气情况下的播放列表' },
   { type: 'heat', title: '高温天气', des: '适用于一般情况下的播放列表' },
   { type: 'cold', title: '低温天气', des: '适用于一般情况下的播放列表' },
   { type: 'gale', title: '大风天气', des: '适用于一般情况下的播放列表' },
@@ -97,3 +97,25 @@ export const playlistType = Object.freeze([
   { type: 'smoke', title: '浓烟天气', des: '适用于一般情况下的播放列表' },
   { type: 'unknown', title: '未知', des: '适用于一般情况下的播放列表' }
 ])
+
+const roadScenes = Object.freeze([
+  { type: 'construction', title: '道路施工', des: '适用于前方道路施工时' },
+  { type: 'trafficAccident', title: '交通事故', des: '适用于前方交通事故时' }
+])
+
+const customizeScenes = Object.freeze([
+  { type: 'customize1', title: '自定义场景1', des: '用户可根据需要自行配置' },
+  { type: 'customize2', title: '自定义场景2', des: '用户可根据需要自行配置' }
+])
+
+const lightScenes = Object.freeze([
+  { type: 'red', title: '红灯', des: '适用于红灯亮起情况下的播放列表' },
+  { type: 'green', title: '绿灯', des: '适用于绿灯亮起情况下的播放列表' }
+])
+
+export const playlistType = Object.freeze({
+  weatherScenes,
+  roadScenes,
+  customizeScenes,
+  lightScenes
+})

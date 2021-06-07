@@ -135,7 +135,7 @@ export default {
       }
       &_value{
         flex: 1;
-        width: 100px;
+        width: 1px;
         font-size: 15px;
       }
     }

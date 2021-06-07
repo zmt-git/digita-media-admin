@@ -10,16 +10,16 @@
   <div class="card-play-list" :class="isAdd ? 'flex-center' : ''" @click="add">
     <template v-if="!isAdd">
       <div class="media">
-        <i class="iconfont icon-zuo media_icon" ></i>
+        <i class="iconfont icon-zuo media_icon" title="左移" @click="move('left')"></i>
         <div class="media_box">
           <img class="media_img" :src="src" alt="媒体图片">
         </div>
-        <i class="iconfont icon-you media_icon"></i>
+        <i class="iconfont icon-you media_icon" title="右移" @click="move('right')"></i>
       </div>
       <div class="info">
         <span>
           <span class="info_name">播放时长</span>
-          <el-input-number size="mini" :max="99" :min="1" :value="length"></el-input-number>
+          <el-input-number size="mini" :max="99" :min="1" :value="length" @change="onchange"></el-input-number>
           <span class="second">秒</span>
         </span>
         <el-button class="btn" type="danger" size="mini" icon="el-icon-delete" @click="deleteMedia"></el-button>
@@ -56,6 +56,12 @@ export default {
     }
   },
 
+  data () {
+    return {
+      timmer: null
+    }
+  },
+
   methods: {
     deleteMedia () {
       this.$emit('deleteMedia', this.info)
@@ -63,6 +69,19 @@ export default {
     add () {
       if (!this.isAdd) return
       this.$emit('add')
+    },
+    move (direction) {
+      this.$emit('move', direction, this.info)
+    },
+
+    onchange (e) {
+      this.$emit('update:length', e)
+      this.timmer && clearTimeout(this.timmer)
+      this.timmer = setTimeout(() => {
+        clearTimeout(this.timmer)
+        this.$emit('setLength', this.info, e)
+        this.timmer = null
+      }, 1000)
     }
   }
 }

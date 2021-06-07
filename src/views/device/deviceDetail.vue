@@ -1,6 +1,6 @@
 <template>
   <div class="device-detail" v-loading='loading'>
-    <div class="device-detail-info">
+    <div class="device-detail-info" @click.self="setSystem">
       <!-- <h3 class="device-name">{{info.name}}</h3> -->
       <!-- <base-title type='primary'>运行状态</base-title> -->
       <div class="device-detail-info-control">
@@ -17,12 +17,29 @@
         <device-form-scenes :info='info' @updateInfo='updateInfo' :loading.sync='loading' :disabled='disabled'></device-form-scenes>
       </div>
       <!-- <base-title type='primary'>系统设置</base-title> -->
-      <div class="device-detail-info-control">
+      <div class="device-detail-info-control" v-if="showSystem">
         <device-form-system :info='info' @updateInfo='updateInfo' :loading.sync='loading' :disabled='disabled'></device-form-system>
       </div>
     </div>
     <div class="device-detail-playlist">
-      <device-form-play-list :loading.sync='loading' :info='info' @updateInfo='updateInfo' :disabled='disabled' type='sunny'></device-form-play-list>
+      <div class="device-detail-playlist-list">
+        <template v-for="(item, key) in scenes">
+          <device-form-play-list
+            v-for="i in item"
+            :key="i"
+            :type='i'
+            :scenes='key'
+            :loading.sync='loading'
+            :info='info'
+            :disabled='disabled'
+            @updateInfo='updateInfo'
+          >
+          </device-form-play-list>
+        </template>
+      </div>
+      <div class="device-detail-playlist-btn">
+        <el-button type="primary">发布</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -36,6 +53,7 @@ import DeviceFormSystem from '@/components/DeviceFormSystem.vue'
 import DeviceState from '@/components/DeviceState.vue'
 import DeviceInfo from '@/components/DeviceInfo.vue'
 import { infoDevice } from '@/api/device'
+import { deviceType } from '@/data/common'
 export default {
   name: 'device-detail',
 
@@ -44,12 +62,19 @@ export default {
   computed: {
     disabled () {
       return this.info.stateOnline === 0
+    },
+    scenes () {
+      const scenes = deviceType.find(item => item.value === this.info.type)
+      return scenes ? scenes.scenes : deviceType[0].scenes
     }
   },
 
   data () {
     return {
       loading: false,
+      showSystem: false,
+      timmer: null,
+      count: 0,
       id: null,
       info: {}
     }
@@ -64,6 +89,7 @@ export default {
     getDeviceDetail () {
       return infoDevice(this.id)
         .then(res => {
+          res.data.type = 'ELF-T1-W'
           this.info = res.data
         })
         .catch(e => console.log(e))
@@ -72,6 +98,24 @@ export default {
     async updateInfo () {
       await this.getDeviceDetail()
       this.loading = false
+    },
+
+    setSystem () {
+      if (this.timmer) {
+        clearTimeout(this.timmer)
+        this.timmer = null
+      }
+      this.count++
+      if (this.count >= 5) {
+        this.showSystem = true
+        return
+      }
+      this.timmer = setTimeout(() => {
+        this.count = 0
+        this.showSystem = false
+        clearTimeout(this.timmer)
+        this.timmer = null
+      }, 3000)
     }
   }
 }
@@ -104,9 +148,32 @@ export default {
   &-playlist{
     flex: 1;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 10px 10px 0 10px;
     background-color: #fafafa;
     margin-left: 5px;
+    display: flex;
+    flex-direction: column;
+    &-list{
+      flex: 1;
+      overflow: auto;
+      &::-webkit-scrollbar-thumb{
+      background-color: #d0d0d0;
+      }
+      &::-webkit-scrollbar{
+        width: 3px;
+      }
+    }
+    &-btn{
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: 5px;
+      border-top: 1px solid #f0f0f0;
+      & button{
+        width: 200px;
+      }
+    }
   }
 }
 .device-name{
@@ -119,23 +186,6 @@ export default {
   }
   &::-webkit-scrollbar{
     height: 3px;
-  }
-}
-</style>
-<style lang="scss">
-@media screen and (min-width: 1280px) {
-  .device-detail-screen{
-    width: calc(50% - 23px);
-  }
-}
-@media screen and (max-width: 1280px) {
-  .device-detail-screen{
-    width: calc(100% - 23px);
-  }
-}
-@media screen and (max-width: 920px) {
-  .device-detail-screen{
-    width: calc(100% - 23px);
   }
 }
 </style>

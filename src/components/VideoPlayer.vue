@@ -10,7 +10,6 @@
   <video ref="videoPlayer"
     class="video-js vjs-default-skin vjs-big-play-centered video-player"
     preload='auto'
-    autoplay
     muted
   >
     <source src="../assets/video/oceans.mp4" type="video/mp4" >
@@ -30,6 +29,10 @@ export default {
     options: {
       type: Object,
       default: () => {}
+    },
+    autoplay: {
+      type: Boolean,
+      default: true
     }
   },
 
@@ -59,6 +62,7 @@ export default {
 
   mounted () {
     this.init()
+    this.$emit('hook:beforeDestroy', this.dispose)
   },
 
   methods: {
@@ -77,9 +81,12 @@ export default {
         'Current Time': '当前时间',
         'Remaining Time': '剩余时间 '
       })
-
-      this.player = videojs(this.$refs.videoPlayer, options, () => {
-        this.play()
+      this.$nextTick(() => {
+        this.player = videojs(this.$refs.videoPlayer, options, () => {
+          if (this.autoplay) {
+            this.play()
+          }
+        })
       })
     },
 
