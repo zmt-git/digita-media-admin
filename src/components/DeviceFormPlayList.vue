@@ -18,7 +18,6 @@
     <div class="play-list-content clear">
       <draggable v-model="publishList"
         ref="draggable"
-        animation="1000"
         chosenClass="chosen"
         forceFallback
         :disabled="disabled"

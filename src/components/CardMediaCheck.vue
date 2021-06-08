@@ -1,5 +1,5 @@
 <template>
-  <div class="card-media-check" :class="active ? 'active' : ''">
+  <div class="card-media-check box-shadow" :class="active ? 'active' : ''">
     <i v-show="active" class="iconfont active_icon icon-duihao"></i>
     <div class="card-media-check-media">
       <el-image

@@ -76,11 +76,16 @@ export default {
 <style lang="scss" scoped>
 .base-drawer-media{
   /deep/ .el-drawer{
-    background-color: #f0f0f0;
+    background-color: #f9f9f9;
+  }
+  /deep/ .el-drawer__header{
+    margin-bottom: 20px;
   }
   /deep/ .el-drawer__body{
     display: flex;
     flex-direction: column;
+    border-top: 1px solid #f0f0f0;
+    padding: 5px;
   }
   /deep/ .demo-drawer__footer{
     display: flex;
@@ -88,8 +93,8 @@ export default {
     align-items: center;
     width: 100%;
     box-sizing: border-box;
+    border-top: 1px solid #f0f0f0;
     padding: 5px 0;
-    border-top: 1px solid #fff;
     & button{
       width: 40%;
     }
@@ -97,7 +102,6 @@ export default {
 }
 .content{
   box-sizing: border-box;
-  padding: 1px 5px;
   flex: 1;
   overflow: auto;
 }
