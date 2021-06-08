@@ -88,7 +88,6 @@ export default {
 .device-control{
   width: 100%;
   border-radius: 10px;
-  margin-bottom: 10px;
   display: flex;
   flex-flow: wrap;
 }

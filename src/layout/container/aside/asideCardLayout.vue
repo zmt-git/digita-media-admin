@@ -1,6 +1,8 @@
 <template>
   <div class="aside-card">
-    <span class="plate-img"></span>
+    <router-link to="/device/">
+      <span class="plate-img"></span>
+    </router-link>
     <base-aside-card :active='route.path === $route.path' v-for="route in routesChildren" :path='route.path' :key='route.path' :title="route.meta.title" :icon='route.meta.icon'></base-aside-card>
   </div>
 </template>
@@ -46,5 +48,6 @@ export default {
   background-image: url('../../../assets/layout/aside/logo.png');
   vertical-align: middle;
   margin: 5px;
+  background-repeat: no-repeat;
 }
 </style>
