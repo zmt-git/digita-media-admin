@@ -8,11 +8,11 @@
 -->
 <template>
   <el-header class="header" :height='height'>
-    <div class="header-left">
+    <!-- <div class="header-left">
       <el-tooltip :content="leftIconTitle" placement="bottom-start" effect="light">
         <i class="iconfont header-left_nav" :collapse='collapse' @click="changeCollapse" :class="collapseIconClass"></i>
       </el-tooltip>
-    </div>
+    </div> -->
     <div class="header-right">
       <!-- <el-tooltip content="通知" placement="bottom" effect="light">
         <el-popover

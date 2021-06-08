@@ -107,7 +107,6 @@ export default {
         this.$message({ type: 'warning', message: '云空间不足，请删除不需要的媒体' })
         return
       }
-      // todo 上传媒体到视频服务器， 成功后将媒体信息上传到服务器
       const formData = new FormData()
 
       formData.append('file', file)

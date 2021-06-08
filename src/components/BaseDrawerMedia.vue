@@ -18,7 +18,7 @@
     </div>
     <div class="demo-drawer__footer">
       <el-button @click="close">取 消</el-button>
-      <el-button type="primary" @click="add">添加</el-button>
+      <el-button type="primary" @click="add" :disabled='empty'>添加</el-button>
     </div>
   </el-drawer>
 </template>

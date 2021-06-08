@@ -70,10 +70,13 @@ export const orientOptions = Object.freeze([
 ])
 
 export const scenesOptions = Object.freeze([
-  { value: 0, label: '横屏向右' },
-  { value: 1, label: '竖屏向上' },
-  { value: 8, label: '横屏向左' },
-  { value: 9, label: '竖屏向下' }
+  { value: 0, label: '默认场景' },
+  { value: 1, label: '浓雾天气' },
+  { value: 2, label: '雨雪天气' },
+  { value: 3, label: '道路施工' },
+  { value: 4, label: '交通事故' },
+  { value: 5, label: '红灯' },
+  { value: 6, label: '绿灯' }
 ])
 
 const weatherScenes = Object.freeze([

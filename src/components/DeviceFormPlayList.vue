@@ -25,15 +25,18 @@
         :group="type"
         :touchStartThreshold='0'
       >
+      <transition-group name="cell" tag="div">
         <card-play-list
+          :key='item.id'
           v-for="item in publishList"
           :info='item'
-          :key='item.id'
           :length.sync='item.length'
+          :disabled="disabled"
           @deleteMedia='deleteMedia'
           @move='move'
           @setLength='setLength'
         ></card-play-list>
+      </transition-group>
       </draggable>
       <card-play-list
         isAdd
@@ -102,14 +105,14 @@ export default {
     return {
       visible: false,
       target: null,
-      publishList: [{ src: '', length: 61 },
-        { src: '', length: 62 },
-        { src: '', length: 63 },
-        { src: '', length: 64 },
-        { src: '', length: 65 },
-        { src: '', length: 66 },
-        { src: '', length: 67 },
-        { src: '', length: 68 }
+      publishList: [{ id: 1, src: '', length: 61 },
+        { id: 2, src: '', length: 62 },
+        { id: 3, src: '', length: 63 },
+        { id: 4, src: '', length: 64 },
+        { id: 5, src: '', length: 65 },
+        { id: 6, src: '', length: 66 },
+        { id: 7, src: '', length: 67 },
+        { id: 9, src: '', length: 68 }
       ],
       unpublishList: [
         { id: 1, src: '', length: 61, mediaType: 1, oldSize: 30 },
@@ -260,5 +263,8 @@ export default {
 }
 .chosen{
   @include border-color('danger');
+}
+.cell-move {
+  transition: transform 1s;
 }
 </style>

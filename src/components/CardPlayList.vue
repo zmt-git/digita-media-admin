@@ -7,14 +7,14 @@
  * @LastEditTime: 2021-06-06 22:51:45
 -->
 <template>
-  <div class="card-play-list" :class="isAdd ? 'flex-center' : ''" @click="add">
+  <div class="card-play-list" :class="[isAdd ? 'flex-center' : '', disabled ? 'disabled' : '']" @click="add">
     <template v-if="!isAdd">
       <div class="media">
-        <i class="iconfont icon-zuo media_icon" title="左移" @click="move('left')"></i>
+        <i class="iconfont icon-zuo media_icon" :class="disabled ? 'disabled' : ''" title="左移" @click="move('left')"></i>
         <div class="media_box">
           <img class="media_img" :src="src" alt="媒体图片">
         </div>
-        <i class="iconfont icon-you media_icon" title="右移" @click="move('right')"></i>
+        <i class="iconfont icon-you media_icon" :class="disabled ? 'disabled' : ''" title="右移" @click="move('right')"></i>
       </div>
       <div class="info">
         <span>
@@ -36,6 +36,10 @@ export default {
   name: 'card-play-list',
 
   props: {
+    disabled: {
+      type: Boolean,
+      default: false
+    },
     info: {
       type: Object,
       default: () => {}
@@ -71,6 +75,7 @@ export default {
       this.$emit('add')
     },
     move (direction) {
+      if (this.disabled) return
       this.$emit('move', direction, this.info)
     },
 
@@ -160,5 +165,8 @@ export default {
 .btn{
   font-size: 10px;
   padding: 2px 5px;
+}
+.disabled{
+  cursor: no-drop;
 }
 </style>
