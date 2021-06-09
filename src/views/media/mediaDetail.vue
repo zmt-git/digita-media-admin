@@ -177,29 +177,6 @@ export default {
         .catch(e => console.log(e))
     },
 
-    // 获取发布媒体设备列表
-    // getPublishDeviceListRequest () {
-    //   return publishDevice({ mediaid: this.info.id })
-    //     .then(res => {
-    //       this.deviceList = res.list
-    //     })
-    //     .catch(e => console.log(e))
-    // },
-
-    // 获取未发布媒体设备列表
-    // getUnpublishDeviceListRequest () {
-    //   return unpublishDevice({ mediaid: this.info.id })
-    //     .then(res => {
-    //       this.deviceList = res.list
-    //       this.deviceList.forEach(item => {
-    //         if (item.stateOnline === 1) {
-    //           this.allDeviceIds.push(item.id)
-    //         }
-    //       })
-    //     })
-    //     .catch(e => console.log(e))
-    // },
-
     // 媒体发布到终端设备
     publishMediaRequest () {
       return publishMedia({ deviceIds: this.checkList.join(','), mediaId: this.info.id })

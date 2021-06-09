@@ -100,13 +100,15 @@ export default {
       return playlistType[this.scenes].find(item => item.type === this.type).des
     },
     scenesList () {
-      return this.playlist[this.index]
+      try {
+        return JSON.parse(this.playlist[this.index].content)
+      } catch (e) {
+        console.log(e)
+        return []
+      }
     },
     length () {
       return this.scenesList.length
-    },
-    id () {
-      return this.info.id
     }
   },
 
@@ -152,16 +154,8 @@ export default {
       this.$emit('update:loading', false)
     },
 
-    // todo
     move (direction, target) {
-      const currentIndex = this.scenesList.indexOf(target)
-      if (direction === 'right' && currentIndex < this.length) {
-        const nextItem = this.scenesList[currentIndex + 1]
-        this.scenesList.splice(currentIndex, 2, nextItem, target)
-      } else if (direction === 'left' && currentIndex !== 0) {
-        const nextItem = this.scenesList[currentIndex - 1]
-        this.scenesList.splice(currentIndex - 1, 2, target, nextItem)
-      }
+      this.$emit('move', direction, target, this.index)
     }
   }
 }

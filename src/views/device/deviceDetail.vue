@@ -35,6 +35,7 @@
             :playlist='playlist'
             :index='i.index'
             @updateInfo='updateInfo'
+            @move='move'
           >
           </device-form-play-list>
         </template>
@@ -80,7 +81,7 @@ export default {
       count: 0,
       id: null,
       info: {},
-      playlist: []
+      playlist: [{ content: JSON.stringify([{ id: 1 }, { id: 2 }]) }]
     }
   },
 
@@ -88,7 +89,7 @@ export default {
     this.loading = true
     this.id = this.$route.query.id
     await this.getDeviceDetail()
-    await this.getPlaylists()
+    // await this.getPlaylists()
     this.loading = false
   },
 
@@ -112,6 +113,22 @@ export default {
     async updateInfo () {
       await this.getDeviceDetail()
       this.loading = false
+    },
+    // todo
+    move (direction, target, index) {
+      const targetArr = JSON.parse(this.playlist[index].content)
+
+      const currentIndex = targetArr.indexOf(target)
+
+      if (direction === 'right' && currentIndex < this.length) {
+        const nextItem = targetArr[currentIndex + 1]
+        targetArr.splice(currentIndex, 2, nextItem, target)
+      } else if (direction === 'left' && currentIndex !== 0) {
+        const nextItem = targetArr[currentIndex - 1]
+        targetArr.splice(currentIndex - 1, 2, target, nextItem)
+      }
+
+      this.playlist[index].content = JSON.stringify(targetArr)
     },
 
     setSystem () {
