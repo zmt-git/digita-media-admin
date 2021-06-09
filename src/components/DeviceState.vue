@@ -44,9 +44,14 @@ export default {
       return this.info.stateOnline === 1 ? '在线' : '离线'
     },
     stateWork () {
-      return this.info.stateWork === 1 ? '工作' : '休眠'
+      return this.info.stateWork === 1
+        ? '工作'
+        : this.info.stateWork === 0
+          ? '休眠'
+          : ''
     },
     temperature () {
+      if (this.info.stateWork !== 1 || this.info.stateWork !== 0) return ''
       if (typeof (this.info.temperature) === 'number') {
         return this.info.temperature + '℃'
       } else {

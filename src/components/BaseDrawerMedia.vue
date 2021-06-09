@@ -35,6 +35,10 @@ export default {
     visible: {
       type: Boolean,
       default: false
+    },
+    playlist: {
+      type: Array,
+      default: () => []
     }
   },
 
@@ -46,8 +50,7 @@ export default {
 
   data () {
     return {
-      checkeArr: [],
-      playlist: []
+      checkeArr: []
     }
   },
 

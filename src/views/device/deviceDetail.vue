@@ -35,7 +35,8 @@
             :playlist='playlist'
             :index='i.index'
             @updateInfo='updateInfo'
-            @move='move'
+            @updatePlaylist='updatePlaylist'
+            @addPlaylist='showDrawer'
           >
           </device-form-play-list>
         </template>
@@ -43,6 +44,7 @@
       <div class="device-detail-playlist-btn">
         <el-button type="primary">发布</el-button>
       </div>
+      <base-drawer-media :visible.sync='visible' :playlist='allMediaList' @add='addPlaylist'></base-drawer-media>
     </div>
   </div>
 </template>
@@ -55,13 +57,16 @@ import DeviceFormScenes from '@/components/DeviceFormScenes.vue'
 import DeviceFormSystem from '@/components/DeviceFormSystem.vue'
 import DeviceState from '@/components/DeviceState.vue'
 import DeviceInfo from '@/components/DeviceInfo.vue'
+import BaseDrawerMedia from '@/components/BaseDrawerMedia.vue'
+
 import { infoDevice } from '@/api/device'
 import { getPlaylist } from '@/api/playlist'
 import { deviceType } from '@/data/common'
+
 export default {
   name: 'device-detail',
 
-  components: { /* BaseTitle, */ DeviceInfo, DeviceFormPlayList, DeviceFormConfig, DeviceFormSystem, DeviceState, DeviceFormScenes },
+  components: { /* BaseTitle, */ DeviceInfo, DeviceFormPlayList, DeviceFormConfig, DeviceFormSystem, DeviceState, DeviceFormScenes, BaseDrawerMedia },
 
   computed: {
     disabled () {
@@ -77,11 +82,17 @@ export default {
     return {
       loading: false,
       showSystem: false,
+      visible: false,
       timmer: null,
       count: 0,
+      currentIndex: 0,
       id: null,
       info: {},
-      playlist: [{ content: JSON.stringify([{ id: 1 }, { id: 2 }]) }]
+      playlist: [
+        { content: JSON.stringify([{ id: 1 }, { id: 2 }]) },
+        { content: JSON.stringify([{ id: 1 }, { id: 2 }]) }
+      ],
+      allMediaList: [{ id: 3 }, { id: 4 }]
     }
   },
 
@@ -114,21 +125,23 @@ export default {
       await this.getDeviceDetail()
       this.loading = false
     },
-    // todo
-    move (direction, target, index) {
-      const targetArr = JSON.parse(this.playlist[index].content)
 
-      const currentIndex = targetArr.indexOf(target)
+    updatePlaylist (arr, index) {
+      const target = this.playlist[index]
+      target.content = JSON.stringify(arr)
+      this.playlist.splice(index, 1, target)
+    },
 
-      if (direction === 'right' && currentIndex < this.length) {
-        const nextItem = targetArr[currentIndex + 1]
-        targetArr.splice(currentIndex, 2, nextItem, target)
-      } else if (direction === 'left' && currentIndex !== 0) {
-        const nextItem = targetArr[currentIndex - 1]
-        targetArr.splice(currentIndex - 1, 2, target, nextItem)
-      }
+    showDrawer (index) {
+      this.visible = true
+      this.currentIndex = index
+    },
 
-      this.playlist[index].content = JSON.stringify(targetArr)
+    addPlaylist (arr) {
+      console.log(arr)
+      const originContent = JSON.parse(this.playlist[this.currentIndex].content)
+      const newContent = originContent.concat(arr)
+      this.updatePlaylist(newContent, this.currentIndex)
     },
 
     setSystem () {

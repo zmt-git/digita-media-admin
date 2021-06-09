@@ -1,7 +1,7 @@
 <template>
   <div class="device-form-config">
     <el-form :model="ruleForm" status-icon ref="ruleForm" label-width="70px" class="demo-ruleForm">
-      <el-form-item label="光源控制" prop="timeControl" style="text-align: right;">
+      <el-form-item label="光源控制" prop="lightControl" style="text-align: right;">
         <el-switch
           :disabled='disabled'
           active-text="手动控制"
@@ -14,24 +14,24 @@
           inactive-color="#ff4949">
         </el-switch>
       </el-form-item>
-      <el-form-item label="光源开关" prop="timeControl" style="text-align: right;">
+      <el-form-item label="光源开关" prop="lightBrightness" style="text-align: right;">
         <el-switch
-          :disabled='disabled'
+          :disabled='disabled || disbledLigthSwitch'
           active-text="ON"
           inactive-text="OFF"
-          :active-value='100'
-          :inactive-value='-1'
-          v-model="ruleForm.lightBrightness"
+          :active-value='true'
+          :inactive-value='false'
+          v-model="lightSwitch"
           @change="modelLight"
           active-color="#13ce66"
           inactive-color="#ff4949">
         </el-switch>
       </el-form-item>
       <el-form-item label="休眠时间" prop="timeClose">
-        <el-time-picker v-model="ruleForm.timeClose" @change="setTimeClose"  placeholder="请选择休眠时间" :style="style" :disabled='disabled || disabledTime'></el-time-picker>
+        <el-time-picker v-model="ruleForm.timeClose" @change="setTimeClose"  placeholder="请选择休眠时间" format='HH:mm' value-format='HH:mm' :style="style" :disabled='disabled || disabledTime'></el-time-picker>
       </el-form-item>
       <el-form-item label="唤醒时间" prop="timeOpen">
-        <el-time-picker v-model="ruleForm.timeOpen" @change="setTimeOpen" placeholder="请选择唤醒时间" :style="style" :disabled='disabled || disabledTime'></el-time-picker>
+        <el-time-picker v-model="ruleForm.timeOpen" @change="setTimeOpen" placeholder="请选择唤醒时间" format='HH:mm' value-format='HH:mm' :style="style" :disabled='disabled || disabledTime'></el-time-picker>
       </el-form-item>
       <!-- <el-form-item label="媒体音量" prop="stateVolume">
         <el-slider
@@ -75,18 +75,22 @@ export default {
       return this.info.id ? this.info.id : undefined
     },
     disabledTime () {
-      return !!this.ruleForm.timeControl
+      return this.ruleForm.lightControl === 1
+    },
+    disbledLigthSwitch () {
+      return this.ruleForm.lightControl === 0
     }
   },
 
   data () {
     return {
+      lightSwitch: false,
       ruleForm: {
         timeControl: '',
-        timeClose: '',
-        timeOpen: '',
+        timeClose: '00:00',
+        timeOpen: '00:00',
         lightControl: 0,
-        lightBrightness: '100',
+        lightBrightness: 1,
         stateOrient: '',
         stateVolume: 10,
         stateLogo: '',
@@ -97,16 +101,12 @@ export default {
       }
     }
   },
-
-  async mounted () {
-    this.assginFormData(this.info)
-  },
-
   methods: {
     assginFormData (obj) {
       Object.keys(this.ruleForm).forEach(key => {
-        this.ruleForm[key] = obj[key]
+        this.ruleForm[key] = obj[key] !== undefined ? obj[key] : this.ruleForm[key]
       })
+      console.log(this.ruleForm)
     },
 
     async setTimeControl () {
@@ -166,8 +166,19 @@ export default {
     }
   },
   watch: {
-    info (n, o) {
-      this.assginFormData(n)
+    info: {
+      handler: function (n, o) {
+        this.assginFormData(n)
+        this.ruleForm.lightBrightness > 0 ? this.lightSwitch = true : this.lightSwitch = false
+      },
+      immediate: true
+    },
+    lightSwitch (newVal, oldVal) {
+      if (newVal) {
+        this.ruleForm.lightBrightness = 100
+      } else {
+        this.ruleForm.lightBrightness = 0
+      }
     }
   }
 }

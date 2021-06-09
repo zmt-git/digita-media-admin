@@ -27,8 +27,8 @@
       >
       <transition-group name="cell" tag="div">
         <card-play-list
-          :key='item.id'
           v-for="item in scenesList"
+          :key='item.id'
           :info='item'
           :length.sync='item.length'
           :disabled="disabled"
@@ -40,22 +40,19 @@
       </draggable>
       <card-play-list
         isAdd
-        @add='showDrawer'
+        @add='addPlaylist'
       ></card-play-list>
     </div>
-    <base-drawer-media :visible.sync='visible' @add='addPlaylist'></base-drawer-media>
   </div>
 </template>
 
 <script>
 import CardPlayList from './CardPlayList.vue'
-import BaseDrawerMedia from './BaseDrawerMedia.vue'
-
 import { playlistType } from '@/data/common'
 import draggable from 'vuedraggable'
 import { lengthMedia } from '@/api/media'
 export default {
-  components: { CardPlayList, draggable, BaseDrawerMedia },
+  components: { CardPlayList, draggable },
 
   name: 'play-lsit',
 
@@ -100,14 +97,6 @@ export default {
     des () {
       return playlistType[this.scenes].find(item => item.type === this.type).des
     },
-    scenesList () {
-      try {
-        return JSON.parse(this.playlist[this.index].content)
-      } catch (e) {
-        console.log(e)
-        return []
-      }
-    },
     length () {
       return this.scenesList.length
     }
@@ -116,7 +105,21 @@ export default {
   data () {
     return {
       visible: false,
-      target: null
+      target: null,
+      scenesList: []
+    }
+  },
+
+  watch: {
+    playlist: {
+      handler: function (newVal, oldVal) {
+        try {
+          this.scenesList = JSON.parse(newVal[this.index].content)
+        } catch (e) {
+          this.scenesList = []
+        }
+      },
+      immediate: true
     }
   },
 
@@ -133,16 +136,12 @@ export default {
       })
     },
 
-    showDrawer () {
-      this.visible = true
-    },
-
-    addPlaylist (publishList) {
-
-    },
-
     updateInfo () {
       this.$emit('updateInfo', this.info)
+    },
+
+    addPlaylist () {
+      this.$emit('addPlaylist', this.index)
     },
 
     async setLength (target, value) {
@@ -156,11 +155,24 @@ export default {
     },
 
     move (direction, target) {
-      this.$emit('move', direction, target, this.index)
+      const currentIndex = this.scenesList.indexOf(target)
+      if (direction === 'right' && currentIndex < this.length) {
+        const nextItem = this.scenesList[currentIndex + 1]
+        this.scenesList.splice(currentIndex, 2, nextItem, target)
+      } else if (direction === 'left' && currentIndex !== 0) {
+        const nextItem = this.scenesList[currentIndex - 1]
+        this.scenesList.splice(currentIndex - 1, 2, target, nextItem)
+      }
+
+      this.updatePlaylist()
     },
 
     end () {
+      this.updatePlaylist()
+    },
 
+    updatePlaylist () {
+      this.$emit('updatePlaylist', this.scenesList, this.index)
     }
   }
 }
