@@ -23,6 +23,7 @@
         :disabled="disabled"
         :group="type"
         :touchStartThreshold='0'
+        @end='end'
       >
       <transition-group name="cell" tag="div">
         <card-play-list
@@ -156,6 +157,10 @@ export default {
 
     move (direction, target) {
       this.$emit('move', direction, target, this.index)
+    },
+
+    end () {
+
     }
   }
 }
