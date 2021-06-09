@@ -133,10 +133,20 @@ export const asyncRoutes = [
         meta: {
           title: '意见建议',
           icon: 'icon-jianyi',
-          auth: [2],
-          btn: ['删除']
+          auth: [2]
         },
         component: () => lazyComponent(import('@/views/suggest/index.vue'))
+      },
+      {
+        name: 'server',
+        path: '/system/server',
+        hidden: false,
+        meta: {
+          title: '服务器配置',
+          icon: 'icon-fuwuqi1',
+          auth: [2]
+        },
+        component: () => lazyComponent(import('@/views/server/index.vue'))
       }
     ]
   }

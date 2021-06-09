@@ -63,6 +63,8 @@ export default {
 }
 .title{
   font-size: 16px;
+  width: 100%;
+  text-align: center;
 }
 .active{
   // background: linear-gradient(135deg, transparent 5px, #ffffff 0) top left,

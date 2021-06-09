@@ -6,6 +6,7 @@
  * @LastEditors: ZMT
  * @LastEditTime: 2021-06-06 22:18:55
  */
+// 添加设备步骤 已废弃-------------------------------------------------------------------------------------------
 export const deviceAddSteps = Object.freeze([
   { title: '添加设备', icon: 'icon-del' },
   { title: '设置参数', icon: 'icon-peizhi' },
@@ -13,11 +14,19 @@ export const deviceAddSteps = Object.freeze([
   { title: '设置播放列表', icon: 'icon-duomeit' }
 ])
 
+// 电话号码 正则-------------------------------------------------------------------------------------------
 export const telReg = /^1[3-9]\d{9}$/
+
+// 验证码 正则-------------------------------------------------------------------------------------------
 export const codeReg = /^\d{4}$/
+
+// 公司代码 正则-------------------------------------------------------------------------------------------
 export const companyCodeReg = /[A-Z0-9]{8}-[A-Z0-9]$|[A-Z0-9]{8}-[A-Z0-9]-[0-9]{2}$/
+
+// 身份证 正则-------------------------------------------------------------------------------------------
 export const idCardReg = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
 
+// 任务状态 -------------------------------------------------------------------------------------------
 export const jobState = Object.freeze([
   { type: 'error', name: '失败', state: -1 },
   { type: 'success', name: '成功', state: 1 },
@@ -25,6 +34,7 @@ export const jobState = Object.freeze([
   { type: 'warning', name: '等待', state: 0 }
 ])
 
+// 行业 -------------------------------------------------------------------------------------------
 export const tradeType = Object.freeze([
   { name: '美食餐饮', val: 1 },
   { name: '服装服饰', val: 2 },
@@ -41,12 +51,14 @@ export const tradeType = Object.freeze([
   { name: '其他行业', val: 13 }
 ])
 
+// 上传媒体类型 -------------------------------------------------------------------------------------------
 export const mediaType = Object.freeze([
   // { type: 'video/mp4', mediaType: 0 },
   { type: 'image/png', mediaType: 2 },
   { type: 'image/jpeg', mediaType: 1 }
 ])
 
+// 建议类型 -------------------------------------------------------------------------------------------
 export const SuggestType = Object.freeze([
   { value: 1, title: '产品建议', des: '请输入您对XX智能产品在XX场景下的改进建议或体验类问题' },
   { value: 2, title: '功能缺陷', des: '请输入您在使用智能产品过程中遇到的阻断或影响正常使用的缺陷类问题' },
@@ -54,6 +66,7 @@ export const SuggestType = Object.freeze([
   { value: 4, title: '其他', des: '请输入使用智能产品过程中的咨询类问题，如账号、云空间等相关问题' }
 ])
 
+// 设备类型-------------------------------------------------------------------------------------------
 export const deviceType = Object.freeze([
   { value: 'ELF-A', label: 'ELF-A', scenes: { weatherScenes: ['sunny'] } },
   { value: 'ELF-T1-W', label: 'ELF-T1-W', scenes: { weatherScenes: ['sunny', 'fog', 'rain-snow'], roadScenes: ['construction', 'trafficAccident'], customizeScenes: ['customize1', 'customize2'] } },
@@ -62,6 +75,7 @@ export const deviceType = Object.freeze([
   { value: 'ELF-T2-RG', label: 'ELF-T2-RG', scenes: { lightScenes: ['red', 'green'] } }
 ])
 
+// 设备播放方向 -------------------------------------------------------------------------------------------
 export const orientOptions = Object.freeze([
   { value: 0, label: '横屏向右' },
   { value: 1, label: '竖屏向上' },
@@ -69,6 +83,7 @@ export const orientOptions = Object.freeze([
   { value: 9, label: '竖屏向下' }
 ])
 
+// 切换场景 -------------------------------------------------------------------------------------------
 export const scenesOptions = Object.freeze([
   { value: 0, label: '默认场景' },
   { value: 1, label: '浓雾天气' },
@@ -79,6 +94,7 @@ export const scenesOptions = Object.freeze([
   { value: 6, label: '绿灯' }
 ])
 
+// 天气场景-------------------------------------------------------------------------------------------
 const weatherScenes = Object.freeze([
   { type: 'sunny', title: '默认场景', des: '适用于一般情况下的播放列表' },
   { type: 'cloudy', title: '多云天气', des: '适用于一般情况下的播放列表' },
@@ -101,24 +117,36 @@ const weatherScenes = Object.freeze([
   { type: 'unknown', title: '未知', des: '适用于一般情况下的播放列表' }
 ])
 
+// 道路场景-------------------------------------------------------------------------------------------
 const roadScenes = Object.freeze([
   { type: 'construction', title: '道路施工', des: '适用于前方道路施工时' },
   { type: 'trafficAccident', title: '交通事故', des: '适用于前方交通事故时' }
 ])
 
+// 自定义场景-------------------------------------------------------------------------------------------
 const customizeScenes = Object.freeze([
   { type: 'customize1', title: '自定义场景1', des: '用户可根据需要自行配置' },
   { type: 'customize2', title: '自定义场景2', des: '用户可根据需要自行配置' }
 ])
 
+// 交通灯场景-------------------------------------------------------------------------------------------
 const lightScenes = Object.freeze([
   { type: 'red', title: '红灯', des: '适用于红灯亮起情况下的播放列表' },
   { type: 'green', title: '绿灯', des: '适用于绿灯亮起情况下的播放列表' }
 ])
 
+// 场景集合-------------------------------------------------------------------------------------------
 export const playlistType = Object.freeze({
   weatherScenes,
   roadScenes,
   customizeScenes,
   lightScenes
 })
+
+// 媒体服务器类型-------------------------------------------------------------------------------------------
+export const serverType = Object.freeze([
+  { value: 1, name: '七牛' },
+  { value: 2, name: '阿里云' },
+  { value: 3, name: '腾讯云' },
+  { value: 4, name: 'Minio' }
+])
