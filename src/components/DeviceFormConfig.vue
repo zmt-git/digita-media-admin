@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { timeDevice, volumeDevice, lightDevice } from '@/api/device'
+import { timeDevice, lightDevice } from '@/api/device'
 import prompt from '@/mixins/prompt'
 export default {
   name: 'device-form-config',
@@ -124,16 +124,6 @@ export default {
     async setTimeOpen () {
       this.$emit('update:loading', true)
       await this.setTime()
-      this.$emit('updateInfo')
-    },
-
-    async setStateVolume () {
-      this.$emit('update:loading', true)
-      await volumeDevice(this.id, this.ruleForm)
-        .then(res => {
-          this.prompt(res.state)
-        })
-        .catch(e => console.log(e))
       this.$emit('updateInfo')
     },
 
