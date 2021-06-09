@@ -87,7 +87,7 @@ export default {
 
   computed: {
     img () {
-      return !this.isAddCard && this.info.addressOld ? this.info.addressOld : require('../assets/device/empty.png')
+      return !this.isAddCard && this.info.addressOld ? this.info.addressOld : require('../assets/common/empty.png')
     }
   },
 

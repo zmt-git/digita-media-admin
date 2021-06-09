@@ -56,7 +56,7 @@ export default {
 
   computed: {
     src () {
-      return !this.isAdd && this.info.addressOld ? this.info.addressOld : require('../assets/device/empty.png')
+      return !this.isAdd && this.info.addressOld ? this.info.addressOld : require('../assets/common/empty.png')
     }
   },
 

@@ -64,7 +64,7 @@ export const asyncRoutes = [
         meta: {
           title: '媒体',
           auth: [0, 1, 2],
-          icon: 'icon-meitiliebiao'
+          icon: 'icon-liumeitimeitiliebiao'
         },
         component: () => lazyComponent(import('@/views/media/index.vue'))
       },

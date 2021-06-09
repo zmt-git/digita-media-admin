@@ -72,7 +72,7 @@ export default {
 
   computed: {
     img () {
-      return this.info.addressOld ? this.info.addressOld : require('../assets/device/empty.png')
+      return this.info.addressOld ? this.info.addressOld : require('../assets/common/empty.png')
     },
 
     active () {

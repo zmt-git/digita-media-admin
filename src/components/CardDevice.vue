@@ -10,7 +10,7 @@
   <li class="detail-device box-shadow radius-10" @click="setup">
     <!-- <div class="mask" v-if="this.info.stateOnline !== 1"></div> -->
     <div class="detail-device-status">
-      <img class="detail-device-status_img" src="../assets/test/device.png" alt="设备图片">
+      <img class="detail-device-status_img" src="../assets/device/device.png" alt="设备图片">
       <div class="detail-device-info">
         <!-- <base-storage :info='info'></base-storage> -->
         <div class="detail-device-info-item" :title="type">

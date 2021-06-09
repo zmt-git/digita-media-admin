@@ -1,5 +1,5 @@
 <template>
-  <img class="empty" src="../assets/device/empty.png" alt="">
+  <img class="empty" src="../assets/common/empty.png" alt="">
 </template>
 
 <script>

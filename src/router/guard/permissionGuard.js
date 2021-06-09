@@ -9,11 +9,13 @@
 import { getToken, removeToken } from '@/utils/cache/cacheToken'
 import { asyncRoutes } from '@/router/routes/asyncRouters'
 import { routesFilter } from '@/utils/auth'
+import { getPageTitle } from '@/utils/getPageTitle'
 import store from '@/store'
 const WHITE_LIST = ['/login', '/404', '/401', '/500', '/register', '/userAgreement']
 
 export function createPermission (router) {
   router.beforeEach(async (to, from, next) => {
+    document.title = getPageTitle(to.meta.title)
     if (getToken()) {
       if (store.getters.load) {
         if (to.path === 'login') {
