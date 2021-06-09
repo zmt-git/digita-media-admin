@@ -5,7 +5,7 @@
 </template>
 
 <style lang="scss">
-@import url('//at.alicdn.com/t/font_2569984_hesh8h576yf.css');
+@import url('//at.alicdn.com/t/font_2569984_owamziv4qah.css');
 #app{
   width: 100%;
   height: 100%;

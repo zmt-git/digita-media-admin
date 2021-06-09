@@ -132,7 +132,7 @@ export const asyncRoutes = [
         hidden: false,
         meta: {
           title: '意见建议',
-          icon: 'icon-jianyi',
+          icon: 'icon-yijianliebiao',
           auth: [2]
         },
         component: () => lazyComponent(import('@/views/suggest/index.vue'))
