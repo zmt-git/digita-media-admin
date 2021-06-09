@@ -21,14 +21,6 @@ export function directionDevice (devid, params) {
   })
 }
 
-export function scenesDevice (devid, params) {
-  return http({
-    url: `/device/device/scenes/${devid}`,
-    method: 'POST',
-    params
-  })
-}
-
 // /device/device/info/{devid}
 // 设置信息提示
 export function infoDevicePost (id, params) {
@@ -63,26 +55,6 @@ export function lightDevice (devid, params) {
 export function listDevice (params) {
   return http({
     url: '/device/device/list',
-    method: 'GET',
-    params
-  })
-}
-
-// /device/device/list/publish
-// 媒体已发布设备列表
-export function publishDevice (params) {
-  return http({
-    url: '/device/device/list/publish',
-    method: 'GET',
-    params
-  })
-}
-
-// /device/device/list/unpublish
-// 媒体未发布设备列表
-export function unpublishDevice (params) {
-  return http({
-    url: '/device/device/list/unpublish',
     method: 'GET',
     params
   })
@@ -181,6 +153,14 @@ export function uploadLogDevice (devid, params) {
 export function volumeDevice (devid, params) {
   return http({
     url: `/device/device/volume/${devid}`,
+    method: 'POST',
+    params
+  })
+}
+
+export function scenesDevice (devid, params) {
+  return http({
+    url: `/device/device/scenes/${devid}`,
     method: 'POST',
     params
   })

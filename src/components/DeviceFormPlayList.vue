@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="play-list-content clear">
-      <draggable v-model="publishList"
+      <draggable v-model="scenesList"
         ref="draggable"
         chosenClass="chosen"
         forceFallback
@@ -27,7 +27,7 @@
       <transition-group name="cell" tag="div">
         <card-play-list
           :key='item.id'
-          v-for="item in publishList"
+          v-for="item in scenesList"
           :info='item'
           :length.sync='item.length'
           :disabled="disabled"
@@ -42,7 +42,7 @@
         @add='showDrawer'
       ></card-play-list>
     </div>
-    <base-drawer-media :visible.sync='visible' :playlist="unpublishList" @add='addPlaylist'></base-drawer-media>
+    <base-drawer-media :visible.sync='visible' @add='addPlaylist'></base-drawer-media>
   </div>
 </template>
 
@@ -53,7 +53,6 @@ import BaseDrawerMedia from './BaseDrawerMedia.vue'
 import { playlistType } from '@/data/common'
 import draggable from 'vuedraggable'
 import { lengthMedia } from '@/api/media'
-import { allListPlaylist, deletePlaylist } from '@/api/playList'
 export default {
   components: { CardPlayList, draggable, BaseDrawerMedia },
 
@@ -63,6 +62,14 @@ export default {
     info: {
       type: Object,
       default: () => {}
+    },
+    playlist: {
+      type: Array,
+      default: () => []
+    },
+    index: {
+      type: Number,
+      default: 0
     },
     loading: {
       type: Boolean,
@@ -92,8 +99,11 @@ export default {
     des () {
       return playlistType[this.scenes].find(item => item.type === this.type).des
     },
+    scenesList () {
+      return this.playlist[this.index]
+    },
     length () {
-      return this.publishList.length
+      return this.scenesList.length
     },
     id () {
       return this.info.id
@@ -103,25 +113,8 @@ export default {
   data () {
     return {
       visible: false,
-      target: null,
-      publishList: [{ id: 1, src: '', length: 61 },
-        { id: 2, src: '', length: 62 },
-        { id: 3, src: '', length: 63 },
-        { id: 4, src: '', length: 64 },
-        { id: 5, src: '', length: 65 },
-        { id: 6, src: '', length: 66 },
-        { id: 7, src: '', length: 67 },
-        { id: 9, src: '', length: 68 }
-      ],
-      unpublishList: [
-        { id: 1, src: '', length: 61, mediaType: 1, oldSize: 30 },
-        { id: 2, src: '', length: 61, mediaType: 0, oldSize: 30 }
-      ]
+      target: null
     }
-  },
-
-  mounted () {
-    this.getPlayList()
   },
 
   methods: {
@@ -141,21 +134,12 @@ export default {
       this.visible = true
     },
 
-    addPlaylist (publishList, unpublishList) {
-      this.publishList = this.publishList.concat(publishList)
-      this.unpublishList = unpublishList
+    addPlaylist (publishList) {
+
     },
 
     updateInfo () {
       this.$emit('updateInfo', this.info)
-    },
-
-    getPlayList () {
-      return allListPlaylist(this.id)
-        .then(res => {
-          this.publishList = res.list.filter(item => item.state === 1).sort((a, b) => a.sort - b.sort)
-          this.unpublishList = res.list.filter(item => item.state === 0)
-        })
     },
 
     async setLength (target, value) {
@@ -168,45 +152,15 @@ export default {
       this.$emit('update:loading', false)
     },
 
-    getSortParams () {
-      const arr = this.publishList.concat(this.unpublishList)
-
-      const params = []
-
-      arr.forEach(item => {
-        const obj = {}
-        obj.id = item.id
-        obj.sort = item.sorts
-        obj.state = item.state
-        params.push(obj)
-      })
-
-      return JSON.stringify(params).slice(1, -1)
-    },
-
-    async updateList (info) {
-      const params = this.getSortParams()
-      this.$emit('update:loading', true)
-      await deletePlaylist({ playlistArr: params })
-        .then(res => {
-          this.prompt(res.state)
-          return true
-        })
-        .catch(e => {
-          console.log(e)
-          return false
-        })
-      this.$emit('update:loading', false)
-    },
-
+    // todo
     move (direction, target) {
-      const currentIndex = this.publishList.indexOf(target)
+      const currentIndex = this.scenesList.indexOf(target)
       if (direction === 'right' && currentIndex < this.length) {
-        const nextItem = this.publishList[currentIndex + 1]
-        this.publishList.splice(currentIndex, 2, nextItem, target)
+        const nextItem = this.scenesList[currentIndex + 1]
+        this.scenesList.splice(currentIndex, 2, nextItem, target)
       } else if (direction === 'left' && currentIndex !== 0) {
-        const nextItem = this.publishList[currentIndex - 1]
-        this.publishList.splice(currentIndex - 1, 2, target, nextItem)
+        const nextItem = this.scenesList[currentIndex - 1]
+        this.scenesList.splice(currentIndex - 1, 2, target, nextItem)
       }
     }
   }

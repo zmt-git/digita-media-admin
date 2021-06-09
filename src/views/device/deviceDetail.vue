@@ -26,12 +26,14 @@
         <template v-for="(item, key) in scenes">
           <device-form-play-list
             v-for="i in item"
-            :key="i"
-            :type='i'
+            :key="i.type"
+            :type='i.type'
             :scenes='key'
             :loading.sync='loading'
             :info='info'
             :disabled='disabled'
+            :playlist='playlist'
+            :index='i.index'
             @updateInfo='updateInfo'
           >
           </device-form-play-list>
@@ -53,6 +55,7 @@ import DeviceFormSystem from '@/components/DeviceFormSystem.vue'
 import DeviceState from '@/components/DeviceState.vue'
 import DeviceInfo from '@/components/DeviceInfo.vue'
 import { infoDevice } from '@/api/device'
+import { getPlaylist } from '@/api/playlist'
 import { deviceType } from '@/data/common'
 export default {
   name: 'device-detail',
@@ -76,21 +79,32 @@ export default {
       timmer: null,
       count: 0,
       id: null,
-      info: {}
+      info: {},
+      playlist: []
     }
   },
 
-  created () {
+  async created () {
+    this.loading = true
     this.id = this.$route.query.id
-    this.getDeviceDetail()
+    await this.getDeviceDetail()
+    await this.getPlaylists()
+    this.loading = false
   },
 
   methods: {
     getDeviceDetail () {
       return infoDevice(this.id)
         .then(res => {
-          res.data.type = 'ELF-T1-W'
           this.info = res.data
+        })
+        .catch(e => console.log(e))
+    },
+
+    getPlaylists () {
+      return getPlaylist(this.id)
+        .then(res => {
+          this.playlist = res.list
         })
         .catch(e => console.log(e))
     },

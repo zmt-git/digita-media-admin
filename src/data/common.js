@@ -67,12 +67,16 @@ export const SuggestType = Object.freeze([
 ])
 
 // 设备类型-------------------------------------------------------------------------------------------
+const scenesA = { weatherScenes: [{ type: 'sunny', index: 0 }] }
+const scenesRG = { lightScenes: [{ type: 'red', index: 0 }, { type: 'green', index: 1 }] }
+const scenesW = { weatherScenes: [{ type: 'sunny', index: 0 }, { type: 'fog', index: 1 }, { type: 'rain-snow', index: 2 }], roadScenes: [{ type: 'construction', index: 3 }, { type: 'trafficAccident', index: 4 }], customizeScenes: [{ type: 'customize1', index: 5 }, { type: 'customize2', index: 6 }] }
+
 export const deviceType = Object.freeze([
-  { value: 'ELF-A', label: 'ELF-A', scenes: { weatherScenes: ['sunny'] } },
-  { value: 'ELF-T1-W', label: 'ELF-T1-W', scenes: { weatherScenes: ['sunny', 'fog', 'rain-snow'], roadScenes: ['construction', 'trafficAccident'], customizeScenes: ['customize1', 'customize2'] } },
-  { value: 'ELF-T1-RG', label: 'ELF-T1-RG', scenes: { lightScenes: ['red', 'green'] } },
-  { value: 'ELF-T2-W', label: 'ELF-T2-W', scenes: { weatherScenes: ['sunny', 'fog', 'rain-snow'], roadScenes: ['construction', 'trafficAccident'], customizeScenes: ['customize1', 'customize2'] } },
-  { value: 'ELF-T2-RG', label: 'ELF-T2-RG', scenes: { lightScenes: ['red', 'green'] } }
+  { value: 'ELF-A', label: 'ELF-A', scenes: scenesA },
+  { value: 'ELF-T1-W', label: 'ELF-T1-W', scenes: scenesW },
+  { value: 'ELF-T1-RG', label: 'ELF-T1-RG', scenes: scenesRG },
+  { value: 'ELF-T2-W', label: 'ELF-T2-W', scenes: scenesW },
+  { value: 'ELF-T2-RG', label: 'ELF-T2-RG', scenes: scenesRG }
 ])
 
 // 设备播放方向 -------------------------------------------------------------------------------------------
