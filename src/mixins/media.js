@@ -13,7 +13,11 @@ export default {
       return this.mediaType === 'MP4' ? 'icon-icon_moments_mp4' : 'icon-tupian1'
     },
     oldSize () {
-      return this.info.size ? (this.info.size / 1024).toFixed(2) + 'MB' : '0MB'
+      if (this.mediaType === 'MP4') {
+        return this.info.size ? (this.info.size / 1024).toFixed(2) + 'MB' : '0MB'
+      } else {
+        return this.info.size ? this.info.size + 'KB' : '0KB'
+      }
     },
     state () {
       return this.info && this.info.state !== 1
