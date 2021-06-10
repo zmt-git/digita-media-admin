@@ -29,7 +29,7 @@
       <card-device :info='item' v-for="item in pageList" :key='item.id' @setup='setup'></card-device>
     </ul>
     <base-backtop :total='pageTotal' :currentNum='lengthList'></base-backtop>
-    <base-page-loading :loading='pageLoading' :noMore='noMore'></base-page-loading>
+    <base-page-loading :loading='pageLoading' :noMore='noMore' :list='pageList'></base-page-loading>
   </div>
 </div>
 </template>

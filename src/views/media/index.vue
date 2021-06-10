@@ -33,7 +33,7 @@
           </el-upload>
         </card-media>
         <card-media v-for="item in pageList" :key="item.id" :info='item' @delete='deleteMedia'></card-media>
-        <base-page-loading :loading='pageLoading' :noMore='noMore'></base-page-loading>
+        <base-page-loading :loading='pageLoading' :noMore='noMore' :list='pageList'></base-page-loading>
       </ul>
     </div>
     <media-delete-dialog :visible.sync="dialogVisible" @confirm='deleteConfirm'></media-delete-dialog>

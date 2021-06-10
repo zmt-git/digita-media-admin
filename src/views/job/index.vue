@@ -26,7 +26,7 @@
           </card-task>
         </el-timeline-item>
       </el-timeline>
-      <base-page-loading :loading='pageLoading' :noMore='noMore'></base-page-loading>
+      <base-page-loading :loading='pageLoading' :noMore='noMore' :list='pageList'></base-page-loading>
     </div>
   </div>
 </template>
