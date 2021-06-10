@@ -3,23 +3,17 @@ import { deleteMedia } from '@/api/media'
 export default {
   computed: {
     mediaName () {
-      return this.info.mediaType === 0 ? '视频媒体' : '图片媒体'
+      return this.getType() === 'MP4' ? '视频媒体' : '图片媒体'
     },
 
     mediaType () {
-      if (this.info.mediaType === 0) {
-        return 'MP4'
-      } else if (this.info.mediaType === 1) {
-        return 'JPG'
-      } else {
-        return 'PNG'
-      }
+      return this.getType()
     },
     mediaIcon () {
-      return this.info.mediaType === 0 ? 'icon-icon_moments_mp4' : 'icon-tupian1'
+      return this.mediaType === 'MP4' ? 'icon-icon_moments_mp4' : 'icon-tupian1'
     },
     oldSize () {
-      return this.info.oldSize ? (this.info.oldSize / 1024).toFixed(2) + 'MB' : '0MB'
+      return this.info.size ? (this.info.size / 1024).toFixed(2) + 'MB' : '0MB'
     },
     state () {
       return this.info && this.info.state !== 1
@@ -36,6 +30,13 @@ export default {
   },
 
   methods: {
+    getType () {
+      try {
+        return this.info.name.split('.').pop().toUpperCase()
+      } catch (e) {
+        return 'PNG'
+      }
+    },
     getState (state) {
       // -1：删除，0，审核中，-2，审核失败，1：正常；
       let obj = { name: '审核中', type: 'primary' }
@@ -58,7 +59,7 @@ export default {
         isDeletMedia: checked ? 1 : 0
       }
       this.loading = true
-      await deleteMedia(params)
+      await deleteMedia(this.targetMedia.id, params)
         .then(res => {
           if (res.state === 1) {
             this.$message({ message: '删除成功', type: 'success' })

@@ -78,22 +78,22 @@ export default {
   mixins: [prompt],
 
   data () {
-    const validateCode = async (rule, value, callback) => {
-      if (value) {
-        try {
-          const result = await this.registerDevice(value)
-          if (result) {
-            callback(new Error('设备未注册'))
-          } else {
-            callback()
-          }
-        } catch (e) {
-          callback(new Error(e))
-        }
-      } else {
-        callback()
-      }
-    }
+    // const validateCode = async (rule, value, callback) => {
+    //   if (value) {
+    //     try {
+    //       const result = await this.registerDevice(value)
+    //       if (result) {
+    //         callback(new Error('设备未注册'))
+    //       } else {
+    //         callback()
+    //       }
+    //     } catch (e) {
+    //       callback(new Error(e))
+    //     }
+    //   } else {
+    //     callback()
+    //   }
+    // }
 
     return {
       options: deviceType,
@@ -110,8 +110,8 @@ export default {
         name: [{ required: true, message: '请输入设备名称', trigger: 'blur' }],
         location: [{ required: true, message: '请输入安装位置', trigger: 'blur' }],
         code: [
-          { required: true, pattern: /^(e|E)(l|L)(f|F)/, message: '设备编码应以ELF开头' },
-          { validator: validateCode, trigger: 'blur', required: true }
+          { required: true, pattern: /^(e|E)(l|L)(f|F)/, message: '设备编码应以ELF开头' }
+          // { validator: validateCode, trigger: 'blur', required: true }
         ],
         type: [{ required: true, message: '请选择设备类型', trigger: 'change' }],
         orient: [{ required: true, message: '请选择安装方向', trigger: 'change' }]
@@ -172,15 +172,18 @@ export default {
 }
 .img{
   width: 346px;
+  min-width: 346px;
   height: 372px;
   margin-right: 30px;
   /deep/ .el-image__inner{
+    min-width: 346px;
     width: 346px;
     height: 372px;
   }
 }
 .demo-ruleForm{
   width: 400px;
+  min-width: 300px;
 }
 .btn{
   width: 100%;

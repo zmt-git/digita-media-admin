@@ -9,9 +9,9 @@
 import http from '@/utils/http/axios'
 
 // /device/media/delete 删除媒体信息
-export function deleteMedia (params) {
+export function deleteMedia (id, params) {
   return http({
-    url: '/device/media/delete',
+    url: `/device/media/delete/${id}`,
     method: 'POST',
     params
   })

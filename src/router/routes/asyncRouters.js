@@ -5,6 +5,7 @@ export const asyncRoutes = [
   {
     path: '/device',
     hidden: false,
+    name: 'device',
     meta: {
       title: '设备',
       auth: [0, 1, 2],
@@ -14,7 +15,7 @@ export const asyncRoutes = [
     redirect: '/device/deviceList',
     children: [
       {
-        name: 'device',
+        name: 'deviceList',
         path: 'deviceList',
         hidden: false,
         meta: {
@@ -25,8 +26,8 @@ export const asyncRoutes = [
         component: () => lazyComponent(import('@/views/device/index.vue'))
       },
       {
-        name: 'detail',
-        path: 'detail',
+        name: 'deviceDetail',
+        path: 'deviceDetail',
         hidden: true,
         meta: {
           title: '设备详情',
@@ -34,6 +35,7 @@ export const asyncRoutes = [
           icon: 'icon-meitiliebiao'
         },
         component: () => lazyComponent(import('@/views/device/deviceDetail.vue'))
+        // component: () => import('@/views/device/deviceDetail.vue')
       },
       {
         name: 'add',
@@ -51,6 +53,7 @@ export const asyncRoutes = [
   {
     path: '/media',
     hidden: false,
+    name: 'media',
     meta: {
       title: '媒体',
       auth: [0, 1, 2],
@@ -60,7 +63,7 @@ export const asyncRoutes = [
     redirect: '/media/mediaList',
     children: [
       {
-        name: 'media',
+        name: 'mediaList',
         path: 'mediaList',
         hidden: false,
         meta: {
@@ -71,8 +74,8 @@ export const asyncRoutes = [
         component: () => lazyComponent(import('@/views/media/index.vue'))
       },
       {
-        name: 'player',
-        path: 'detail',
+        name: 'mediaDetail',
+        path: 'mediaDetail',
         hidden: true,
         meta: {
           title: '媒体播放',
@@ -86,6 +89,7 @@ export const asyncRoutes = [
   {
     path: '/task',
     hidden: false,
+    name: 'task',
     meta: {
       title: '任务',
       auth: [0, 1, 2],
@@ -95,7 +99,7 @@ export const asyncRoutes = [
     redirect: '/task/taskList',
     children: [
       {
-        name: 'task',
+        name: 'taskList',
         path: 'taskList',
         hidden: false,
         meta: {
@@ -109,6 +113,7 @@ export const asyncRoutes = [
   },
   {
     path: '/system',
+    name: 'system',
     hidden: false,
     meta: {
       title: '系统',

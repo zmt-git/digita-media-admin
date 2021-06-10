@@ -311,6 +311,7 @@ $color: #f9ffff;
       height: 100%;
       box-sizing: border-box;
       padding-left: 70px;
+      overflow: auto;
       &_title{
         font-size: 50px;
         margin-top: 60px;
@@ -340,6 +341,7 @@ $color: #f9ffff;
   }
   &-contanier{
     width: 370px;
+    min-width: 370px;
     height: 100%;
     background-color: #ffffffdb;
     box-sizing: border-box;

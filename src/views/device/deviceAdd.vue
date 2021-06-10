@@ -69,7 +69,6 @@ export default {
   methods: {
     submit (info) {
       this.info = info
-      // this.next()
       this.$router.back()
     },
     next () {

@@ -41,6 +41,14 @@ export default {
         this.count--
         this.codeBtnName = `${this.count}s后重新获取`
       }, 1000)
+    },
+
+    clear () {
+      this.timer && clearInterval(this.timer)
+      this.codeDisabled = false
+      this.timer = null
+      this.count = 60
+      this.codeBtnName = '获取验证码'
     }
   }
 }

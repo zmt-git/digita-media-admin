@@ -5,12 +5,12 @@
       <h3 class="title">欢迎注册数字媒体管家</h3>
       <el-form v-show="currentStep === 0" :inline='false' size="small" :model="formMobile" ref="formMobile" class="form" :rules="rulesMobile">
         <el-form-item prop="mobile">
-          <el-input v-model="formMobile.mobile" clearable placeholder="请输入手机号码">
+          <el-input v-model="formMobile.mobile" @keyup.enter.native="next" clearable placeholder="请输入手机号码">
             <i slot="prefix" class="iconfont icon-shoujihaoma prefix-icon"></i>
           </el-input>
         </el-form-item>
         <el-form-item prop="code">
-          <el-input v-model="formMobile.code" clearable placeholder="请输入验证码">
+          <el-input v-model="formMobile.code" clearable placeholder="请输入验证码" @keyup.enter.native="next">
             <i slot="prefix" class="iconfont icon-duanxinyanzhengma prefix-icon"></i>
             <el-button slot="suffix" size="mini" :disabled='codeDisabled || hasMobile' :loading='codeLoading' @click="getCode">{{codeBtnName}}</el-button>
           </el-input>
@@ -251,27 +251,30 @@ export default {
       this.$refs.formMobile.validate(valid => {
         if (valid) {
           this.currentStep = 1
+          this.clear()
         } else {
           console.log('error submit')
         }
       })
     },
     registerUser () {
+      const _this = this
       this.$refs.formInfo.validate(async valid => {
         if (valid) {
-          this.loading = true
-          const params = Object.assign(this.formMobile, this.formInfo)
-          params.city = this.cityCode
+          _this.loading = true
+          console.log(_this.formMobile)
+          const params = Object.assign(_this.formInfo, _this.formMobile)
+          params.city = _this.cityCode
           await registerLogin(params)
             .then(res => {
-              this.$store.commit('set_user', res.data)
+              _this.$store.commit('set_user', res.data)
               setToken(res.data.token)
-              this.$router.push('/device')
+              _this.$router.push('/device')
             })
             .catch(e => {
               console.log(e)
             })
-          this.loading = false
+          _this.loading = false
         } else {
           console.log('error submit')
         }

@@ -137,7 +137,7 @@ export default {
     },
 
     toSuggest () {
-      this.$router.push('/system/suggest/add')
+      this.$router.push('/suggestAdd/add')
     },
 
     logout () {

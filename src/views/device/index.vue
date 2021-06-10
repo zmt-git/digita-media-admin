@@ -58,6 +58,11 @@ export default {
     this.getStatisticsDevice()
   },
 
+  beforeRouteLeave (to, from, next) {
+    console.log(123)
+    next()
+  },
+
   methods: {
     addDevice () {
       this.$router.push('/device/add')
@@ -71,7 +76,7 @@ export default {
       //   })
       //   return
       // }
-      this.$router.push({ path: '/device/detail', query: { id: info.id } })
+      this.$router.push({ path: '/device/deviceDetail', query: { id: info.id } })
     },
 
     getStatisticsDevice () {

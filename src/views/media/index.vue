@@ -32,7 +32,7 @@
             <div class="el-upload__text" style="margin-top: 10px">只能上传jpg/png文件</div>
           </el-upload>
         </card-media>
-        <card-media v-for="item in pageList" :key="item.id" :info='item' :tag='true' @delete='deleteMedia'></card-media>
+        <card-media v-for="item in pageList" :key="item.id" :info='item' @delete='deleteMedia'></card-media>
         <base-page-loading :loading='pageLoading' :noMore='noMore'></base-page-loading>
       </ul>
     </div>
@@ -130,15 +130,15 @@ export default {
     // 获取媒体文件请求参数
     getSaveParams (res, file) {
       this.mediaForm.name = file.name
-      this.mediaForm.oldSize = file.size / 1024
+      this.mediaForm.size = file.size / 1024
       this.mediaForm.mediaType = mediaType.find(item => item.type === file.type).mediaType
-      this.mediaForm.addressOld = res.addressOld
+      this.mediaForm.address = res.url
       this.mediaForm.length = 10
     },
     uploadMediaFile (formData) {
       return uploadMedia(formData)
         .then(res => {
-          return res.data
+          return res
         })
         .catch(e => console.log(e))
     },

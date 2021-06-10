@@ -17,7 +17,7 @@
         <device-form-scenes :info='info' @updateInfo='updateInfo' :loading.sync='loading' :disabled='disabled'></device-form-scenes>
       </div>
       <!-- <base-title type='primary'>系统设置</base-title> -->
-      <div class="device-detail-info-control" v-if="showSystem">
+      <div class="device-detail-info-control" v-if="false">
         <device-form-system :info='info' @updateInfo='updateInfo' :loading.sync='loading' :disabled='disabled'></device-form-system>
       </div>
     </div>
@@ -97,14 +97,13 @@ export default {
   async created () {
     this.loading = true
     this.id = this.$route.query.id
-    this.playChange = false
+    this.playChange = true
     await this.getDeviceDetail()
     await this.getPlaylists()
     this.loading = false
   },
 
   beforeRouteLeave (to, from, next) {
-    console.log(123)
     if (this.playChange) {
       this.$confirm('播放列表已变更，是否更新？', '提示', {
         confirmButtonText: '确定',
