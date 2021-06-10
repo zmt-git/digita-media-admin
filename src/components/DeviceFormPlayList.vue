@@ -110,19 +110,6 @@ export default {
     }
   },
 
-  watch: {
-    playlist: {
-      handler: function (newVal, oldVal) {
-        try {
-          this.scenesList = JSON.parse(newVal[this.index].content)
-        } catch (e) {
-          this.scenesList = []
-        }
-      },
-      immediate: true
-    }
-  },
-
   methods: {
     deleteMedia (info) {
       this.$confirm('在播放列表中删除该媒体吗？', '提示', {
@@ -130,7 +117,11 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        info.state = -1
+        const index = this.scenesList.findeIndex(item => item.id === info.id)
+        if (index >= 0) {
+          this.scenesList.splice(index, 1)
+          this.updatePlaylist()
+        }
       }).catch(() => {
 
       })
@@ -173,6 +164,19 @@ export default {
 
     updatePlaylist () {
       this.$emit('updatePlaylist', this.scenesList, this.index)
+    }
+  },
+
+  watch: {
+    playlist: {
+      handler: function (newVal, oldVal) {
+        try {
+          this.scenesList = JSON.parse(newVal[this.index].content)
+        } catch (e) {
+          this.scenesList = []
+        }
+      },
+      immediate: true
     }
   }
 }

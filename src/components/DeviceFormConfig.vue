@@ -86,15 +86,10 @@ export default {
     return {
       lightSwitch: false,
       ruleForm: {
-        timeControl: '',
         timeClose: '00:00',
         timeOpen: '00:00',
         lightControl: 0,
-        lightBrightness: 1,
-        stateOrient: '',
-        stateVolume: 10,
-        stateLogo: '',
-        stateInfo: ''
+        lightBrightness: 1
       },
       style: {
         width: '100%'
@@ -106,7 +101,6 @@ export default {
       Object.keys(this.ruleForm).forEach(key => {
         this.ruleForm[key] = obj[key] !== undefined ? obj[key] : this.ruleForm[key]
       })
-      console.log(this.ruleForm)
     },
 
     async setTimeControl () {
@@ -127,14 +121,6 @@ export default {
       this.$emit('updateInfo')
     },
 
-    setTime () {
-      return timeDevice(this.id, this.ruleForm)
-        .then(res => {
-          this.prompt(res.state)
-        })
-        .catch(e => console.log())
-    },
-
     async switchLight () {
       this.$emit('update:loading', true)
       await this.setLight()
@@ -147,8 +133,16 @@ export default {
       this.$emit('updateInfo')
     },
 
+    setTime () {
+      return timeDevice(this.id, { devid: this.info.id, deviceCode: this.info.deviceCode, ...this.ruleForm, timeControl: 1 })
+        .then(res => {
+          this.prompt(res.state)
+        })
+        .catch(e => console.log())
+    },
+
     setLight () {
-      return lightDevice(this.id, this.ruleForm)
+      return lightDevice(this.id, { devid: this.info.id, deviceCode: this.info.deviceCode, ...this.ruleForm })
         .then(res => {
           this.prompt(res.state)
         })

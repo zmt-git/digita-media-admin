@@ -1,9 +1,9 @@
 <template>
   <div class="aside-card">
-    <router-link to="/device/">
+    <router-link to="/device">
       <span class="plate-img"></span>
     </router-link>
-    <base-aside-card :active='route.path === $route.path' v-for="route in routesChildren" :path='route.path' :key='route.path' :title="route.meta.title" :icon='route.meta.icon'></base-aside-card>
+    <base-aside-card :active='route.parentPath + "/" + route.path === $route.path' v-for="route in routesChildren" :path='route.parentPath + "/" + route.path' :key='route.path' :title="route.meta.title" :icon='route.meta.icon'></base-aside-card>
   </div>
 </template>
 
@@ -21,7 +21,12 @@ export default {
     routesChildren () {
       let routesChildren = []
       this.routes.forEach(route => {
-        route.children && route.children.length > 0 ? routesChildren.push(...route.children) : routesChildren.push(route)
+        if (route.children && route.children.length > 0) {
+          route.children.forEach(item => { item.parentPath = route.path })
+          routesChildren.push(...route.children)
+        } else {
+          routesChildren.push(route)
+        }
       })
       routesChildren = routesChildren.filter(route => !route.hidden)
       return routesChildren

@@ -266,7 +266,7 @@ export default {
             .then(res => {
               this.$store.commit('set_user', res.data)
               setToken(res.data.token)
-              this.$router.push('/device/')
+              this.$router.push('/device')
             })
             .catch(e => {
               console.log(e)

@@ -112,8 +112,9 @@ export default {
   align-items: center;
   overflow: auto;
   &-form{
-    width: 400px;
+    width: 800px;
     padding: 20px;
+    overflow: auto;
     // background-color: #fff;
   }
   &-system{

@@ -132,6 +132,7 @@
 import { codeLogin } from '@/api/system/login'
 import smsCode from '@/mixins/smsCode'
 import { telReg, codeReg } from '@/data/common'
+import { removeToken, setToken } from '@/utils/cache/cacheToken'
 
 export default {
   name: 'login',
@@ -208,6 +209,7 @@ export default {
   },
 
   mounted () {
+    removeToken()
     if (this.loginForm.username === '') {
       this.$refs.username.focus()
     } else if (this.loginForm.password === '') {
@@ -225,8 +227,9 @@ export default {
         if (valid) {
           this.loading = true
           this.$store.dispatch('loginActions', this.loginForm)
-            .then(() => {
-              this.$router.push({ path: '/device/' })
+            .then((res) => {
+              setToken(res.token)
+              this.$router.push({ path: '/device' })
               this.loading = false
             })
             .catch((e) => {
@@ -245,8 +248,9 @@ export default {
         if (valid) {
           this.loading = true
           this.$store.dispatch('loginCodeActions', this.codeForm)
-            .then(() => {
-              this.$router.push({ path: '/device/' })
+            .then((res) => {
+              setToken(res.data.token)
+              this.$router.push({ path: '/device' })
               this.loading = false
             })
             .catch((e) => {

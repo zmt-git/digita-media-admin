@@ -24,13 +24,15 @@ export default {
 
   methods: {
     isNotIndex (tag) {
-      return tag.path !== '/device/'
+      return tag.path !== '/device/deviceList'
     },
+
     isActive (route) {
       return route.path === this.$route.path
     },
 
     to (tag) {
+      if (this.$route.path === tag.path) return
       this.$router.push({ path: tag.path, query: tag.query })
     },
 

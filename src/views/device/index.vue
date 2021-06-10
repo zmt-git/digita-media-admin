@@ -16,7 +16,7 @@
     <base-status-card iconClass='icon-lx' title="离线" :number='statistics.offline' type='info'></base-status-card>
     <base-status-card :empty='true'>
       <div class="add" title="添加设备" @click="addDevice">
-        <i class="iconfont icon-add-fill"></i>
+        <i class="iconfont icon-jia"></i>
       </div>
     </base-status-card>
   </div>
@@ -100,7 +100,8 @@ export default {
   text-align: center;
   cursor: pointer;
   & i{
-    font-size: 50px;
+    color: #000;
+    font-size: 30px;
     line-height: 60px;
   }
 }

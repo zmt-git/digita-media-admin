@@ -8,7 +8,7 @@
 -->
 <template>
   <el-aside class="aside" :width='width'>
-    <router-link class="plate" to="/device/">
+    <router-link class="plate" to="/device">
       <!-- <span ref="plateImg" style="backgroundPositionY: 0px" class="plate-img" @mouseover="translate(true)" @mouseout="translate(false)"></span> -->
       <span class="plate-img"></span>
       <transition enter-active-class="animate__animated animate__animated" leave-active-class="animate__animated animate__fadeOut"></transition>

@@ -42,7 +42,7 @@
         </template>
       </div>
       <div class="device-detail-playlist-btn">
-        <el-button type="primary">发布</el-button>
+        <el-button type="primary" @click="setPlaylist">发布</el-button>
       </div>
       <base-drawer-media :visible.sync='visible' :playlist='allMediaList' @add='addPlaylist'></base-drawer-media>
     </div>
@@ -60,7 +60,7 @@ import DeviceInfo from '@/components/DeviceInfo.vue'
 import BaseDrawerMedia from '@/components/BaseDrawerMedia.vue'
 
 import { infoDevice } from '@/api/device'
-import { getPlaylist } from '@/api/playlist'
+import { getPlaylist, updateContent } from '@/api/playlist'
 import { deviceType } from '@/data/common'
 
 export default {
@@ -83,25 +83,44 @@ export default {
       loading: false,
       showSystem: false,
       visible: false,
+      playChange: false,
       timmer: null,
       count: 0,
       currentIndex: 0,
       id: null,
       info: {},
-      playlist: [
-        { content: JSON.stringify([{ id: 1 }, { id: 2 }]) },
-        { content: JSON.stringify([{ id: 1 }, { id: 2 }]) }
-      ],
-      allMediaList: [{ id: 3 }, { id: 4 }]
+      playlist: [],
+      allMediaList: []
     }
   },
 
   async created () {
     this.loading = true
     this.id = this.$route.query.id
+    this.playChange = false
     await this.getDeviceDetail()
-    // await this.getPlaylists()
+    await this.getPlaylists()
     this.loading = false
+  },
+
+  beforeRouteLeave (to, from, next) {
+    console.log(123)
+    if (this.playChange) {
+      this.$confirm('播放列表已变更，是否更新？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        this.loading = true
+        await this.setPlaylistRequest()
+        this.loading = false
+        next()
+      }).catch(() => {
+        next()
+      })
+    } else {
+      next()
+    }
   },
 
   methods: {
@@ -109,6 +128,7 @@ export default {
       return infoDevice(this.id)
         .then(res => {
           this.info = res.data
+          this.info.type = 'ELF-A'
         })
         .catch(e => console.log(e))
     },
@@ -117,6 +137,26 @@ export default {
       return getPlaylist(this.id)
         .then(res => {
           this.playlist = res.list
+        })
+        .catch(e => console.log(e))
+    },
+
+    async setPlaylist () {
+      this.loading = true
+      await this.setPlaylistRequest()
+      this.loading = false
+    },
+
+    setPlaylistRequest () {
+      const ids = []
+      const contents = []
+      this.playlist.forEach(item => {
+        ids.push(item.id)
+        contents.push(item.content)
+      })
+      return updateContent({ devid: this.id, ids: ids, contents: contents })
+        .then(res => {
+          this.$message({ type: 'success', message: '设置播放列表成功' })
         })
         .catch(e => console.log(e))
     },
@@ -130,6 +170,7 @@ export default {
       const target = this.playlist[index]
       target.content = JSON.stringify(arr)
       this.playlist.splice(index, 1, target)
+      this.playChange = true
     },
 
     showDrawer (index) {
@@ -138,10 +179,14 @@ export default {
     },
 
     addPlaylist (arr) {
-      console.log(arr)
-      const originContent = JSON.parse(this.playlist[this.currentIndex].content)
-      const newContent = originContent.concat(arr)
-      this.updatePlaylist(newContent, this.currentIndex)
+      const originContents = JSON.parse(this.playlist[this.currentIndex].content)
+      const lastOrder = originContents.length + 2
+      const addContents = []
+      arr.forEach((item, index) => {
+        addContents.push({ mediaId: arr.id, mediaTime: arr.length, mediaOrder: lastOrder + index })
+      })
+      const newContents = originContents.concat(addContents)
+      this.updatePlaylist(newContents, this.currentIndex)
     },
 
     setSystem () {

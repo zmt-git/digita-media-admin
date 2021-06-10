@@ -7,37 +7,55 @@
  * @LastEditTime: 2021-06-06 16:48:17
 -->
 <template>
-  <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-    <el-form-item label="设备编码" prop="code">
-      <el-input clearable v-model="ruleForm.code"></el-input>
-    </el-form-item>
-    <el-form-item label="设备类型" prop="type">
-      <el-select clearable v-model="ruleForm.type" placeholder="请选择设备类型" style='width: 100%'>
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item label="安装位置" prop="location">
-      <el-input clearable v-model="ruleForm.location" autocomplete="off"></el-input>
-    </el-form-item>
-    <el-form-item label="设备名称" prop="name">
-      <el-input clearable v-model="ruleForm.name" autocomplete="off"></el-input>
-    </el-form-item>
-    <el-form-item>
-      <slot>
-        <el-button class="btn" type="primary" @click="submitForm">添加设备</el-button>
-      </slot>
-    </el-form-item>
-  </el-form>
+  <div class="add-device">
+    <el-image
+      class="img"
+      :src="url"
+      :preview-src-list="[url]">
+    </el-image>
+
+    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+      <el-form-item label="设备编码" prop="code" required>
+        <el-input clearable v-model="ruleForm.code"></el-input>
+      </el-form-item>
+      <el-form-item label="设备类型" prop="type">
+        <el-select clearable v-model="ruleForm.type" placeholder="请选择设备类型" style='width: 100%'>
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="安装位置" prop="location" required>
+        <el-input clearable v-model="ruleForm.location" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="设备名称" prop="name" required>
+        <el-input clearable v-model="ruleForm.name" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="安装方向" prop="orient" required>
+        <el-select clearable v-model="ruleForm.orient" placeholder="请选择设备安装方向" style='width: 100%'>
+          <el-option
+            v-for="item in orientOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <slot>
+          <el-button class="btn" type="primary" @click="submitForm">添加设备</el-button>
+        </slot>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script>
 import { saveDevice, registerDevice } from '@/api/device'
-import { deviceType } from '@/data/common'
+import { deviceType, orient } from '@/data/common'
 import prompt from '@/mixins/prompt'
 export default {
   name: 'device-form-info',
@@ -79,11 +97,14 @@ export default {
 
     return {
       options: deviceType,
+      orientOptions: orient,
+      url: require('../assets/device/orient.png'),
       ruleForm: {
         name: '',
         location: '',
         code: 'ELF',
-        type: ''
+        type: '',
+        orient: ''
       },
       rules: {
         name: [{ required: true, message: '请输入设备名称', trigger: 'blur' }],
@@ -92,7 +113,8 @@ export default {
           { required: true, pattern: /^(e|E)(l|L)(f|F)/, message: '设备编码应以ELF开头' },
           { validator: validateCode, trigger: 'blur', required: true }
         ],
-        type: [{ required: true, message: '请选择设备类型', trigger: 'change' }]
+        type: [{ required: true, message: '请选择设备类型', trigger: 'change' }],
+        orient: [{ required: true, message: '请选择安装方向', trigger: 'change' }]
       }
     }
   },
@@ -143,6 +165,23 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.add-device{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.img{
+  width: 346px;
+  height: 372px;
+  margin-right: 30px;
+  /deep/ .el-image__inner{
+    width: 346px;
+    height: 372px;
+  }
+}
+.demo-ruleForm{
+  width: 400px;
+}
 .btn{
   width: 100%;
 }

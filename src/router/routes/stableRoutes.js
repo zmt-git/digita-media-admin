@@ -54,7 +54,7 @@ export const stableRoutes = [
     children: [
       {
         name: 'suggestAdd',
-        path: '/system/suggest/add',
+        path: 'add',
         hidden: true,
         meta: {
           title: '提交意见建议',
@@ -74,19 +74,6 @@ export const stableRoutes = [
       title: '设备',
       icon: ''
     },
-    component: layout,
-    children: [
-      {
-        name: 'index',
-        path: '/',
-        hidden: true,
-        meta: {
-          auth: [0, 1, 2],
-          title: '设备',
-          icon: ''
-        },
-        component: () => lazyComponent(import('@/views/device/index.vue'))
-      }
-    ]
+    redirect: '/device/deviceList'
   }
 ]

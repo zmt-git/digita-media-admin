@@ -18,8 +18,8 @@ export function createPermission (router) {
     document.title = getPageTitle(to.meta.title)
     if (getToken()) {
       if (store.getters.load) {
-        if (to.path === 'login') {
-          next({ path: '/' })
+        if (to.path === '/login') {
+          next({ path: '/device' })
         } else {
           next()
         }
@@ -43,10 +43,11 @@ export function createPermission (router) {
       if (WHITE_LIST.includes(to.path)) {
         next()
       } else {
-        await store.dispatch('logoutActions')
-          .catch(e => {
-            console.log(e)
-          })
+        try {
+          await store.dispatch('logoutActions')
+        } catch (e) {
+          console.log(e)
+        }
         removeToken()
         next('/login')
       }

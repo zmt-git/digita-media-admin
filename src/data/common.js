@@ -87,16 +87,31 @@ export const orientOptions = Object.freeze([
   { value: 9, label: '竖屏向下' }
 ])
 
-// 切换场景 -------------------------------------------------------------------------------------------
-export const scenesOptions = Object.freeze([
-  { value: 0, label: '默认场景' },
-  { value: 1, label: '浓雾天气' },
-  { value: 2, label: '雨雪天气' },
-  { value: 3, label: '道路施工' },
-  { value: 4, label: '交通事故' },
-  { value: 5, label: '红灯' },
-  { value: 6, label: '绿灯' }
+// 设备安装方向 -------------------------------------------------------------------------------------------
+export const orient = Object.freeze([
+  { value: 0, label: '正向安装' },
+  { value: 8, label: '方向安装' }
 ])
+
+// 切换场景 -------------------------------------------------------------------------------------------
+export const scenesOptions = Object.freeze({
+  A: [
+    { value: 0, label: '默认场景' }
+  ],
+  RG: [
+    { value: 0, label: '红灯' },
+    { value: 1, label: '绿灯' }
+  ],
+  W: [
+    { value: 0, label: '默认场景' },
+    { value: 1, label: '浓雾天气' },
+    { value: 2, label: '雨雪天气' },
+    { value: 3, label: '道路施工' },
+    { value: 4, label: '交通事故' },
+    { value: 5, label: '自定义场景1' },
+    { value: 6, label: '自定义场景2' }
+  ]
+})
 
 // 天气场景-------------------------------------------------------------------------------------------
 const weatherScenes = Object.freeze([

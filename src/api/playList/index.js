@@ -7,3 +7,11 @@ export function getPlaylist (devid) {
     method: 'GET'
   })
 }
+// /update/content
+export function updateContent (data) {
+  return http({
+    url: '/device/playlist//update/content',
+    method: 'POST',
+    data
+  })
+}

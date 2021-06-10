@@ -228,4 +228,12 @@ $iconColor: #ffffff;
   @include color('danger');
   @include bg-color('info-plain')
 }
+.detail-media-src_img {
+  /deep/ .el-image__inner{
+    max-width: 320px;
+    max-height: 180px;
+    width: inherit;
+    height: inherit;
+  }
+}
 </style>

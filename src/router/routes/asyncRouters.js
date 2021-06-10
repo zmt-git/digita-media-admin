@@ -11,10 +11,11 @@ export const asyncRoutes = [
       icon: 'icon-touyingyi'
     },
     component: layout,
+    redirect: '/device/deviceList',
     children: [
       {
         name: 'device',
-        path: '/device/',
+        path: 'deviceList',
         hidden: false,
         meta: {
           title: '设备',
@@ -25,7 +26,7 @@ export const asyncRoutes = [
       },
       {
         name: 'detail',
-        path: '/device/detail',
+        path: 'detail',
         hidden: true,
         meta: {
           title: '设备详情',
@@ -36,7 +37,7 @@ export const asyncRoutes = [
       },
       {
         name: 'add',
-        path: '/device/add',
+        path: 'add',
         hidden: true,
         meta: {
           auth: [0, 1, 2],
@@ -56,10 +57,11 @@ export const asyncRoutes = [
       icon: 'icon-duomeit'
     },
     component: layout,
+    redirect: '/media/mediaList',
     children: [
       {
         name: 'media',
-        path: '/media/',
+        path: 'mediaList',
         hidden: false,
         meta: {
           title: '媒体',
@@ -70,7 +72,7 @@ export const asyncRoutes = [
       },
       {
         name: 'player',
-        path: '/media/detail',
+        path: 'detail',
         hidden: true,
         meta: {
           title: '媒体播放',
@@ -90,10 +92,11 @@ export const asyncRoutes = [
       icon: 'icon-renwu'
     },
     component: layout,
+    redirect: '/task/taskList',
     children: [
       {
         name: 'task',
-        path: '/task/',
+        path: 'taskList',
         hidden: false,
         meta: {
           title: '任务',
@@ -113,10 +116,11 @@ export const asyncRoutes = [
       auth: [2]
     },
     component: layout,
+    redirect: '/system/user',
     children: [
       {
         name: 'user',
-        path: '/system/user',
+        path: 'user',
         hidden: false,
         meta: {
           title: '用户',
@@ -128,7 +132,7 @@ export const asyncRoutes = [
       },
       {
         name: 'suggest',
-        path: '/system/suggest',
+        path: 'suggest',
         hidden: false,
         meta: {
           title: '意见建议',
@@ -139,7 +143,7 @@ export const asyncRoutes = [
       },
       {
         name: 'server',
-        path: '/system/server',
+        path: 'server',
         hidden: false,
         meta: {
           title: '服务器配置',

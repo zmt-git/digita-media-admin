@@ -158,9 +158,11 @@ export function volumeDevice (devid, params) {
   })
 }
 
-export function scenesDevice (devid, params) {
+// 切换场景
+// deviceCode playListNumber
+export function orderNumber (devid, params) {
   return http({
-    url: `/device/device/scenes/${devid}`,
+    url: `/device/device/ordernumber/${devid}`,
     method: 'POST',
     params
   })

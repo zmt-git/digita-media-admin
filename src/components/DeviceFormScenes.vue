@@ -1,9 +1,9 @@
 
 <template>
   <div class="device-form-scenes">
-    <el-form :model="ruleForm" status-icon ref="ruleForm" label-width="70px" class="demo-ruleForm">
+    <el-form status-icon ref="ruleForm" label-width="70px" class="demo-ruleForm">
       <el-form-item label="画面方向" prop="stateOrient">
-        <el-select v-model="ruleForm.stateOrient" placeholder="请选择" :style="style" :disabled='disabled' @change="setStateOrient">
+        <el-select v-model="stateOrient" placeholder="请选择" :style="style" :disabled='disabled' @change="setStateOrient">
           <el-option
             v-for="item in orientOptions"
             :key="item.value"
@@ -13,7 +13,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="切换场景" prop="scenes">
-        <el-select v-model="ruleForm.scenes" placeholder="请选择" :style="style" :disabled='disabled' @change="setScenes">
+        <el-select v-model="ordernumber" placeholder="请选择" :style="style" :disabled='disabled' @change="setOrderNumber">
           <el-option
             v-for="item in scenesOptions"
             :key="item.value"
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { directionDevice, scenesDevice } from '@/api/device'
+import { directionDevice, orderNumber } from '@/api/device'
 import { orientOptions, scenesOptions } from '@/data/common'
 import prompt from '@/mixins/prompt'
 export default {
@@ -53,24 +53,20 @@ export default {
   computed: {
     id () {
       return this.info.id ? this.info.id : undefined
+    },
+    scenesOptions () {
+      if (this.info.type && this.info.type.indexOf('-') >= 0) {
+        const type = this.info.type.split('-').pop()
+        return scenesOptions[type]
+      }
+      return scenesOptions.A
     }
   },
 
   data () {
     return {
-      ruleForm: {
-        timeControl: '',
-        timeClose: '',
-        timeOpen: '',
-        lightControl: 0,
-        lightBrightness: '100',
-        stateOrient: '',
-        stateVolume: 10,
-        stateLogo: '',
-        stateInfo: '',
-        scenes: ''
-      },
-      scenesOptions: scenesOptions,
+      stateOrient: '',
+      ordernumber: '',
       orientOptions: orientOptions,
       style: {
         width: '100%'
@@ -78,20 +74,16 @@ export default {
     }
   },
 
-  async mounted () {
-    this.assginFormData(this.info)
-  },
-
   methods: {
     assginFormData (obj) {
-      Object.keys(this.ruleForm).forEach(key => {
-        this.ruleForm[key] = obj[key]
-      })
+      this.stateOrient = obj.stateOrient
+      this.ordernumber = obj.ordernumber
     },
+
     async setStateOrient () {
       this.$emit('update:loading', true)
 
-      await directionDevice(this.id, this.ruleForm)
+      await directionDevice(this.id, { deviceCode: this.info.deviceCode, devid: this.info.id, stateOrient: this.stateOrient })
         .then(res => {
           this.prompt(res.state)
         })
@@ -99,9 +91,9 @@ export default {
       this.$emit('updateInfo')
     },
 
-    async setScenes () {
+    async setOrderNumber () {
       this.$emit('update:loading', true)
-      await scenesDevice(this.id, this.ruleForm)
+      await orderNumber(this.id, { deviceCode: this.info.deviceCode, devid: this.info.id, playListNumber: this.ordernumber })
         .then(res => {
           this.prompt(res.state)
         })
@@ -110,8 +102,11 @@ export default {
     }
   },
   watch: {
-    info (n, o) {
-      this.assginFormData(n)
+    info: {
+      handler: function (n, o) {
+        this.assginFormData(n)
+      },
+      immediate: true
     }
   }
 }
