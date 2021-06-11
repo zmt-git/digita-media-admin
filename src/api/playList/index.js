@@ -7,11 +7,12 @@ export function getPlaylist (devid) {
     method: 'GET'
   })
 }
-// /update/content
-export function updateContent (data) {
+// /device/playlist/update/content
+// 批量修改播放列表内容
+export function updateContent (params) {
   return http({
-    url: '/device/playlist//update/content',
+    url: '/device/playlist/update/content',
     method: 'POST',
-    data
+    params
   })
 }

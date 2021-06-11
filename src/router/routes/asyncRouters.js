@@ -34,8 +34,7 @@ export const asyncRoutes = [
           auth: [0, 1, 2],
           icon: 'icon-meitiliebiao'
         },
-        component: () => lazyComponent(import('@/views/device/deviceDetail.vue'))
-        // component: () => import('@/views/device/deviceDetail.vue')
+        component: () => import('@/views/device/deviceDetail.vue')
       },
       {
         name: 'add',

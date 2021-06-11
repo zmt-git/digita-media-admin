@@ -30,7 +30,7 @@
           v-for="item in scenesList"
           :key='item.mediaId'
           :info='item'
-          :length.sync='item.length'
+          :length.sync='item.mediaTime'
           :disabled="disabled"
           @deleteMedia='deleteMedia'
           @move='move'
@@ -50,7 +50,6 @@
 import CardPlayList from './CardPlayList.vue'
 import { playlistType } from '@/data/common'
 import draggable from 'vuedraggable'
-import { lengthMedia } from '@/api/media'
 export default {
   components: { CardPlayList, draggable },
 
@@ -117,7 +116,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        const index = this.scenesList.findeIndex(item => item.id === info.id)
+        const index = this.scenesList.findIndex(item => item.mediaId === info.mediaId)
         if (index >= 0) {
           this.scenesList.splice(index, 1)
           this.updatePlaylist()
@@ -136,13 +135,7 @@ export default {
     },
 
     async setLength (target, value) {
-      this.$emit('update:loading', true)
-      await lengthMedia({ id: target.id, length: value })
-        .then(res => {
-          this.$message({ type: 'success', message: '设置成功' })
-        })
-        .catch(e => console.log(e))
-      this.$emit('update:loading', false)
+      this.updatePlaylist()
     },
 
     move (direction, target) {

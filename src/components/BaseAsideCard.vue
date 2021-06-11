@@ -73,6 +73,7 @@ export default {
   //   linear-gradient(-135deg, transparent 5px, #ffffff 0) top right;
   // background-size: 50% 50%;
   // background-repeat: no-repeat;
-  @include color('primary')
+  // @include color('primary')
+  color: #f5bf2d;
 }
 </style>

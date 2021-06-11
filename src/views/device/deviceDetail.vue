@@ -97,7 +97,7 @@ export default {
   async created () {
     this.loading = true
     this.id = this.$route.query.id
-    this.playChange = true
+    this.playChange = false
     await this.getDeviceDetail()
     await this.getPlaylists()
     this.loading = false
@@ -135,9 +135,21 @@ export default {
     getPlaylists () {
       return getPlaylist(this.id)
         .then(res => {
-          this.playlist = res.list
+          this.initPlaylist(res.list)
+          console.log(this.playlist)
         })
         .catch(e => console.log(e))
+    },
+
+    initPlaylist (list) {
+      if (list.length === 0) {
+        const playlisttItem = { content: '' }
+        const scenesType = deviceType.find(item => item.value === this.info.type).scenes
+        let num = 0
+        Object.keys(scenesType).forEach(item => { num = num + scenesType[item].length })
+        this.playlist = new Array(num)
+        this.playlist.fill(playlisttItem)
+      }
     },
 
     async setPlaylist () {
@@ -153,7 +165,8 @@ export default {
         ids.push(item.id)
         contents.push(item.content)
       })
-      return updateContent({ devid: this.id, ids: ids, contents: contents })
+
+      return updateContent({ devid: this.id, ids: ids.toString(), contents: contents.toString() })
         .then(res => {
           this.$message({ type: 'success', message: '设置播放列表成功' })
         })

@@ -1,6 +1,7 @@
 export default {
   data () {
     return {
+      isInit: true,
       pageCurrent: 1,
       pageLimit: 20,
       pageList: [],
@@ -16,7 +17,7 @@ export default {
       return this.pageList.length
     },
     noMore () {
-      return this.pageList.length !== 0 && this.pageList.length >= this.pageTotal
+      return !this.isInit && this.pageList.length >= this.pageTotal
     }
   },
 
@@ -26,6 +27,7 @@ export default {
       this.scrollDisabled = true
       await this.pageRequest({ page: this.pageCurrent, limit: this.pageLimit })
         .then(res => {
+          this.isInit = false
           this.pageTotal = res.page.totalCount
           this.pageCurrent = res.page.currPage
           if (this.pageCurrent < res.page.totalPage) {
