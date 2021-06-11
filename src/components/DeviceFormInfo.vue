@@ -104,7 +104,8 @@ export default {
         location: '',
         code: 'ELF',
         type: '',
-        orient: ''
+        orient: '',
+        devid: 0
       },
       rules: {
         name: [{ required: true, message: '请输入设备名称', trigger: 'blur' }],
@@ -147,10 +148,12 @@ export default {
           this.$emit('update:loading', true)
           await saveDevice(this.ruleForm)
             .then(res => {
-              this.prompt(res.state)
-              if (res.state === 1) {
-                this.$emit('submit', res.data)
-              }
+              this.$message({ type: 'success', message: '添加成功' })
+              this.$emit('submit', res.data)
+              // this.prompt(res.state)
+              // if (res.state === 1) {
+              //   this.$emit('submit', res.data)
+              // }
             })
             .catch(e => {
               console.log(e)

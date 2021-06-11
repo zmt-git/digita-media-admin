@@ -19,10 +19,10 @@
       <div class="info">
         <span>
           <span class="info_name">播放时长</span>
-          <el-input-number size="mini" :max="99" :min="1" :value="length" @change="onchange"></el-input-number>
+          <el-input-number :disabled='disabled' size="mini" :max="99" :min="1" :value="length" @change="onchange"></el-input-number>
           <span class="second">秒</span>
         </span>
-        <el-button class="btn" type="danger" size="mini" icon="el-icon-delete" @click="deleteMedia"></el-button>
+        <el-button class="btn" :disabled='disabled' type="danger" size="mini" icon="el-icon-delete" @click="deleteMedia"></el-button>
       </div>
     </template>
     <template v-else>

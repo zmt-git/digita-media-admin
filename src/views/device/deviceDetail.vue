@@ -44,7 +44,7 @@
       <div class="device-detail-playlist-btn">
         <el-button type="primary" @click="setPlaylist">发布</el-button>
       </div>
-      <base-drawer-media :visible.sync='visible' :playlist='allMediaList' @add='addPlaylist'></base-drawer-media>
+      <base-drawer-media :visible.sync='visible' @add='addPlaylist'></base-drawer-media>
     </div>
   </div>
 </template>
@@ -70,7 +70,7 @@ export default {
 
   computed: {
     disabled () {
-      return this.info.stateOnline === 0
+      return !this.info.stateOnline === 0
     },
     scenes () {
       const scenes = deviceType.find(item => item.value === this.info.type)
@@ -166,7 +166,7 @@ export default {
     },
 
     updatePlaylist (arr, index) {
-      const target = this.playlist[index]
+      const target = this.playlist[index] ? this.playlist[index] : {}
       target.content = JSON.stringify(arr)
       this.playlist.splice(index, 1, target)
       this.playChange = true
@@ -178,11 +178,16 @@ export default {
     },
 
     addPlaylist (arr) {
-      const originContents = JSON.parse(this.playlist[this.currentIndex].content)
+      let originContents
+      try {
+        originContents = JSON.parse(this.playlist[this.currentIndex].content)
+      } catch (e) {
+        originContents = []
+      }
       const lastOrder = originContents.length + 2
       const addContents = []
       arr.forEach((item, index) => {
-        addContents.push({ mediaId: arr.id, mediaTime: arr.length, mediaOrder: lastOrder + index })
+        addContents.push({ mediaId: item.id, mediaTime: item.length ? item.length : 1, mediaOrder: lastOrder + index })
       })
       const newContents = originContents.concat(addContents)
       this.updatePlaylist(newContents, this.currentIndex)

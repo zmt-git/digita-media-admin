@@ -9,7 +9,7 @@
           :active-value='1'
           :inactive-value='0'
           v-model="ruleForm.lightControl"
-          @change="switchLight"
+          @change="modelLight"
           active-color="#13ce66"
           inactive-color="#ff4949">
         </el-switch>
@@ -22,7 +22,7 @@
           :active-value='true'
           :inactive-value='false'
           v-model="lightSwitch"
-          @change="modelLight"
+          @change="switchLight"
           active-color="#13ce66"
           inactive-color="#ff4949">
         </el-switch>
@@ -122,7 +122,13 @@ export default {
     },
 
     async switchLight () {
+      console.log(1)
       this.$emit('update:loading', true)
+      if (this.lightSwitch) {
+        this.ruleForm.lightBrightness = 100
+      } else {
+        this.ruleForm.lightBrightness = 0
+      }
       await this.setLight()
       this.$emit('updateInfo')
     },
@@ -156,13 +162,6 @@ export default {
         this.ruleForm.lightBrightness > 0 ? this.lightSwitch = true : this.lightSwitch = false
       },
       immediate: true
-    },
-    lightSwitch (newVal, oldVal) {
-      if (newVal) {
-        this.ruleForm.lightBrightness = 100
-      } else {
-        this.ruleForm.lightBrightness = 0
-      }
     }
   }
 }

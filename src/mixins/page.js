@@ -16,7 +16,7 @@ export default {
       return this.pageList.length
     },
     noMore () {
-      return this.pageList.length >= this.pageTotal
+      return this.pageList.length !== 0 && this.pageList.length >= this.pageTotal
     }
   },
 

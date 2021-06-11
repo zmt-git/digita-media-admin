@@ -8,13 +8,20 @@
     @open='open'
     class="base-drawer-media"
   >
-    <div class="content" :class="empty ? 'flex-center' : ''">
-      <template v-for="item in playlist">
-        <card-media-check :key="item.id" :info='item' :checkeArr.sync='checkeArr' :value='item.id'></card-media-check>
-      </template>
-      <template v-if="empty">
-        <base-empty></base-empty>
-      </template>
+    <div class="content infinite-list-wrapper" :class="empty ? 'flex-center' : ''" style="overflow:auto">
+      <ul
+        class="list clear"
+        v-infinite-scroll="pageLoad"
+        infinite-scroll-disabled='scrollDisabled'
+      >
+        <template v-for="item in pageList">
+          <card-media-check :key="item.id" :info='item' :checkeArr.sync='checkeArr' :value='item.id'></card-media-check>
+        </template>
+        <template v-if="empty">
+          <base-empty></base-empty>
+        </template>
+        <base-page-loading :loading='pageLoading' :noMore='noMore' :list='pageList'></base-page-loading>
+      </ul>
     </div>
     <div class="demo-drawer__footer">
       <el-button @click="close">取 消</el-button>
@@ -25,31 +32,34 @@
 
 <script>
 import CardMediaCheck from './CardMediaCheck.vue'
+import BasePageLoading from './BasePageLoading'
 import BaseEmpty from './BaseEmpty'
+import page from '@/mixins/page'
+import { listMedia } from '@/api/media'
 export default {
   name: 'base-drawer-media',
 
-  components: { CardMediaCheck, BaseEmpty },
+  components: { CardMediaCheck, BaseEmpty, BasePageLoading },
+
+  mixins: [page],
 
   props: {
     visible: {
       type: Boolean,
       default: false
-    },
-    playlist: {
-      type: Array,
-      default: () => []
     }
   },
 
   computed: {
     empty () {
-      return !this.playlist.length
+      return !this.pageList.length
     }
   },
 
   data () {
     return {
+      pageRequest: listMedia,
+      pageList: [],
       checkeArr: []
     }
   },
@@ -60,12 +70,13 @@ export default {
     },
 
     open () {
+      this.refresh()
       this.checkeArr = []
     },
 
     add () {
-      const checkeArr = this.playlist.filter(item => this.checkeArr.includes(item.id))
-      const uncheckeArr = this.playlist.filter(item => !this.checkeArr.includes(item.id))
+      const checkeArr = this.pageList.filter(item => this.checkeArr.includes(item.id))
+      const uncheckeArr = this.pageList.filter(item => !this.checkeArr.includes(item.id))
       this.$emit('add', checkeArr, uncheckeArr)
       this.$emit('update:visible', false)
     }
@@ -86,6 +97,7 @@ export default {
     flex-direction: column;
     border-top: 1px solid #f0f0f0;
     padding: 5px;
+    overflow: auto;
   }
   /deep/ .demo-drawer__footer{
     display: flex;

@@ -74,6 +74,7 @@ export const stableRoutes = [
       title: '设备',
       icon: ''
     },
-    redirect: '/device/deviceList'
+    redirect: '/device/deviceList',
+    component: () => lazyComponent(import('@/views/device/index.vue'))
   }
 ]

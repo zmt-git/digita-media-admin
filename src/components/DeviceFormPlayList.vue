@@ -28,7 +28,7 @@
       <transition-group name="cell" tag="div">
         <card-play-list
           v-for="item in scenesList"
-          :key='item.id'
+          :key='item.mediaId'
           :info='item'
           :length.sync='item.length'
           :disabled="disabled"
