@@ -14,6 +14,7 @@
     "element-china-area-data": "^5.0.2",
     "element-ui": "^2.15.1",
     "nprogress": "^0.2.0",
+    "qs": "^6.10.1",
     "register-service-worker": "^1.7.1",
     "video.js": "^7.11.8",
     "vue": "^2.6.11",

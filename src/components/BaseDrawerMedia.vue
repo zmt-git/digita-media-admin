@@ -17,7 +17,7 @@
         <template v-for="item in pageList">
           <card-media-check :key="item.id" :info='item' :checkeArr.sync='checkeArr' :value='item.id'></card-media-check>
         </template>
-        <template v-if="empty">
+        <template v-if="empty && pageLoading">
           <base-empty></base-empty>
         </template>
         <base-page-loading :loading='pageLoading' :noMore='noMore' :list='pageList'></base-page-loading>

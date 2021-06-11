@@ -43,6 +43,7 @@ export default {
     },
 
     resetPageParams () {
+      this.isInit = true
       this.pageList = []
       this.pageCurrent = 1
       this.pageLimit = 20

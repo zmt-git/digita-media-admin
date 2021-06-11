@@ -40,6 +40,7 @@
       </draggable>
       <card-play-list
         isAdd
+        :disabled="disabled"
         @add='addPlaylist'
       ></card-play-list>
     </div>

@@ -58,11 +58,9 @@ import DeviceFormSystem from '@/components/DeviceFormSystem.vue'
 import DeviceState from '@/components/DeviceState.vue'
 import DeviceInfo from '@/components/DeviceInfo.vue'
 import BaseDrawerMedia from '@/components/BaseDrawerMedia.vue'
-
 import { infoDevice } from '@/api/device'
 import { getPlaylist, updateContent } from '@/api/playlist'
 import { deviceType } from '@/data/common'
-
 export default {
   name: 'device-detail',
 
@@ -70,7 +68,7 @@ export default {
 
   computed: {
     disabled () {
-      return !this.info.stateOnline === 0
+      return this.info.stateOnline === 0
     },
     scenes () {
       const scenes = deviceType.find(item => item.value === this.info.type)
@@ -127,7 +125,6 @@ export default {
       return infoDevice(this.id)
         .then(res => {
           this.info = res.data
-          this.info.type = 'ELF-A'
         })
         .catch(e => console.log(e))
     },
@@ -135,26 +132,16 @@ export default {
     getPlaylists () {
       return getPlaylist(this.id)
         .then(res => {
-          this.initPlaylist(res.list)
-          console.log(this.playlist)
+          this.playlist = res.list
         })
         .catch(e => console.log(e))
-    },
-
-    initPlaylist (list) {
-      if (list.length === 0) {
-        const playlisttItem = { content: '' }
-        const scenesType = deviceType.find(item => item.value === this.info.type).scenes
-        let num = 0
-        Object.keys(scenesType).forEach(item => { num = num + scenesType[item].length })
-        this.playlist = new Array(num)
-        this.playlist.fill(playlisttItem)
-      }
     },
 
     async setPlaylist () {
       this.loading = true
       await this.setPlaylistRequest()
+      await this.getPlaylists()
+      this.playChange = false
       this.loading = false
     },
 
@@ -165,8 +152,8 @@ export default {
         ids.push(item.id)
         contents.push(item.content)
       })
-
-      return updateContent({ devid: this.id, ids: ids.toString(), contents: contents.toString() })
+      const params = { devid: this.id, ids: ids, contents: contents }
+      return updateContent(params)
         .then(res => {
           this.$message({ type: 'success', message: '设置播放列表成功' })
         })
@@ -197,7 +184,7 @@ export default {
       } catch (e) {
         originContents = []
       }
-      const lastOrder = originContents.length + 2
+      const lastOrder = originContents.length + 1
       const addContents = []
       arr.forEach((item, index) => {
         addContents.push({ mediaId: item.id, mediaTime: item.length ? item.length : 1, mediaOrder: lastOrder + index })

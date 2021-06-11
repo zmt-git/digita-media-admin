@@ -65,6 +65,7 @@ export default {
       width: 100px;
       font-size: 14px;
       text-align: right;
+      line-height: 18px;
     }
   }
 }

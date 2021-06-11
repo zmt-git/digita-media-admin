@@ -7,7 +7,7 @@
  * @LastEditTime: 2021-06-06 22:51:45
 -->
 <template>
-  <div class="card-play-list" :class="[isAdd ? 'flex-center' : '', disabled ? 'disabled' : '']" @click="add">
+  <div class="card-play-list" :class="[disabled ? 'disabled' : '', isAdd ? 'flex-center' : '']" @click="add">
     <template v-if="!isAdd">
       <div class="media">
         <i class="iconfont icon-zuo media_icon" :class="disabled ? 'disabled' : ''" title="左移" @click="move('left')"></i>
@@ -26,7 +26,7 @@
       </div>
     </template>
     <template v-else>
-      <i class="iconfont add icon-jia"></i>
+      <i class="iconfont add icon-jia" :class="disabled ? 'disabled' : ''"></i>
     </template>
   </div>
 </template>
@@ -71,7 +71,7 @@ export default {
       this.$emit('deleteMedia', this.info)
     },
     add () {
-      if (!this.isAdd) return
+      if (!this.isAdd || this.disabled) return
       this.$emit('add')
     },
     move (direction) {
