@@ -165,7 +165,7 @@ export default {
     playlist: {
       handler: function (newVal, oldVal) {
         try {
-          this.scenesList = JSON.parse(newVal[this.index].content)
+          this.scenesList = JSON.parse(newVal[this.index].content).sort((a, b) => a.mediaOrder - b.mediaOrder)
         } catch (e) {
           this.scenesList = []
         }

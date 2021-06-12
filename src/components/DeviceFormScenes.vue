@@ -83,7 +83,7 @@ export default {
     async setStateOrient () {
       this.$emit('update:loading', true)
 
-      await directionDevice(this.id, { deviceCode: this.info.deviceCode, devid: this.info.id, stateOrient: this.stateOrient })
+      await directionDevice(this.id, { deviceCode: this.info.code, devid: this.info.id, stateOrient: this.stateOrient })
         .then(res => {
           this.prompt(res.state)
         })
@@ -93,7 +93,7 @@ export default {
 
     async setOrderNumber () {
       this.$emit('update:loading', true)
-      await orderNumber(this.id, { deviceCode: this.info.deviceCode, devid: this.info.id, playListNumber: this.ordernumber })
+      await orderNumber(this.id, { deviceCode: this.info.code, devid: this.info.id, playListNumber: this.ordernumber })
         .then(res => {
           this.prompt(res.state)
         })

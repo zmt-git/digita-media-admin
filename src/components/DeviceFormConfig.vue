@@ -140,7 +140,7 @@ export default {
     },
 
     setTime () {
-      return timeDevice(this.id, { devid: this.info.id, deviceCode: this.info.deviceCode, ...this.ruleForm, timeControl: 1 })
+      return timeDevice(this.id, { devid: this.info.id, deviceCode: this.info.code, ...this.ruleForm, timeControl: 1 })
         .then(res => {
           this.prompt(res.state)
         })
@@ -148,7 +148,7 @@ export default {
     },
 
     setLight () {
-      return lightDevice(this.id, { devid: this.info.id, deviceCode: this.info.deviceCode, ...this.ruleForm })
+      return lightDevice(this.id, { devid: this.info.id, deviceCode: this.info.code, ...this.ruleForm })
         .then(res => {
           this.prompt(res.state)
         })
