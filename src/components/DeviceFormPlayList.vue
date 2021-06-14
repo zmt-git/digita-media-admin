@@ -140,7 +140,7 @@ export default {
     },
 
     move (direction, target) {
-      const currentIndex = this.scenesList.indexOf(target)
+      const currentIndex = this.scenesList.findIndex(item => item.mediaId === target.mediaId)
       if (direction === 'right' && currentIndex < this.length) {
         const nextItem = this.scenesList[currentIndex + 1]
         this.scenesList.splice(currentIndex, 2, nextItem, target)

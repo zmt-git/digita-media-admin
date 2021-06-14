@@ -149,13 +149,18 @@ export default {
       const ids = []
       const contents = []
       this.playlist.forEach(item => {
+        const content = JSON.parse(item.content)
+        content.forEach((i, index) => {
+          i.mediaOrder = index + 1
+        })
+        item.content = JSON.stringify(content)
         ids.push(item.id)
         contents.push(item.content)
       })
       const params = { devid: this.id, ids: ids, contents: contents }
       return updateContent(params)
         .then(res => {
-          this.$message({ type: 'success', message: '设置播放列表成功' })
+          this.$message({ type: 'success', message: res.msg })
         })
         .catch(e => console.log(e))
     },
