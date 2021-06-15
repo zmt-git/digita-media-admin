@@ -28,7 +28,7 @@
       <transition-group name="cell" tag="div">
         <card-play-list
           v-for="item in scenesList"
-          :key='item.mediaId'
+          :key='item.mediaOrder'
           :info='item'
           :length.sync='item.mediaTime'
           :disabled="disabled"
@@ -117,7 +117,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        const index = this.scenesList.findIndex(item => item.mediaId === info.mediaId)
+        const index = this.scenesList.findIndex(item => item.mediaOrder === info.mediaOrder)
         if (index >= 0) {
           this.scenesList.splice(index, 1)
           this.updatePlaylist()
@@ -140,7 +140,7 @@ export default {
     },
 
     move (direction, target) {
-      const currentIndex = this.scenesList.findIndex(item => item.mediaId === target.mediaId)
+      const currentIndex = this.scenesList.findIndex(item => item.mediaOrder === target.mediaOrder)
       if (direction === 'right' && currentIndex < this.length) {
         const nextItem = this.scenesList[currentIndex + 1]
         this.scenesList.splice(currentIndex, 2, nextItem, target)
