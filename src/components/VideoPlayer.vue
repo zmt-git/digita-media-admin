@@ -12,7 +12,7 @@
     preload='auto'
     muted
   >
-    <source src="../assets/video/oceans.mp4" type="video/mp4" >
+    <source :src="src" type="video/mp4" >
   </video>
 </template>
 
@@ -38,7 +38,7 @@ export default {
 
   computed: {
     src () {
-      return this.info.addressOld ? this.info.addressOld : '../assets/video/oceans.mp4'
+      return this.info.address ? this.info.address : ''
     }
   },
 
