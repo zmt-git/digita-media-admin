@@ -129,7 +129,9 @@ export default {
     },
     // 获取媒体文件请求参数
     getSaveParams (res, file) {
-      this.mediaForm.name = file.name
+      const type = file.type.split('/').pop()
+      const name = (this.user.mobile || 'unknown') + '/' + new Date().getTime() + '.' + type
+      this.mediaForm.name = name
       this.mediaForm.size = file.size / 1024
       this.mediaForm.mediaType = mediaType.find(item => item.type === file.type).mediaType
       this.mediaForm.address = res.url
