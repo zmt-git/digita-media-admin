@@ -15,10 +15,10 @@
     </el-image>
 
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="设备编码" prop="code" required>
+      <el-form-item label="设备编码" prop="code" required v-if="isAdd">
         <el-input clearable v-model="ruleForm.code"></el-input>
       </el-form-item>
-      <el-form-item label="设备类型" prop="type">
+      <el-form-item label="设备类型" prop="type" v-if="isAdd">
         <el-select clearable v-model="ruleForm.type" placeholder="请选择设备类型" style='width: 100%'>
           <el-option
             v-for="item in options"
@@ -34,7 +34,7 @@
       <el-form-item label="设备名称" prop="name" required>
         <el-input clearable v-model="ruleForm.name" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="安装方向" prop="orient" required>
+      <el-form-item label="安装方向" prop="orient" required v-if="isAdd">
         <el-select clearable v-model="ruleForm.orient" placeholder="请选择设备安装方向" style='width: 100%'>
           <el-option
             v-for="item in orientOptions"
@@ -44,7 +44,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="供电方式" prop="power" required>
+      <el-form-item label="供电方式" prop="power" required v-if="isAdd">
         <el-select clearable v-model="ruleForm.power" placeholder="请选择设备供电方式" style='width: 100%'>
           <el-option
             v-for="item in powerOptions"
@@ -56,7 +56,7 @@
       </el-form-item>
       <el-form-item>
         <slot>
-          <el-button class="btn" type="primary" @click="submitForm">添加设备</el-button>
+          <el-button class="btn" type="primary" @click="submitForm">{{isAdd ? '添加设备' : '编辑'}}</el-button>
         </slot>
       </el-form-item>
     </el-form>
@@ -154,18 +154,23 @@ export default {
         })
     },
 
+    getParams () {
+      if (this.isAdd) {
+        return this.ruleForm
+      } else {
+        return Object.assign(this.dataForm, this.ruleForm)
+      }
+    },
+
     submitForm () {
       this.$refs.ruleForm.validate(async valid => {
         if (valid) {
           this.$emit('update:loading', true)
-          await saveDevice(this.ruleForm)
+          const params = this.getParams()
+          await saveDevice(params)
             .then(res => {
               this.$message({ type: 'success', message: '添加成功' })
               this.$emit('submit', res.data)
-              // this.prompt(res.state)
-              // if (res.state === 1) {
-              //   this.$emit('submit', res.data)
-              // }
             })
             .catch(e => {
               console.log(e)

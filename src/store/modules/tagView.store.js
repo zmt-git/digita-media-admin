@@ -7,13 +7,17 @@ export default {
 
   mutations: {
     add_visited_views (state, view) {
-      if (state.visitedViews.some(v => v.path === view.path)) return
+      const index = state.visitedViews.findIndex(v => v.path === view.path)
+      if (index >= 0) {
+        const obj = Object.assign({}, view, { title: view.meta.title || 'no-name' })
+        state.visitedViews.splice(index, 1, obj)
+        return
+      }
       state.visitedViews.push(Object.assign({}, view, {
         title: view.meta.title || 'no-name'
       }))
     },
     delete_visited_views (state, view) {
-      console.log(view)
       for (const [i, v] of state.visitedViews.entries()) {
         if (v.path === view.path) {
           state.visitedViews.splice(i, 1)

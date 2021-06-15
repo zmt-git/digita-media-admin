@@ -19,7 +19,7 @@
         leave-active-class="animate__fadeOutLeft animate__animated"
       >
         <div class="step-content-form" v-if="active === 0">
-          <device-form-info @submit='submit' :loading.sync='loading'></device-form-info>
+          <device-form-info @submit='submit' :loading.sync='loading' :dataForm='info' :isAdd='isAdd'></device-form-info>
         </div>
         <!-- <div class="step-content-form" v-if="active === 1">
           <device-form-config :info='info' @next='next' @updateInfo='updateInfo' :loading.sync='loading' :disabled='disabled'></device-form-config>
@@ -59,10 +59,21 @@ export default {
 
   data () {
     return {
+      isAdd: true,
       active: 0,
       info: {},
       loading: false,
       steps: deviceAddSteps
+    }
+  },
+
+  created () {
+    this.isAdd = this.$route.query.isAdd === 'true'
+    if (!this.isAdd) {
+      this.$route.meta.title = '设备编辑'
+      this.info = JSON.parse(this.$route.query.info)
+    } else {
+      this.$route.meta.title = '设备添加'
     }
   },
 

@@ -26,7 +26,7 @@
       v-infinite-scroll="pageLoad"
       infinite-scroll-disabled='scrollDisabled'
     >
-      <card-device :info='item' v-for="item in pageList" :key='item.id' @setup='setup'></card-device>
+      <card-device :info='item' v-for="item in pageList" :key='item.id' @setup='setup' @toEdit='toEdit'></card-device>
     </ul>
     <base-backtop :total='pageTotal' :currentNum='lengthList'></base-backtop>
     <base-page-loading :loading='pageLoading' :noMore='noMore' :list='pageList'></base-page-loading>
@@ -50,7 +50,8 @@ export default {
   data () {
     return {
       pageRequest: listDevice,
-      statistics: {}
+      statistics: {},
+      isAdd: true
     }
   },
 
@@ -59,23 +60,22 @@ export default {
   },
 
   beforeRouteLeave (to, from, next) {
-    console.log(123)
+    to.meta.title = this.isAdd ? '设备添加' : '设备编辑'
     next()
   },
 
   methods: {
     addDevice () {
-      this.$router.push('/device/add')
+      this.isAdd = true
+      this.$router.push({ path: '/device/add', query: { isAdd: true } })
+    },
+
+    toEdit (info) {
+      this.isAdd = false
+      this.$router.push({ path: '/device/add', query: { info: JSON.stringify(info), isAdd: false } })
     },
 
     setup (info) {
-      if (info.stateOnline !== 1) {
-        this.$message({
-          type: 'error',
-          message: '智能终端离线，无法进行操作！'
-        })
-        return
-      }
       this.$router.push({ path: '/device/deviceDetail', query: { id: info.id } })
     },
 

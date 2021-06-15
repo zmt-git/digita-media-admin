@@ -23,7 +23,7 @@ export const asyncRoutes = [
           auth: [0, 1, 2],
           icon: 'icon-touyingyi1'
         },
-        component: () => lazyComponent(import('@/views/device/index.vue'))
+        component: () => import('@/views/device/index.vue')
       },
       {
         name: 'deviceDetail',
