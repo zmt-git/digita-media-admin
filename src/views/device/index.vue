@@ -69,13 +69,13 @@ export default {
     },
 
     setup (info) {
-      if (info.stateOnline !== 1) {
-        this.$message({
-          type: 'error',
-          message: '智能终端离线，无法进行操作！'
-        })
-        return
-      }
+      // if (info.stateOnline !== 1) {
+      //   this.$message({
+      //     type: 'error',
+      //     message: '智能终端离线，无法进行操作！'
+      //   })
+      //   return
+      // }
       this.$router.push({ path: '/device/deviceDetail', query: { id: info.id } })
     },
 

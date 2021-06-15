@@ -12,7 +12,12 @@
       <div class="media">
         <i class="iconfont icon-zuo media_icon" :class="disabled ? 'disabled' : ''" title="左移" @click="move('left')"></i>
         <div class="media_box">
-          <img class="media_img" :src="src" alt="媒体图片">
+          <el-image
+            class="media_img"
+            :src="url"
+            :preview-src-list="[url]">
+          </el-image>
+          <!-- <img class="media_img" :src="url" alt="媒体图片"> -->
         </div>
         <i class="iconfont icon-you media_icon" :class="disabled ? 'disabled' : ''" title="右移" @click="move('right')"></i>
       </div>
@@ -32,6 +37,7 @@
 </template>
 
 <script>
+import { infoMedia } from '@/api/media'
 export default {
   name: 'card-play-list',
 
@@ -54,19 +60,29 @@ export default {
     }
   },
 
-  computed: {
-    src () {
-      return !this.isAdd && this.info.addressOld ? this.info.addressOld : require('../assets/common/empty.png')
+  data () {
+    return {
+      timmer: null,
+      url: require('../assets/common/empty.png')
     }
   },
 
-  data () {
-    return {
-      timmer: null
-    }
+  created () {
+    console.log(12)
+    if (this.isAdd) return
+    this.getMediaUrl()
   },
 
   methods: {
+    getMediaUrl () {
+      return infoMedia(this.info.mediaId)
+        .then(res => {
+          this.url = res.data.address
+        })
+        .catch(e => {
+          console.log(e)
+        })
+    },
     deleteMedia () {
       this.$emit('deleteMedia', this.info)
     },
@@ -124,6 +140,12 @@ export default {
   &_img{
     max-width: 200px;
     max-height: 120px;
+    & /deep/ .el-image__inner{
+      max-width: 200px;
+      max-height: 120px;
+      width: inherit;
+      height: inherit;
+    }
   }
 }
 .info{
