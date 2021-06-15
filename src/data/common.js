@@ -27,11 +27,12 @@ export const companyCodeReg = /[A-Z0-9]{8}-[A-Z0-9]$|[A-Z0-9]{8}-[A-Z0-9]-[0-9]{
 export const idCardReg = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
 
 // 任务状态 -------------------------------------------------------------------------------------------
-export const jobState = Object.freeze([
-  { type: 'error', name: '失败', state: -1 },
+export const jobState = Object.freeze([ // 1成功，0等待执行，-1失败，-2执行中，-3执行超时
+  { type: 'warning', name: '等待', state: 0 },
   { type: 'success', name: '成功', state: 1 },
+  { type: 'error', name: '失败', state: -1 },
   { type: 'primary', name: '执行中', state: -2 },
-  { type: 'warning', name: '等待', state: 0 }
+  { type: 'info', name: '执行超时', state: -3 }
 ])
 
 // 行业 -------------------------------------------------------------------------------------------

@@ -1,11 +1,11 @@
 export default {
   methods: {
-    prompt (state) {
+    prompt (state) { // 1成功，-1失败，-3 执行超时
       if (state === 1) {
         this.message('设置成功', 'success')
-      } else if (state === 0) {
-        this.message('通讯超时', 'info')
-      } else if (state === -2) {
+      } else if (state === -3) {
+        this.message('执行超时', 'info')
+      } else if (state === -1) {
         this.message('执行失败', 'warning')
       } else {
         this.message('操作失败，请重试！', 'error')
