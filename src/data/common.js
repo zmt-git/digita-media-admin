@@ -92,6 +92,11 @@ export const orient = Object.freeze([
   { value: 0, label: '正向安装' },
   { value: 8, label: '方向安装' }
 ])
+// 设备供电方式 -------------------------------------------------------------------------------------------
+export const powerOptions = Object.freeze([
+  { value: 0, label: '电网市电' },
+  { value: 1, label: '太阳能蓄电池' }
+])
 
 // 切换场景 -------------------------------------------------------------------------------------------
 export const scenesOptions = Object.freeze({

@@ -44,6 +44,16 @@
           </el-option>
         </el-select>
       </el-form-item>
+      <el-form-item label="供电方式" prop="power" required>
+        <el-select clearable v-model="ruleForm.power" placeholder="请选择设备供电方式" style='width: 100%'>
+          <el-option
+            v-for="item in powerOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item>
         <slot>
           <el-button class="btn" type="primary" @click="submitForm">添加设备</el-button>
@@ -55,7 +65,7 @@
 
 <script>
 import { saveDevice, registerDevice } from '@/api/device'
-import { deviceType, orient } from '@/data/common'
+import { deviceType, orient, powerOptions } from '@/data/common'
 import prompt from '@/mixins/prompt'
 export default {
   name: 'device-form-info',
@@ -98,6 +108,7 @@ export default {
     return {
       options: deviceType,
       orientOptions: orient,
+      powerOptions: powerOptions,
       url: require('../assets/device/orient.png'),
       ruleForm: {
         name: '',
@@ -105,7 +116,7 @@ export default {
         code: 'ELF',
         type: '',
         orient: '',
-        devid: 0
+        power: ''
       },
       rules: {
         name: [{ required: true, message: '请输入设备名称', trigger: 'blur' }],
@@ -115,7 +126,8 @@ export default {
           // { validator: validateCode, trigger: 'blur', required: true }
         ],
         type: [{ required: true, message: '请选择设备类型', trigger: 'change' }],
-        orient: [{ required: true, message: '请选择安装方向', trigger: 'change' }]
+        orient: [{ required: true, message: '请选择安装方向', trigger: 'change' }],
+        power: [{ required: true, message: '请选择供电方式', trigger: 'change' }]
       }
     }
   },
