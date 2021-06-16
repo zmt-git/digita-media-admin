@@ -47,14 +47,14 @@ export default {
   flex-shrink: 0;
 }
 .plate-img{
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   display: inline-block;
   background-size: 100%;
   // background-image: url('../../../assets/layout/aside/plate.png');
   background-image: url('../../../assets/layout/aside/logo.png');
   vertical-align: middle;
-  margin: 20px 5px;
+  margin: 12px 0;
   background-repeat: no-repeat;
 }
 </style>
