@@ -2,7 +2,7 @@
   <div class="register" v-loading='loading'>
     <!-- 1.手机号获取验证码 -->
     <div class="register-item">
-      <h3 class="title">欢迎注册数字媒体管家</h3>
+      <h3 class="title">欢迎注册</h3>
       <el-form v-show="currentStep === 0" :inline='false' size="small" :model="formMobile" ref="formMobile" class="form" :rules="rulesMobile">
         <el-form-item prop="mobile">
           <el-input v-model="formMobile.mobile" @keyup.enter.native="next" clearable placeholder="请输入手机号码">
@@ -325,8 +325,9 @@ export default {
 }
 .title{
   line-height: 60px;
-  font-size: 22px;
+  font-size: 14px;
   margin-bottom: 10px;
+  font-weight: 100;
 }
 .btn{
   width: 100%;

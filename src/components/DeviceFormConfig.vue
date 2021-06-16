@@ -11,7 +11,7 @@
           v-model="ruleForm.lightControl"
           @change="modelLight"
           active-color="#13ce66"
-          inactive-color="#ff4949">
+          inactive-color="#409eff">
         </el-switch>
       </el-form-item>
       <el-form-item label="光源开关" prop="lightBrightness" style="text-align: right;">

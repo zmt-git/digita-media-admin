@@ -1,25 +1,29 @@
 <template>
   <div class="card-task" :class="type">
-    <h3 class="card-task-title">
+    <!-- <h3 class="card-task-title">
       <i class="iconfont card-task-title_icon" :class="iconClass"></i>
       <span class="card-task-title_text">{{title}}</span>
-    </h3>
-    <slot></slot>
+    </h3> -->
+    <p class="card-item">任务内容：{{jobContent}}</p>
+    <p class="card-item">任务主体：{{content}}</p>
+    <p class="card-item">执行时间：{{timeFinish}}</p>
+    <p class="card-item">任务状态：{{jobState}}</p>
   </div>
 </template>
 
 <script>
+import { jobState } from '@/data/common'
 export default {
   name: 'card-task',
 
   props: {
-    title: {
-      type: String,
-      default: ''
+    info: {
+      type: Object,
+      default: () => {}
     },
-    type: {
-      type: String,
-      default: 'success'
+    deviceInfo: {
+      type: Object,
+      default: () => {}
     }
   },
   computed: {
@@ -40,6 +44,26 @@ export default {
       }
 
       return iconClass
+    },
+    jobContent () {
+      return this.info.jobContent ? `【${this.info.jobContent}】` : ''
+    },
+    timeFinish () {
+      return this.info.timeFinish ? `【${this.info.timeFinish}】` : ''
+    },
+    jobState () {
+      const obj = jobState.find(item => item.state === this.info.jobState)
+      return obj ? `【${obj.name}】` : ''
+    },
+    type () {
+      const obj = jobState.find(item => item.state === this.info.jobState)
+      return obj.type
+    },
+    content () {
+      if (this.info.deviceInfo.location && this.info.deviceInfo.name) {
+        return `【${this.info.deviceInfo.location}】-【${this.info.deviceInfo.name}】`
+      }
+      return ''
     }
   }
 }
@@ -49,7 +73,8 @@ export default {
 .card-task{
   width: 100%;
   box-sizing: border-box;
-  padding: 8px 16px;
+  padding: 16px 14px;
+  color: #fff;
   &-title{
     &_icon{
       margin-right: 10px;
@@ -65,24 +90,18 @@ export default {
     line-height: 16px;
   }
 }
-.info{
-  @include bg-color('info-plain');
-  @include color('info');
+.card-item{
+  line-height: 25px;
+  font-size: 12px;
+  box-sizing: border-box;
 }
 .error{
-  @include bg-color('danger-plain');
-  @include color('danger');
+  background-color: #cc0001;
 }
 .primary{
-  @include bg-color('primary-plain');
-  @include color('primary');
+  background-color: #0043b4;
 }
 .success{
-  @include bg-color('success-plain');
-  @include color('success');
-}
-.warning{
-  @include bg-color('warning-plain');
-  @include color('warning');
+  background-color: #009900;
 }
 </style>

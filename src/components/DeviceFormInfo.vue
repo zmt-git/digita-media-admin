@@ -28,11 +28,11 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="安装位置" prop="location" required>
-        <el-input clearable v-model="ruleForm.location" autocomplete="off"></el-input>
-      </el-form-item>
       <el-form-item label="设备名称" prop="name" required>
         <el-input clearable v-model="ruleForm.name" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="安装位置" prop="location" required>
+        <el-input clearable v-model="ruleForm.location" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="安装方向" prop="orient" required v-if="isAdd">
         <el-select clearable v-model="ruleForm.orient" placeholder="请选择设备安装方向" style='width: 100%'>
@@ -193,12 +193,14 @@ export default {
 .img{
   width: 346px;
   min-width: 346px;
-  height: 372px;
+  height: 434px;
   margin-right: 30px;
+  position: relative;
+  top: -10px;
   /deep/ .el-image__inner{
     min-width: 346px;
     width: 346px;
-    height: 372px;
+    height: 434px;
   }
 }
 .demo-ruleForm{

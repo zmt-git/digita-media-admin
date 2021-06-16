@@ -26,7 +26,7 @@ export default {
 
   computed: {
     noMoreaText () {
-      return this.list.length === 0 ? '暂无数据' : '没有更多了'
+      return this.list.length === 0 ? '暂无数据' : 'END'
     }
   }
 }

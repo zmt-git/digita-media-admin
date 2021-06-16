@@ -11,7 +11,7 @@
     <div class="login-box center">
       <div class="login-box-left">
         <h3 class="login-box-left_title">
-          云智能交通标记综合管理平台
+          云智能交通标志综合管理平台
         </h3>
         <p class="login-box-left_des"><span>智能互联</span><span class="point"></span><span>科技赋能</span></p>
         <div class="login-box-left-progress">
@@ -65,7 +65,6 @@
                   <el-input
                     prefix-icon
                     class="login-contanier-form__input"
-                    clearable
                     ref="randomStr"
                     placeholder="请输入验证码"
                     tabindex='1'
@@ -73,13 +72,10 @@
                     @keyup.enter.native="handleLogin"
                   >
                     <i slot="prefix" class="iconfont icon-yanzhengma1 prefix-icon"></i>
+                    <img class="code-img" slot="suffix" :src="codeImgSrc" @click="getCodeImg" alt="验证码" title="点击重新获取">
                   </el-input>
                 </el-form-item>
                 <el-form-item>
-                <div class="code">
-                  <img :src="codeImgSrc" alt="验证码">
-                  <el-button @click="getCodeImg" size="small">点击刷新</el-button>
-                </div>
                 </el-form-item>
                 <el-button type="primary" class="login-contanier-form__btn" :disabled='btnDisabled' :loading='loading' @click="handleLogin">登录</el-button>
               </el-form>
@@ -300,7 +296,7 @@ $color: #f9ffff;
   }
   &-box{
     width: 1430px;
-    height: 467px;
+    height: 400px;
     border-radius: 12px;
     background-image: url('../../assets/login/form_bg.png');
     background-size: 100% 100%;
@@ -315,7 +311,7 @@ $color: #f9ffff;
       &_title{
         font-size: 50px;
         margin-top: 60px;
-        margin-bottom: 220px;
+        margin-bottom: 180px;
         color: #0036a5;
         letter-spacing: 5px;
         font-weight: 600;
@@ -375,6 +371,11 @@ $color: #f9ffff;
         left: 0;
         line-height: 47px;
       }
+      /deep/ .el-input__suffix-inner{
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
       &__item{
         margin-bottom: 10px;
       }
@@ -387,6 +388,10 @@ $color: #f9ffff;
       }
     }
   }
+}
+.code-img{
+  width: 120px;
+  cursor: pointer;
 }
 .prefix-icon{
   font-size: 20px;

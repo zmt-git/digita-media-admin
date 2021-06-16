@@ -34,6 +34,7 @@ export default {
           if (this.pageCurrent < res.page.totalPage) {
             this.pageCurrent++
           }
+          this.beforeAssignPageList && this.beforeAssignPageList(res.page.list)
           this.pageList = this.dataProcessing ? this.dataProcessing(this.pageList.concat(res.page.list)) : this.pageList.concat(res.page.list)
         })
         .catch(e => {

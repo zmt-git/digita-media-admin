@@ -23,7 +23,7 @@
       </div>
       <div class="info">
         <span>
-          <span class="info_name">播放时长</span>
+          <span class="info_name">时长</span>
           <el-input-number :disabled='disabled' size="mini" :max="99" :min="1" :value="length" @change="onchange"></el-input-number>
           <span class="second">秒</span>
         </span>
@@ -110,13 +110,12 @@ export default {
 
 <style lang="scss" scoped>
 .card-play-list{
-  width: 265px;
   height: 165px;
   float: left;
   box-sizing: border-box;
   border: 1px solid #cecece;
   border-radius: 5px;
-  margin: 0px 15px 15px 0;
+  margin: 15px;
   display: flex;
   flex-direction: column;
 }
@@ -190,5 +189,31 @@ export default {
 }
 .disabled{
   cursor: no-drop;
+}
+
+@media screen and (min-width: 1600px) {
+  .card-play-list{
+    width: calc(20% - 30px);
+  }
+}
+@media screen and (max-width: 1600px) {
+  .card-play-list{
+    width: calc(25% - 30px);
+  }
+}
+@media screen and (max-width: 1400px) {
+  .card-play-list{
+    width: calc(33.33% - 30px);
+  }
+}
+@media screen and (max-width: 1160px) {
+  .card-play-list{
+    width: calc(50% - 30px);
+  }
+}
+@media screen and (max-width: 960px) {
+  .card-play-list{
+    width: calc(100% - 30px);
+  }
 }
 </style>

@@ -2,7 +2,7 @@
 <template>
   <div class="device-form-scenes">
     <el-form status-icon ref="ruleForm" label-width="70px" class="demo-ruleForm">
-      <el-form-item label="画面方向" prop="stateOrient">
+      <el-form-item label="画面方向" prop="stateOrient" v-if="hasStateOrient">
         <el-select v-model="stateOrient" placeholder="请选择" :style="style" :disabled='disabled' @change="setStateOrient">
           <el-option
             v-for="item in orientOptions"
@@ -51,6 +51,9 @@ export default {
   },
 
   computed: {
+    hasStateOrient () {
+      return this.info.type === 'ELF-A'
+    },
     id () {
       return this.info.id ? this.info.id : undefined
     },

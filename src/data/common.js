@@ -28,11 +28,11 @@ export const idCardReg = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(
 
 // 任务状态 -------------------------------------------------------------------------------------------
 export const jobState = Object.freeze([ // 1成功，0等待执行，-1失败，-2执行中，-3执行超时
-  { type: 'warning', name: '等待', state: 0 },
   { type: 'success', name: '成功', state: 1 },
+  { type: 'primary', name: '等待', state: 0 },
   { type: 'error', name: '失败', state: -1 },
   { type: 'primary', name: '执行中', state: -2 },
-  { type: 'info', name: '执行超时', state: -3 }
+  { type: 'error', name: '执行超时', state: -3 }
 ])
 
 // 行业 -------------------------------------------------------------------------------------------
@@ -82,10 +82,10 @@ export const deviceType = Object.freeze([
 
 // 设备播放方向 -------------------------------------------------------------------------------------------
 export const orientOptions = Object.freeze([
-  { value: 0, label: '横屏向右' },
-  { value: 1, label: '竖屏向上' },
-  { value: 8, label: '横屏向左' },
-  { value: 9, label: '竖屏向下' }
+  { value: 0, label: '正向' },
+  // { value: 1, label: '竖屏向上' },
+  { value: 8, label: '反向' }
+  // { value: 9, label: '竖屏向下' }
 ])
 
 // 设备安装方向 -------------------------------------------------------------------------------------------

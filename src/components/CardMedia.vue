@@ -5,6 +5,7 @@
       <div class="detail-media-src">
         <el-tag v-if="state && tag" class="state-btn" effect="dark" :type="btnType" size="mini">{{btnName}}</el-tag>
         <el-image
+          fit='contain'
           v-if="info.mediaType !== 0"
           class="detail-media-src_img"
           :src="img"
@@ -147,17 +148,16 @@ $iconColor: #ffffff;
   transition: border-color .5s;
   position: relative;
   &-src{
+    box-sizing: border-box;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 5px 10px;
-    width: 320px;
+    width: 100%;
     height: 180px;
     cursor: pointer;
     &_img{
-      max-width: 320px;
-      max-height: 180px;
       border: 0;
       cursor: pointer;
     }
@@ -183,7 +183,6 @@ $iconColor: #ffffff;
     }
   }
   &-info{
-    width: 320px;
     box-sizing: border-box;
     padding: 0 10px 5px 10px;
     border-top: 1px solid #f0f0f0;
@@ -228,12 +227,29 @@ $iconColor: #ffffff;
   @include color('danger');
   @include bg-color('info-plain')
 }
-.detail-media-src_img {
-  /deep/ .el-image__inner{
-    max-width: 320px;
-    max-height: 180px;
-    width: inherit;
-    height: inherit;
+@media screen and (min-width: 1440px) {
+  .detail-media{
+    width: calc(20% - 20px);
+  }
+}
+@media screen and (max-width: 1440px) {
+  .detail-media{
+    width: calc(25% - 20px);
+  }
+}
+@media screen and (max-width: 1280px) {
+  .detail-media{
+    width: calc(33.33% - 20px);
+  }
+}
+@media screen and (max-width: 960px) {
+  .detail-media{
+    width: calc(50% - 20px);
+  }
+}
+@media screen and (max-width: 600px) {
+  .detail-media{
+    width: calc(100% - 20px);
   }
 }
 </style>

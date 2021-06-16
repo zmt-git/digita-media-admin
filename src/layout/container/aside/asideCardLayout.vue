@@ -54,7 +54,7 @@ export default {
   // background-image: url('../../../assets/layout/aside/plate.png');
   background-image: url('../../../assets/layout/aside/logo.png');
   vertical-align: middle;
-  margin: 5px;
+  margin: 20px 5px;
   background-repeat: no-repeat;
 }
 </style>

@@ -42,7 +42,7 @@
         </template>
       </div>
       <div class="device-detail-playlist-btn">
-        <el-button type="primary" @click="setPlaylist">发布</el-button>
+        <el-button :disabled='disabled' type="primary" @click="setPlaylist">发布</el-button>
       </div>
       <base-drawer-media :visible.sync='visible' @add='addPlaylist'></base-drawer-media>
     </div>

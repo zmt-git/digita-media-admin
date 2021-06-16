@@ -17,10 +17,10 @@
       <span class="device-state-item_value" :class="this.info.stateWork ? 'success' : 'primary'">{{stateWork}}</span>
     </li>
 
-    <li class="device-state-item">
+    <!-- <li class="device-state-item">
       <span class="device-state-item_name">核心温度</span>
       <span class="device-state-item_value" :class="highTemp ? 'error' : 'success'">{{temperature}}</span>
-    </li>
+    </li> -->
 
     <!-- <li class="device-state-item">
       <span class="device-state-item_name">内存使用</span>
