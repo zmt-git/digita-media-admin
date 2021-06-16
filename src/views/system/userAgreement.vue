@@ -1,8 +1,11 @@
 <template>
   <div class="user-agreement">
-    <div class="header">
-      <img class="logo" src="../../assets/layout/aside/logo.png" alt="公司logo">
-      <span class="name">西安启明荣光科技有限公司</span>
+    <div class="header" @click="back">
+      <div class="header-left">
+        <img class="logo" src="../../assets/layout/aside/logo.png" alt="公司logo">
+        <span class="name" >西安启明荣光科技有限公司</span>
+      </div>
+      <span class="header-right">注册账号</span>
     </div>
     <div class="content">
     <h3 class="title">用户许可协议条款</h3>
@@ -88,10 +91,17 @@
 
 <script>
 export default {
-  name: 'user-agreement'
+  name: 'user-agreement',
+
+  methods: {
+    back () {
+      this.$router.back()
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
+@import '~@/styles/handler.scss';
 .user-agreement{
   box-sizing: border-box;
   padding: 10px;
@@ -100,6 +110,16 @@ export default {
   height: 50px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  &-left{
+    display: flex;
+    align-items: center;
+  }
+  &-right{
+    cursor: pointer;
+    font-size: 12px;
+    @include color('primary');
+  }
 }
 .logo{
   width: 40px;
@@ -108,6 +128,7 @@ export default {
 .name{
   font-size: 25px;
   font-weight: 600;
+  cursor: pointer;
 }
 .content{
   border: 1px solid #000;

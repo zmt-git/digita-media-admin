@@ -4,12 +4,12 @@
     <div class="register-item">
       <h3 class="title">欢迎注册</h3>
       <el-form v-show="currentStep === 0" :inline='false' size="small" :model="formMobile" ref="formMobile" class="form" :rules="rulesMobile">
-        <el-form-item prop="mobile">
+        <el-form-item prop="mobile" class="form-item">
           <el-input v-model="formMobile.mobile" @keyup.enter.native="next" clearable placeholder="请输入手机号码">
             <i slot="prefix" class="iconfont icon-shoujihaoma prefix-icon"></i>
           </el-input>
         </el-form-item>
-        <el-form-item prop="code">
+        <el-form-item prop="code" class="form-item">
           <el-input v-model="formMobile.code" clearable placeholder="请输入验证码" @keyup.enter.native="next">
             <i slot="prefix" class="iconfont icon-duanxinyanzhengma prefix-icon"></i>
             <el-button slot="suffix" size="mini" :disabled='codeDisabled || hasMobile' :loading='codeLoading' @click="getCode">{{codeBtnName}}</el-button>
@@ -20,7 +20,7 @@
           <br/>
           <span class="error" v-show="checkPrompt">请先同意服务条款</span>
         </el-form-item>
-        <el-form-item label="">
+        <el-form-item label="" class="form-item">
           <el-button type="primary" class="btn" size="small" @click="next" :disabled='btnDisabled'>下一步</el-button>
         </el-form-item>
       </el-form>
@@ -32,17 +32,17 @@
             <el-radio :label="0">个人</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item prop="username">
+        <el-form-item prop="username" class="form-item">
           <el-input clearable v-model="formInfo.username" :placeholder="username">
             <i slot="prefix" class="iconfont prefix-icon" :class="usernameIcon"></i>
           </el-input>
         </el-form-item>
-        <el-form-item prop="isNumber">
+        <el-form-item prop="isNumber" class="form-item">
           <el-input clearable v-model="formInfo.isNumber" :placeholder="isNumber">
             <i slot="prefix" class="iconfont prefix-icon" :class="isNumberIcon"></i>
           </el-input>
         </el-form-item>
-        <el-form-item prop="city">
+        <el-form-item prop="city" class="form-item">
           <i class="iconfont icon-location prefix-icon icon"></i>
           <el-cascader
             clearable
@@ -53,7 +53,7 @@
             @change="handleChange">
           </el-cascader>
         </el-form-item>
-        <el-form-item prop="tradeType">
+        <el-form-item prop="tradeType" class="form-item">
           <i class="iconfont icon-xingye prefix-icon icon"></i>
           <el-select clearable v-model="formInfo.tradeType" filterable placeholder="行业">
             <el-option
@@ -64,12 +64,12 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item prop="password">
+        <el-form-item prop="password" class="form-item">
           <el-input clearable v-model="formInfo.password" type="password" placeholder="密码">
             <i slot="prefix" class="iconfont icon-mima prefix-icon"></i>
           </el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item  class="form-item">
           <el-button class="btn-half" @click="back">返回</el-button>
           <el-button class="btn-half" type="primary" @click="registerUser">立即注册</el-button>
         </el-form-item>
@@ -292,9 +292,10 @@ export default {
   justify-content: center;
   align-items: center;
   background-color: #f0f0f0;
+  font-size: 16px;
   &-item{
     width: 400px;
-    height: 480px;
+    min-height: 480px;
     padding: 0 45px;
     background-color: #ffffff;
     box-sizing: border-box;
@@ -309,7 +310,6 @@ export default {
     & .el-input__inner{
       padding: 0 15px 0 30px;
       box-sizing: border-box;
-      height: 32px;
     }
   }
   /deep/ .el-select{
@@ -325,7 +325,7 @@ export default {
 }
 .title{
   line-height: 60px;
-  font-size: 14px;
+  font-size: 20px;
   margin-bottom: 10px;
   font-weight: 100;
 }
@@ -354,12 +354,35 @@ export default {
 }
 .icon{
   position: absolute;
-  top: 2px;
-  left: 4px;
+  top: 6px;
+  left: 0px;
   z-index: 2;
 }
 .user-agreement{
   @include color('primary');
   margin: 0 10px;
+}
+.form-item{
+  font-size: 16px;
+  height: 50px;
+  margin-bottom: 10px;
+  /deep/ .el-input__inner{
+    height: 50px;
+    background-color: transparent;
+    border: 0;
+    border-radius: 0;
+    border-bottom: 1px solid #f0f0f0;
+    color: #000000;
+    font-size: 16px;
+  }
+  /deep/ .el-input__prefix{
+    left: 0;
+    line-height: 47px;
+  }
+  /deep/ .el-input__suffix-inner{
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
 }
 </style>
