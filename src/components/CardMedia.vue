@@ -227,17 +227,17 @@ $iconColor: #ffffff;
   @include color('danger');
   @include bg-color('info-plain')
 }
-@media screen and (min-width: 1440px) {
+@media screen and (min-width: 1600px) {
   .detail-media{
     width: calc(20% - 20px);
   }
 }
-@media screen and (max-width: 1440px) {
+@media screen and (max-width: 1600px) {
   .detail-media{
     width: calc(25% - 20px);
   }
 }
-@media screen and (max-width: 1280px) {
+@media screen and (max-width: 1300px) {
   .detail-media{
     width: calc(33.33% - 20px);
   }
