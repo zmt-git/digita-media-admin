@@ -43,6 +43,8 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 .plate-img{
   width: 50px;
