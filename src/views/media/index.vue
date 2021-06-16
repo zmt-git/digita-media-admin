@@ -29,7 +29,7 @@
           >
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-            <div class="el-upload__text" style="margin-top: 10px">不再支持视频，只能上传图片，bmp和jpg两种</div>
+            <!-- <div class="el-upload__text" style="margin-top: 10px">不再支持视频，只能上传图片，bmp和jpg两种</div> -->
           </el-upload>
         </card-media>
         <card-media v-for="item in pageList" :key="item.id" :info='item' @delete='deleteMedia'></card-media>

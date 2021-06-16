@@ -9,6 +9,7 @@
 <template>
   <div class="add-device">
     <el-image
+      v-if="isAdd"
       class="img"
       :src="url"
       :preview-src-list="[url]">

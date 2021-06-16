@@ -13,8 +13,10 @@
         <h3 class="login-box-left_title">
           云智能交通标志综合管理平台
         </h3>
-        <p class="login-box-left_des"><span>智能互联</span><span class="point"></span><span>科技赋能</span></p>
-        <div class="login-box-left-progress">
+        <div class="login-box-left-bottom">
+          <p class="login-box-left_des"><span>智能互联</span><span class="point"></span><span>科技赋能</span></p>
+          <div class="login-box-left-progress">
+        </div>
         </div>
       </div>
       <div class="login-contanier">
@@ -168,13 +170,13 @@ export default {
         width: '100%'
       },
       codeForm: {
-        mobile: '17691107141',
+        mobile: '',
         code: ''
       },
 
       loginForm: {
-        username: '15353711275',
-        password: '123456',
+        username: '',
+        password: '',
         randomStr: ''
       },
 
@@ -306,15 +308,20 @@ $color: #f9ffff;
       flex: 1;
       height: 100%;
       box-sizing: border-box;
-      padding-left: 70px;
+      padding-left: 45px;
       overflow: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       &_title{
-        font-size: 50px;
-        margin-top: 60px;
-        margin-bottom: 180px;
+        font-size: 40px;
+        margin-top: 45px;
         color: #0036a5;
         letter-spacing: 5px;
         font-weight: 600;
+      }
+      &-bottom{
+        margin-bottom: 40px;
       }
       &_des{
         color: #508aff;
@@ -328,7 +335,7 @@ $color: #f9ffff;
       &-progress{
         width: 557px;
         height: 20px;
-        margin-top: 40px;
+        margin-top: 30px;
         overflow: hidden;
         background-image: url('../../assets/login/progress.png');
         animation: progress-bar-stripes 2s linear infinite;

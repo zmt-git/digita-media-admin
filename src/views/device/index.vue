@@ -61,7 +61,7 @@ export default {
 
   beforeRouteLeave (to, from, next) {
     if (to.path === '/device/add') {
-      to.meta.title = this.isAdd ? '设备添加' : '设备编辑'
+      to.meta.title = this.isAdd ? '设备添加' : '设备修改'
     }
     next()
   },
