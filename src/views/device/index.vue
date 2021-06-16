@@ -60,7 +60,9 @@ export default {
   },
 
   beforeRouteLeave (to, from, next) {
-    to.meta.title = this.isAdd ? '设备添加' : '设备编辑'
+    if (to.path === '/device/add') {
+      to.meta.title = this.isAdd ? '设备添加' : '设备编辑'
+    }
     next()
   },
 
@@ -95,6 +97,10 @@ export default {
   border-radius: 10px;
   display: flex;
   flex-flow: wrap;
+}
+.device{
+  display: flex;
+  flex-direction: column;
 }
 .device-list{
   flex: 1;

@@ -11,21 +11,26 @@
     <el-button-group class="btn-box">
       <el-button type="danger" @click="clean" size="mini">清空任务</el-button>
     </el-button-group>
-    <div class="infinite-list" v-infinite-scroll="pageLoad" :infinite-scroll-disabled="scrollDisabled" style="overflow:auto">
-      <el-timeline>
-        <el-timeline-item :timestamp="item.timeCreate" placement="top" v-for="item in pageList" :key="item.id" >
-          <card-task
-            :title="item.jobContent | filterName"
-            :type="item.jobState | type"
-          >
-            <div>
-              <p class="card-item">任务内容：{{item.jobContent | filterContent}}</p>
-              <p class="card-item">执行时间：{{item.timeFinish}}</p>
-              <p class="card-item">任务状态：{{item.jobState | filterState}}</p>
-            </div>
-          </card-task>
-        </el-timeline-item>
-      </el-timeline>
+    <div class="infinite-list-wrapper job-list" style="overflow:auto">
+      <ul class="list"
+        v-infinite-scroll="pageLoad"
+        :infinite-scroll-disabled="scrollDisabled"
+      >
+        <el-timeline>
+          <el-timeline-item :timestamp="item.timeCreate" placement="top" v-for="item in pageList" :key="item.id" >
+            <card-task
+              :title="item.jobContent | filterName"
+              :type="item.jobState | type"
+            >
+              <div>
+                <p class="card-item">任务内容：{{item.jobContent | filterContent}}</p>
+                <p class="card-item">执行时间：{{item.timeFinish}}</p>
+                <p class="card-item">任务状态：{{item.jobState | filterState}}</p>
+              </div>
+            </card-task>
+          </el-timeline-item>
+        </el-timeline>
+      </ul>
       <base-page-loading :loading='pageLoading' :noMore='noMore' :list='pageList'></base-page-loading>
     </div>
   </div>
@@ -89,6 +94,14 @@ export default {
 }
 .job{
   background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  &-list{
+    flex: 1;
+    /deep/ .el-divider__text{
+      background-color: #fff;
+    }
+  }
 }
 .btn-box{
   margin-bottom: 10px;

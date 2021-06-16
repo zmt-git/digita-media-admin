@@ -6,7 +6,6 @@
  * @LastEditors: ZMT
  * @LastEditTime: 2021-05-25 21:52:12
  */
-import { lazyComponent } from '@/utils/lazyComponent'
 import layout from '@/layout/index.vue'
 export const stableRoutes = [
   {
@@ -18,7 +17,7 @@ export const stableRoutes = [
       auth: [0, 1, 2],
       icon: ''
     },
-    component: () => lazyComponent(import('@/views/system/login.vue'))
+    component: () => import('@/views/system/login.vue')
   },
   {
     name: 'register',
@@ -29,7 +28,7 @@ export const stableRoutes = [
       auth: [0, 1, 2],
       icon: ''
     },
-    component: () => lazyComponent(import('@/views/system/register.vue'))
+    component: () => import('@/views/system/register.vue')
   },
   {
     name: 'userAgreement',
@@ -40,7 +39,7 @@ export const stableRoutes = [
       auth: [0, 1, 2],
       icon: ''
     },
-    component: () => lazyComponent(import('@/views/system/userAgreement.vue'))
+    component: () => import('@/views/system/userAgreement.vue')
   },
   {
     path: '/suggestAdd',
@@ -62,7 +61,7 @@ export const stableRoutes = [
           auth: [0, 1, 2],
           btn: ['删除']
         },
-        component: () => lazyComponent(import('@/views/suggest/suggestAdd.vue'))
+        component: () => import('@/views/suggest/suggestAdd.vue')
       }
     ]
   },
@@ -75,6 +74,6 @@ export const stableRoutes = [
       icon: ''
     },
     redirect: '/device/deviceList',
-    component: () => lazyComponent(import('@/views/device/index.vue'))
+    component: () => import('@/views/device/index.vue')
   }
 ]

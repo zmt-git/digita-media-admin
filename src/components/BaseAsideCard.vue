@@ -63,6 +63,7 @@ export default {
 }
 .title{
   font-size: 16px;
+  line-height: 18px;
   width: 100%;
   text-align: center;
 }

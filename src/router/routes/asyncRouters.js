@@ -1,4 +1,3 @@
-import { lazyComponent } from '@/utils/lazyComponent'
 import layout from '@/layout/index.vue'
 
 export const asyncRoutes = [
@@ -45,7 +44,7 @@ export const asyncRoutes = [
           title: '设备添加',
           icon: ''
         },
-        component: () => lazyComponent(import('@/views/device/deviceAdd.vue'))
+        component: () => import('@/views/device/deviceAdd.vue')
       }
     ]
   },
@@ -70,7 +69,7 @@ export const asyncRoutes = [
           auth: [0, 1, 2],
           icon: 'icon-liumeitimeitiliebiao'
         },
-        component: () => lazyComponent(import('@/views/media/index.vue'))
+        component: () => import('@/views/media/index.vue')
       },
       {
         name: 'mediaDetail',
@@ -81,7 +80,7 @@ export const asyncRoutes = [
           auth: [0, 1, 2],
           icon: 'icon-meitiliebiao'
         },
-        component: () => lazyComponent(import('@/views/media/mediaDetail.vue'))
+        component: () => import('@/views/media/mediaDetail.vue')
       }
     ]
   },
@@ -106,7 +105,7 @@ export const asyncRoutes = [
           auth: [0, 1, 2],
           icon: 'icon-renwu1'
         },
-        component: () => lazyComponent(import('@/views/job/index.vue'))
+        component: () => import('@/views/job/index.vue')
       }
     ]
   },
@@ -132,7 +131,7 @@ export const asyncRoutes = [
           auth: [2],
           btn: ['删除']
         },
-        component: () => lazyComponent(import('@/views/user/index.vue'))
+        component: () => import('@/views/user/index.vue')
       },
       {
         name: 'suggest',
@@ -143,7 +142,7 @@ export const asyncRoutes = [
           icon: 'icon-yijianliebiao',
           auth: [2]
         },
-        component: () => lazyComponent(import('@/views/suggest/index.vue'))
+        component: () => import('@/views/suggest/index.vue')
       },
       {
         name: 'server',
@@ -154,7 +153,7 @@ export const asyncRoutes = [
           icon: 'icon-fuwuqi1',
           auth: [2]
         },
-        component: () => lazyComponent(import('@/views/server/index.vue'))
+        component: () => import('@/views/server/index.vue')
       }
     ]
   }

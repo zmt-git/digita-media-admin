@@ -25,8 +25,8 @@ export default {
 
   data () {
     return {
-      time: '2018-2020',
-      company: 'xxx科技有限公司'
+      time: '2020-2022',
+      company: '西安启明荣光科技有限公司'
     }
   }
 }

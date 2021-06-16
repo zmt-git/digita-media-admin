@@ -140,7 +140,7 @@ export default {
 $iconColor: #ffffff;
 .detail-media{
   display: inline-block;
-  margin: 10px;
+  margin: 9px;
   background-color: #ffffff;
   overflow: hidden;
   border: 1px solid transparent;

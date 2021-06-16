@@ -7,8 +7,7 @@ export default {
       pageList: [],
       pageRequest: null,
       pageLoading: false,
-      pageTotal: 0,
-      scrollDisabled: false
+      pageTotal: 0
     }
   },
 
@@ -18,13 +17,15 @@ export default {
     },
     noMore () {
       return !this.isInit && this.pageList.length >= this.pageTotal
+    },
+    scrollDisabled () {
+      return this.pageLoading || this.noMore
     }
   },
 
   methods: {
     async pageLoad () {
       this.pageLoading = true
-      this.scrollDisabled = true
       await this.pageRequest({ page: this.pageCurrent, limit: this.pageLimit })
         .then(res => {
           this.isInit = false
@@ -34,7 +35,6 @@ export default {
             this.pageCurrent++
           }
           this.pageList = this.dataProcessing ? this.dataProcessing(this.pageList.concat(res.page.list)) : this.pageList.concat(res.page.list)
-          this.scrollDisabled = this.setDisabled()
         })
         .catch(e => {
           console.log(e)
@@ -50,10 +50,6 @@ export default {
       this.pageTotal = 0
       this.scrollDisabled = false
       this.pageLoad()
-    },
-
-    setDisabled () {
-      return this.pageList.length >= this.pageTotal
     },
 
     refresh () {
