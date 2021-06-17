@@ -6,7 +6,11 @@
         v-if="info.mediaType !== 0"
         class="detail-media-src_img"
         :src="img"
+        fit='contain'
         :preview-src-list="[img]">
+        <div slot="error" class="image-slot">
+          <i class="error-img_icon el-icon-picture-outline"></i>
+        </div>
       </el-image>
       <template v-else>
         <div class="mask" @click="dialogVisible = true">
@@ -72,7 +76,7 @@ export default {
 
   computed: {
     img () {
-      return this.info.addressOld ? this.info.addressOld : require('../assets/common/empty.png')
+      return this.info.address
     },
 
     active () {
@@ -132,8 +136,8 @@ export default {
     border: 1px solid #f0f0f0;
     position: relative;
     /deep/ .el-image__inner{
-      max-width: 80px;
-      max-height: 80px;
+      width: 80px;
+      height: 80px;
     }
   }
   &-info{

@@ -38,6 +38,8 @@ import TagView from './container/tagView/tagView.vue'
 
 import { useTheme } from '@/hooks/useTheme'
 import { setCollapse, getCollapse } from '@/utils/cache/cacheCollapse'
+
+import { initWebsocket } from '@/utils/http/websocket'
 export default {
   name: 'layout',
 
@@ -53,6 +55,7 @@ export default {
     const { setThemes } = useTheme()
     setThemes()
     getCollapse() === 'true' ? this.collapse = true : this.collapse = false
+    initWebsocket()
   },
 
   watch: {

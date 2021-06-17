@@ -14,7 +14,7 @@
       </div>
       <div class="base-status-card-right">
         <h3>{{title}}</h3>
-        <h3>{{number}}</h3>
+        <h3>{{num}}</h3>
       </div>
     </template>
     <slot v-else></slot>
@@ -45,6 +45,12 @@ export default {
     number: {
       type: Number,
       default: 0
+    }
+  },
+
+  computed: {
+    num () {
+      return this.number > 9999 ? '9999+' : this.number
     }
   }
 }

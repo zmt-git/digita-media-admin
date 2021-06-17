@@ -40,6 +40,8 @@ import BasePageLoading from '@/components/BasePageLoading.vue'
 import BaseStatusCard from '@/components/BaseStatusCard.vue'
 import { listDevice, statisticsDevice } from '@/api/device'
 import page from '@/mixins/page'
+import eventBus from '@/utils/eventBus'
+
 export default {
   name: 'device',
 
@@ -57,6 +59,25 @@ export default {
 
   created () {
     this.getStatisticsDevice()
+
+    eventBus.on('devStatus', (data) => {
+      if (data.code === 'devStatus') {
+        this.statistics = JSON.parse(data.data)
+      } else if (data.code === 'devList') {
+        data.data.forEach(item => {
+          const index = this.pageList.findIndex(el => {
+            return el.id === item.id
+          })
+          if (index >= 0) {
+            this.pageList.splice(index, 1, item)
+          }
+        })
+      }
+    })
+
+    this.$emit('hook:beforeDestroy', () => {
+      eventBus.off('devStatus')
+    })
   },
 
   beforeRouteLeave (to, from, next) {

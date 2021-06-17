@@ -131,7 +131,7 @@ import { codeLogin } from '@/api/system/login'
 import smsCode from '@/mixins/smsCode'
 import { telReg, codeReg } from '@/data/common'
 import { removeToken, setToken } from '@/utils/cache/cacheToken'
-
+import { close } from '@/utils/http/websocket'
 export default {
   name: 'login',
 
@@ -207,6 +207,7 @@ export default {
   },
 
   mounted () {
+    close()
     removeToken()
     if (this.loginForm.username === '') {
       this.$refs.username.focus()
@@ -301,7 +302,7 @@ $color: #f9ffff;
     height: 400px;
     border-radius: 12px;
     background-image: url('../../assets/login/form_bg.png');
-    background-size: 100% 100%;
+    background-size: cover;
     display: flex;
     justify-content: space-between;
     &-left{
@@ -314,18 +315,18 @@ $color: #f9ffff;
       flex-direction: column;
       justify-content: space-between;
       &_title{
-        font-size: 40px;
-        margin-top: 45px;
+        font-size: 32px;
+        margin-top: 54px;
         color: #0036a5;
         letter-spacing: 5px;
         font-weight: 600;
       }
       &-bottom{
-        margin-bottom: 40px;
+        margin-bottom: 30px;
       }
       &_des{
         color: #508aff;
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 600;
         letter-spacing: 4px;
         & span{
@@ -334,8 +335,8 @@ $color: #f9ffff;
       }
       &-progress{
         width: 557px;
-        height: 20px;
-        margin-top: 30px;
+        height: 15px;
+        margin-top: 20px;
         overflow: hidden;
         background-image: url('../../assets/login/progress.png');
         animation: progress-bar-stripes 2s linear infinite;
@@ -459,9 +460,27 @@ $color: #f9ffff;
     background-position: 0 0;
   }
 }
-@media screen and (max-width: 1430px) {
+@media screen and (min-width: 1600px) {
   .login-box{
-    width: 100%;
+    width: 1440px;
   }
 }
+@media screen and (max-width: 1600px) {
+  .login-box{
+    width: calc(100% - 120px);
+  }
+}
+
+@media screen and (min-width: 1140px) {
+  .login-box-left-progress{
+    width: 557px;
+  }
+}
+
+@media screen and (max-width: 1140px) {
+  .login-box-left-progress{
+    width: calc(100% - 40px);
+  }
+}
+
 </style>

@@ -67,7 +67,7 @@ export default {
   data () {
     return {
       timmer: null,
-      url: require('../assets/common/empty.png')
+      url: ''
     }
   },
 
@@ -129,6 +129,7 @@ export default {
   align-items: center;
   box-sizing: border-box;
   padding: 5px 10px;
+  overflow: hidden;
   &_box{
     flex: 1;
     height: 100%;
