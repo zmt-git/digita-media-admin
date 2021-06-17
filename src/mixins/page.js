@@ -49,7 +49,6 @@ export default {
       this.pageCurrent = 1
       this.pageLimit = 20
       this.pageTotal = 0
-      this.scrollDisabled = false
       this.pageLoad()
     },
 
