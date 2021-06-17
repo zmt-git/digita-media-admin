@@ -10,6 +10,9 @@
           class="detail-media-src_img"
           :src="img"
           :preview-src-list="[img]">
+          <div slot="error" class="image-slot">
+            <i class="error-img_icon el-icon-picture-outline"></i>
+          </div>
         </el-image>
         <template v-else>
           <video-player :info='info' :autoplay='false' :options='{ autoplay: false, controls: false}'></video-player>
@@ -160,6 +163,11 @@ $iconColor: #ffffff;
     &_img{
       border: 0;
       cursor: pointer;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     &-mask{
       position: absolute;

@@ -69,7 +69,7 @@
                     class="login-contanier-form__input"
                     ref="randomStr"
                     placeholder="请输入验证码"
-                    tabindex='1'
+                    tabindex='3'
                     v-model="loginForm.randomStr"
                     @keyup.enter.native="handleLogin"
                   >

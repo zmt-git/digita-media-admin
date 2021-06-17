@@ -13,10 +13,7 @@
         <el-input v-model="form.minioAccessKey"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="minioSecretKey" required clearable>
-        <el-input v-model="form.minioSecretKey"></el-input>
-      </el-form-item>
-      <el-form-item label="仓库页面" prop="minioBucketName" required clearable>
-        <el-input v-model="form.minioBucketName"></el-input>
+        <el-input type="password" v-model="form.minioSecretKey"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button class="btn" type="primary" size="small" @click="submitForm">修改</el-button>
@@ -40,8 +37,7 @@ export default {
         type: 4,
         minioUrl: '',
         minioAccessKey: '',
-        minioSecretKey: '',
-        minioBucketName: ''
+        minioSecretKey: ''
       },
       rules: {}
     }

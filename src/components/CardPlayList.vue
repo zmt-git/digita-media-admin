@@ -13,9 +13,13 @@
         <i class="iconfont icon-zuo media_icon" :class="disabled ? 'disabled' : ''" title="左移" @click="move('left')"></i>
         <div class="media_box">
           <el-image
+            fit='contain'
             class="media_img"
             :src="url"
             :preview-src-list="[url]">
+            <div slot="error" class="image-slot">
+              <i class="error-img_icon el-icon-picture-outline"></i>
+            </div>
           </el-image>
           <!-- <img class="media_img" :src="url" alt="媒体图片"> -->
         </div>
@@ -127,6 +131,7 @@ export default {
   padding: 5px 10px;
   &_box{
     flex: 1;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -137,14 +142,11 @@ export default {
     cursor: pointer;
   }
   &_img{
-    max-width: 200px;
-    max-height: 120px;
-    & /deep/ .el-image__inner{
-      max-width: 200px;
-      max-height: 120px;
-      width: inherit;
-      height: inherit;
-    }
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 .info{
