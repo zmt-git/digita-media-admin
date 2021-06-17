@@ -10,7 +10,7 @@ const reconnectMaxNum = 10
 
 let websocketInstance = {}
 
-let options = {}
+let options = { url: window.globalConfig.ws_url }
 
 let reconnectNum = 0
 
@@ -29,12 +29,15 @@ function getUrl (optionsObj) {
   return `${url + getToken()}?token=${getToken()}&userId=${store.getters.user.userId}`
 }
 
-function reconnect () {
+export function reconnect () {
   if (reconnectNum > reconnectMaxNum) {
     console.log('websocket重连失败')
     reconnectTimer && clearTimeout(reconnectTimer)
+    eventBus.emit('websocketStatus', 0)
     return
   }
+  eventBus.emit('websocketStatus', -1)
+
   initWebsocket(options)
 
   reconnectNum++
@@ -55,6 +58,7 @@ export function onOpen () {
   console.log('WebSocket onOpen')
   reconnectTimer && clearTimeout(reconnectTimer)
   keepAliveHeart()
+  eventBus.emit('websocketStatus', 1)
 }
 
 export function onMessage (data) {
@@ -73,6 +77,7 @@ export function onMessage (data) {
 export function onClose () {
   console.log('WebSocket closed')
   heartTimer && clearTimeout(heartTimer)
+  eventBus.emit('websocketStatus', 0)
 }
 
 export function onError (e) {

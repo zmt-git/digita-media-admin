@@ -23,6 +23,10 @@
           <i slot="reference" class="iconfont header-right_icon icon-tongzhi" @click="notice"></i>
         </el-popover>
       </el-tooltip> -->
+      <el-tooltip :content="websocketTitle" placement="bottom" effect="light">
+        <i class="iconfont header-right_icon" :class='websocketIcon' @click="toReconnect"></i>
+      </el-tooltip>
+
       <el-tooltip content="我要建议" placement="bottom" effect="light">
         <i class="iconfont header-right_icon icon-edit" @click="toSuggest"></i>
       </el-tooltip>
@@ -48,6 +52,8 @@ import HeaderUserInfo from './HeaderUserInfo'
 // import HeaderNotice from './HeaderNotice'
 import { useFullscreen } from '@/hooks/useFullscreen'
 import { mapGetters } from 'vuex'
+import { reconnect } from '@/utils/http/websocket'
+import eventBus from '@/utils/eventBus'
 const { toggleFullscreen, isFullscreen } = useFullscreen()
 export default {
   name: 'layout-header',
@@ -81,6 +87,25 @@ export default {
       let title = '全屏'
       this.screenIcon === 'icon-fullscreen' ? title = '全屏' : title = '退出全屏'
       return title
+    },
+
+    websocketTitle () {
+      if (this.websocketStatus === -1) {
+        return 'websocket重连中'
+      } else if (this.websocketStatus === 1) {
+        return 'websocket通信正常'
+      } else {
+        return 'websocket已断开'
+      }
+    },
+    websocketIcon () {
+      if (this.websocketStatus === -1) {
+        return 'icon-zhonglian--'
+      } else if (this.websocketStatus === 1) {
+        return 'icon-websocket'
+      } else {
+        return 'icon-bianzu'
+      }
     }
   },
 
@@ -90,11 +115,15 @@ export default {
       screenIcon: 'icon-fullscreen',
       isFullscreen: false,
       userDrawerVisible: false,
-      userLoading: false
+      userLoading: false,
+      websocketStatus: 0
     }
   },
 
   created () {
+    eventBus.on('websocketStatus', (status) => {
+      this.websocketStatus = status
+    })
     this.collapse ? this.collapseIconClass = 'icon-daohangzhankai' : this.collapseIconClass = 'icon-daohangshouqi'
   },
 
@@ -136,6 +165,12 @@ export default {
       this.userLoading = false
     },
 
+    toReconnect () {
+      if (this.websocketStatus === 0) {
+        reconnect()
+      }
+    },
+
     toSuggest () {
       this.$router.push('/suggestAdd/add')
     },
@@ -164,6 +199,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~@/styles/handler.scss';
 .header{
   width: 100%;
   height: 50px;
@@ -190,5 +226,14 @@ export default {
       cursor: pointer;
     }
   }
+}
+.icon-zhonglian--{
+  @include color('primary')
+}
+.icon-websocket{
+  @include color('success')
+}
+.icon-bianzu{
+  @include color('danger')
 }
 </style>
