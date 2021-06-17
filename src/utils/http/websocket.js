@@ -18,8 +18,14 @@ let reconnectTimer = null
 
 let heartTimer = null
 
-function getUrl (options) {
-  const url = options && options.url ? options.url : window.globalConfig.ws_url
+function getUrl (optionsObj) {
+  let url = ''
+  if (optionsObj && optionsObj.url) {
+    url = optionsObj.url
+  } else {
+    url = window.globalConfig.ws_url
+    options.url = window.globalConfig.ws_url
+  }
   return `${url + getToken()}?token=${getToken()}&userId=${store.getters.user.userId}`
 }
 
@@ -84,7 +90,7 @@ export function initWebsocket (optionsObj) {
   }
   console.log('init websocket')
 
-  options = optionsObj
+  options = optionsObj || {}
 
   const url = getUrl(options)
 
