@@ -8,7 +8,7 @@
 -->
 <template>
   <el-footer class="footer" :height='height'>
-    <span>CopyRight ©{{time}} All Rights Reserved {{company}}</span>
+    <span>©{{time}} All Rights Reserved {{company}}</span>
   </el-footer>
 </template>
 
