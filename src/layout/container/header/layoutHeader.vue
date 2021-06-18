@@ -13,6 +13,7 @@
         <i class="iconfont header-left_nav" :collapse='collapse' @click="changeCollapse" :class="collapseIconClass"></i>
       </el-tooltip>
     </div> -->
+    <tag-view></tag-view>
     <div class="header-right">
       <!-- <el-tooltip content="通知" placement="bottom" effect="light">
         <el-popover
@@ -54,6 +55,7 @@ import { useFullscreen } from '@/hooks/useFullscreen'
 import { mapGetters } from 'vuex'
 import { reconnect } from '@/utils/http/websocket'
 import eventBus from '@/utils/eventBus'
+import TagView from '../tagView/tagView'
 const { toggleFullscreen, isFullscreen } = useFullscreen()
 export default {
   name: 'layout-header',
@@ -74,7 +76,7 @@ export default {
     event: 'change'
   },
 
-  components: { HeaderUserInfo /* HeaderNotice */ },
+  components: { HeaderUserInfo, TagView /* HeaderNotice */ },
 
   computed: {
     ...mapGetters(['user']),
@@ -206,12 +208,15 @@ export default {
   box-sizing: border-box;
   border-bottom: 1px solid #f0f0f0;
   padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   & div {
     line-height: 50px;
     height: 100%;
   }
   &-left{
-    float: left;
+    flex-shrink: 0;
     &_nav{
       font-size: 22px;
       cursor: pointer;

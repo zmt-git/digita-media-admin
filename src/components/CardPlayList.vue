@@ -72,7 +72,6 @@ export default {
   },
 
   created () {
-    console.log(12)
     if (this.isAdd) return
     this.getMediaUrl()
   },

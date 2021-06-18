@@ -113,19 +113,9 @@ export default {
     @include bg-color('danger')
   }
 }
-@media screen and (max-width: 1280px) {
+@media screen and (max-width: 1050px) {
   .base-status-card{
     width: calc(33.33% - 10px);
-  }
-}
-@media screen and (max-width: 760px) {
-  .base-status-card{
-    width: calc(50% - 10px);
-  }
-}
-@media screen and (max-width: 570px) {
-  .base-status-card{
-    width: calc(100% - 10px);
   }
 }
 </style>

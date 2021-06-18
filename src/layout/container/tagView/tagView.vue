@@ -53,8 +53,9 @@ export default {
 <style lang="scss" scoped>
 @import '~@/styles/handler.scss';
 .tagView{
-  width: 100%;
-  height: 35px;
+  flex: 1;
+  height: 100%;
+  min-height: 35px;
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
@@ -69,6 +70,7 @@ export default {
     height: 3px;
   }
   &-item{
+    flex-shrink: 0;
     display: inline-block;
     position: relative;
     cursor: pointer;

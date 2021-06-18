@@ -13,7 +13,6 @@
     <el-container>
       <el-main class="main">
         <layout-header :collapse.sync="collapse"></layout-header>
-        <tag-view></tag-view>
         <transition
           appear
           mode="out-in"
@@ -34,7 +33,6 @@ import layoutHeader from './container/header/layoutHeader'
 import layoutFooter from './container/footer/layoutFooter'
 // import layoutAside from './container/aside/layoutAside'
 import asideCardLayout from './container/aside/asideCardLayout'
-import TagView from './container/tagView/tagView.vue'
 
 import { useTheme } from '@/hooks/useTheme'
 import { setCollapse, getCollapse } from '@/utils/cache/cacheCollapse'
@@ -43,7 +41,7 @@ import { initWebsocket } from '@/utils/http/websocket'
 export default {
   name: 'layout',
 
-  components: { /* layoutAside */ asideCardLayout, layoutHeader, layoutFooter, TagView },
+  components: { /* layoutAside */ asideCardLayout, layoutHeader, layoutFooter },
 
   data () {
     return {

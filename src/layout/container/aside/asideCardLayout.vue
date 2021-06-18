@@ -45,6 +45,8 @@ export default {
   align-items: center;
   flex-grow: 0;
   flex-shrink: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 .plate-img{
   width: 60px;
