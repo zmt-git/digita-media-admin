@@ -153,7 +153,7 @@ export default {
     formatterTradeType (row, column, cellValue, index) {
       const obj = tradeType.find(item => item.val === row.tradeType)
       if (obj) return obj.name
-      return ''
+      return row.tradeType
     },
     formatterCity (row, column, cellValue, index) {
       return province[row.city] ? province[row.city] : ''

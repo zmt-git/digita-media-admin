@@ -99,7 +99,7 @@ export default {
       background-color: #fff;
     }
     /deep/ .el-timeline-item__content{
-      border-radius: 4px;
+      // border-radius: 4px;
       overflow: hidden;
     }
   }

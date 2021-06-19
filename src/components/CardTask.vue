@@ -4,10 +4,10 @@
       <i class="iconfont card-task-title_icon" :class="iconClass"></i>
       <span class="card-task-title_text">{{title}}</span>
     </h3> -->
-    <p class="card-item">任务内容：{{jobContent}}</p>
-    <p class="card-item">任务主体：{{content}}</p>
-    <p class="card-item">执行时间：{{timeFinish}}</p>
-    <p class="card-item">任务状态：{{jobState}}</p>
+    <p class="card-item ellipsis-1" :title="jobContent">任务内容：{{jobContent}}</p>
+    <p class="card-item ellipsis-1" :title="content">任务主体：{{content}}</p>
+    <p class="card-item ellipsis-1" :title="timeFinish">执行时间：{{timeFinish}}</p>
+    <p class="card-item ellipsis-1" :title="jobState">任务状态：{{jobState}}</p>
   </div>
 </template>
 
@@ -74,7 +74,8 @@ export default {
   width: 100%;
   box-sizing: border-box;
   padding: 16px 14px;
-  color: #fff;
+  color: #000;
+  border: 3px solid transparent;
   &-title{
     &_icon{
       margin-right: 10px;
@@ -96,12 +97,12 @@ export default {
   box-sizing: border-box;
 }
 .error{
-  background-color: #cc0001;
+  border-color: #cc0001;
 }
 .primary{
-  background-color: #0043b4;
+  border-color: #0043b4;
 }
 .success{
-  background-color: #009900;
+  border-color: #009900;
 }
 </style>

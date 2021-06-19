@@ -53,7 +53,7 @@
             @change="handleChange">
           </el-cascader>
         </el-form-item>
-        <el-form-item prop="tradeType" class="form-item">
+        <!-- <el-form-item prop="tradeType" class="form-item">
           <i class="iconfont icon-xingye prefix-icon icon"></i>
           <el-select clearable v-model="formInfo.tradeType" filterable placeholder="行业">
             <el-option
@@ -63,7 +63,7 @@
               :value="item.val">
             </el-option>
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item prop="password" class="form-item">
           <el-input clearable v-model="formInfo.password" type="password" placeholder="密码">
             <i slot="prefix" class="iconfont icon-mima prefix-icon"></i>
@@ -199,7 +199,7 @@ export default {
         username: '',
         isNumber: '',
         city: '',
-        tradeType: '',
+        tradeType: '智能交通',
         password: ''
       },
       rulesInfo: {
@@ -334,6 +334,7 @@ export default {
 }
 .btn-half{
   width: 48%;
+  margin-top: 10px;
 }
 .login{
   width: 100%;
