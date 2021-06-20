@@ -31,16 +31,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~@/styles/handler.scss';
+$size: 14px;
 .base-dot{
   display: inline-block;
-  width: 12px;
-  height: 12px;
+  width: $size;
+  height: $size;
   margin-left: 2px;
   position: relative;
   &_status {
     display: inline-block;
-    width: 12px;
-    height: 12px;
+    width: $size;
+    height: $size;
     border-radius: 50%;
     position: absolute;
     top: 0px;
@@ -53,18 +55,26 @@ export default {
   background-color: transparent;
 }
 .online-bg{
-  background-color: #67c23a;
+  @include bg-color('success')
 }
 .offline-bg{
-  background-color: #909399;
+  @include bg-color('danger')
 }
+
+.standby{
+  @include bg-color('info')
+}
+.standby-bg{
+  @include bg-color('info')
+}
+
 .online{
-  border-color: #67c23a;
+  @include border-color('success');
   animation: zoom 1s infinite;
 }
 .offline{
-  border-color: #909399;
-  border: 1px solid #909399;
+  @include border-color('danger');
+  border: 1px solid;
 }
 @keyframes zoom {
   0% { transform: scale(1); }

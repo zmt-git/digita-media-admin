@@ -33,16 +33,19 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item prop="username" class="form-item">
+          <span class="required-icon">*</span>
           <el-input clearable v-model="formInfo.username" :placeholder="username">
             <i slot="prefix" class="iconfont prefix-icon" :class="usernameIcon"></i>
           </el-input>
         </el-form-item>
         <el-form-item prop="isNumber" class="form-item">
+          <span class="required-icon">*</span>
           <el-input clearable v-model="formInfo.isNumber" :placeholder="isNumber">
             <i slot="prefix" class="iconfont prefix-icon" :class="isNumberIcon"></i>
           </el-input>
         </el-form-item>
         <el-form-item prop="city" class="form-item">
+          <span class="required-icon">*</span>
           <i class="iconfont icon-location prefix-icon icon"></i>
           <el-cascader
             clearable
@@ -65,6 +68,7 @@
           </el-select>
         </el-form-item> -->
         <el-form-item prop="password" class="form-item">
+          <span class="required-icon">*</span>
           <el-input clearable v-model="formInfo.password" type="password" placeholder="密码">
             <i slot="prefix" class="iconfont icon-mima prefix-icon"></i>
           </el-input>
@@ -85,9 +89,9 @@
       width="30%">
       <span>
         <p class="explanation error"> 根据《中华人名共和国广告法》以及国信办通字﹝2019﹞3号《网络音视频信息服务管理规定》，您必须完成实名认证； </p>
-        <p class="explanation error"> 请选择用户身份，完成认证 </p>
+        <p class="explanation error"> 请选择用户身份，完成认证； </p>
         <p class="explanation error"> 企业用户请填写组织机构名称和组织机构代码； </p>
-        <p class="explanation error"> 个人用户请填写姓名和居民身份信息 </p>
+        <p class="explanation error"> 个人用户请填写姓名和居民身份信息。 </p>
       </span>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" size="mini" @click="dialogVisible = false">确 定</el-button>
@@ -199,7 +203,7 @@ export default {
         username: '',
         isNumber: '',
         city: '',
-        tradeType: '智能交通',
+        tradeType: 14,
         password: ''
       },
       rulesInfo: {
@@ -385,5 +389,11 @@ export default {
     display: flex;
     align-items: center;
   }
+}
+.required-icon{
+  color: red;
+  position: absolute;
+  top: 10px;
+  left: -10px;
 }
 </style>

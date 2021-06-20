@@ -30,7 +30,7 @@
         <base-dot :ripple='workStatus' :borderClass='stateClass' :bgClass='stateClassBg' :title="title"></base-dot>
         <!-- <i class="iconfont icon-wenduji icon" :style="{ color: highTemp ? '#f56c6c' : '#67c23a' }" :title="tempTitle"></i> -->
         <!-- <i class="iconfont icon-shezhi icon set-icon primary" title="设置" ></i> -->
-        <i class="iconfont icon-edit icon set-icon primary" title="编辑" @click.stop="toEdit"></i>
+        <!-- <i class="iconfont icon-edit icon set-icon primary" title="编辑" @click.stop="toEdit"></i> -->
       </div>
     </div>
   </li>
@@ -59,10 +59,18 @@ export default {
       }
     },
     stateClass () {
-      return this.info.stateOnline === 1 ? 'online' : 'offline'
+      if (this.info.stateOnline === 1) {
+        return this.info.stateWork === 1 ? 'online' : 'standby'
+      } else {
+        return 'offline'
+      }
     },
     stateClassBg () {
-      return this.info.stateOnline === 1 ? 'online-bg' : 'offline-bg'
+      if (this.info.stateOnline === 1) {
+        return this.info.stateWork === 1 ? 'online-bg' : 'standby-bg'
+      } else {
+        return 'offline-bg'
+      }
     },
     workStatus () {
       return !!(this.info.stateOnline && this.info.stateWork)
@@ -121,6 +129,8 @@ export default {
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
+      box-sizing: border-box;
+      padding: 8px 0;
     }
   }
   &-info{

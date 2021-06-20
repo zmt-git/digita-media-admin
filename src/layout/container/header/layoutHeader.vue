@@ -29,7 +29,7 @@
       </el-tooltip>
 
       <el-tooltip content="我要建议" placement="bottom" effect="light">
-        <i class="iconfont header-right_icon icon-edit" @click="toSuggest"></i>
+        <i class="iconfont header-right_icon icon-bianji" @click="toSuggest"></i>
       </el-tooltip>
 
       <el-tooltip :content="screenTitle" placement="bottom" effect="light">

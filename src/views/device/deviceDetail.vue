@@ -3,7 +3,7 @@
     <div class="device-detail-info" @click.self="setSystem">
       <!-- <h3 class="device-name">{{info.name}}</h3> -->
       <!-- <base-title type='primary'>运行状态</base-title> -->
-      <div class="device-detail-info-control">
+      <div class="device-detail-info-control" @click="toEdit" style='cursor: pointer'>
         <device-info :info='info'></device-info>
       </div>
       <div class="device-detail-info-control">
@@ -102,6 +102,9 @@ export default {
   },
 
   beforeRouteLeave (to, from, next) {
+    if (to.path === '/device/add') {
+      to.meta.title = this.isAdd ? '设备添加' : '设备修改'
+    }
     if (this.playChange) {
       this.$confirm('播放列表已变更，是否更新？', '提示', {
         confirmButtonText: '确定',
@@ -121,6 +124,10 @@ export default {
   },
 
   methods: {
+    toEdit () {
+      this.$router.push({ path: '/device/add', query: { info: JSON.stringify(this.info), isAdd: true } })
+    },
+
     getDeviceDetail () {
       return infoDevice(this.id)
         .then(res => {

@@ -26,7 +26,7 @@
       v-infinite-scroll="pageLoad"
       infinite-scroll-disabled='scrollDisabled'
     >
-      <card-device :info='item' v-for="item in pageList" :key='item.id' @setup='setup' @toEdit='toEdit'></card-device>
+      <card-device :info='item' v-for="item in pageList" :key='item.id' @setup='setup'></card-device>
     </ul>
     <base-backtop :total='pageTotal' :currentNum='lengthList'></base-backtop>
     <base-page-loading :loading='pageLoading' :noMore='noMore' :list='pageList'></base-page-loading>
@@ -91,11 +91,6 @@ export default {
     addDevice () {
       this.isAdd = true
       this.$router.push({ path: '/device/add', query: { isAdd: true } })
-    },
-
-    toEdit (info) {
-      this.isAdd = false
-      this.$router.push({ path: '/device/add', query: { info: JSON.stringify(info), isAdd: false } })
     },
 
     setup (info) {
