@@ -57,23 +57,25 @@ $size: 14px;
 .online-bg{
   @include bg-color('success')
 }
-.offline-bg{
-  @include bg-color('danger')
-}
-
-.standby{
-  @include bg-color('info')
-}
-.standby-bg{
-  @include bg-color('info')
-}
 
 .online{
   @include border-color('success');
   animation: zoom 1s infinite;
 }
+
+.standby{
+  @include bg-color('primariy')
+}
+
+.standby-bg{
+  @include bg-color('primariy')
+}
+
+.offline-bg{
+  @include bg-color('info')
+}
 .offline{
-  @include border-color('danger');
+  @include border-color('info');
   border: 1px solid;
 }
 @keyframes zoom {

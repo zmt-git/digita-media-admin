@@ -125,7 +125,7 @@ export default {
 
   methods: {
     toEdit () {
-      this.$router.push({ path: '/device/add', query: { info: JSON.stringify(this.info), isAdd: true } })
+      this.$router.push({ path: '/device/add', query: { info: JSON.stringify(this.info), isAdd: false } })
     },
 
     getDeviceDetail () {
