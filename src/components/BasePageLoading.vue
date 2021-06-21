@@ -39,7 +39,7 @@ export default {
   justify-content: center;
   align-items: center;
   /deep/ .el-divider__text{
-    background-color: #f0f2f5;
+    background-color: #f0f0f0;
   }
 }
 </style>
