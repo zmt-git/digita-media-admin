@@ -13,14 +13,14 @@
     <el-container>
       <el-main class="main">
         <layout-header :collapse.sync="collapse"></layout-header>
-        <!-- <base-page-loading-view key="pageLoadingState" v-if="pageLoadingState"></base-page-loading-view> -->
         <transition
           appear
+          mode="out-in"
           appear-active-class="animate__animated animate__fadeIn"
           enter-active-class="animate__animated animate__fadeIn"
           leave-active-class="animate__animated animate__fadeOut"
         >
-          <router-view key="view" class="main-view"></router-view>
+          <router-view class="main-view"></router-view>
         </transition>
         <layout-footer></layout-footer>
       </el-main>
@@ -33,20 +33,15 @@ import layoutHeader from './container/header/layoutHeader'
 import layoutFooter from './container/footer/layoutFooter'
 // import layoutAside from './container/aside/layoutAside'
 import asideCardLayout from './container/aside/asideCardLayout'
-// import BasePageLoadingView from '../components/BasePageLoadingView'
+
 import { useTheme } from '@/hooks/useTheme'
 import { setCollapse, getCollapse } from '@/utils/cache/cacheCollapse'
 
 import { initWebsocket } from '@/utils/http/websocket'
-import { mapGetters } from 'vuex'
 export default {
   name: 'layout',
 
   components: { /* layoutAside */ asideCardLayout, layoutHeader, layoutFooter },
-
-  computed: {
-    ...mapGetters(['pageLoadingState'])
-  },
 
   data () {
     return {
