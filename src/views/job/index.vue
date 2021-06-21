@@ -96,7 +96,7 @@ export default {
   &-list{
     flex: 1;
     /deep/ .el-divider__text{
-      background-color: #fff;
+      background-color: #fff!important;
     }
     /deep/ .el-timeline-item__content{
       // border-radius: 4px;
