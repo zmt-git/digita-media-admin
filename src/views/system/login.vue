@@ -291,7 +291,6 @@ $color: #f9ffff;
   position: relative;
   box-sizing: border-box;
   padding: 0 .1rem;
-  background-color: #000000;
   background-image: url('../../assets/login/bg.jpg');
   background-size: 100% 100%;
   & *::selection{
