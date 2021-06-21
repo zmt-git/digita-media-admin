@@ -8,6 +8,8 @@ const reconnectTime = 3 * 1000
 
 const reconnectMaxNum = 10
 
+let reconnectStatus = 0 // 0 不重连 1 正在重连
+
 let websocketInstance = {}
 
 let options = { url: window.globalConfig.ws_url }
@@ -33,9 +35,11 @@ export function reconnect () {
   if (reconnectNum > reconnectMaxNum) {
     console.log('websocket重连失败')
     reconnectTimer && clearTimeout(reconnectTimer)
+    reconnectStatus = 0
     eventBus.emit('websocketStatus', 0)
     return
   }
+  reconnectStatus = 1
   eventBus.emit('websocketStatus', -1)
 
   initWebsocket(options)
@@ -77,7 +81,9 @@ export function onMessage (data) {
 export function onClose () {
   console.log('WebSocket closed')
   heartTimer && clearTimeout(heartTimer)
-  eventBus.emit('websocketStatus', 0)
+  if (reconnectStatus !== 1) {
+    eventBus.emit('websocketStatus', 0)
+  }
 }
 
 export function onError (e) {
@@ -120,4 +126,9 @@ export function close () {
   } catch (e) {
     // console.log(e)
   }
+}
+
+export function reconnectWS () {
+  reconnectNum = 0
+  reconnect()
 }

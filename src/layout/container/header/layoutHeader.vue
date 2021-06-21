@@ -53,7 +53,7 @@ import HeaderUserInfo from './HeaderUserInfo'
 // import HeaderNotice from './HeaderNotice'
 import { useFullscreen } from '@/hooks/useFullscreen'
 import { mapGetters } from 'vuex'
-import { reconnect } from '@/utils/http/websocket'
+import { reconnectWS } from '@/utils/http/websocket'
 import eventBus from '@/utils/eventBus'
 import TagView from '../tagView/tagView'
 const { toggleFullscreen, isFullscreen } = useFullscreen()
@@ -97,12 +97,12 @@ export default {
       } else if (this.websocketStatus === 1) {
         return 'websocket通信正常'
       } else {
-        return 'websocket已断开'
+        return 'websocket已断开,点击重连'
       }
     },
     websocketIcon () {
       if (this.websocketStatus === -1) {
-        return 'icon-zhonglian--'
+        return 'icon-jiazaizhong el-icon-loading'
       } else if (this.websocketStatus === 1) {
         return 'icon-websocket'
       } else {
@@ -169,7 +169,7 @@ export default {
 
     toReconnect () {
       if (this.websocketStatus === 0) {
-        reconnect()
+        reconnectWS()
       }
     },
 
@@ -232,13 +232,13 @@ export default {
     }
   }
 }
-.icon-zhonglian--{
-  @include color('primary')
+.icon-jiazaizhong{
+  @include color('primary');
 }
 .icon-websocket{
-  @include color('success')
+  @include color('success');
 }
 .icon-bianzu{
-  @include color('danger')
+  @include color('danger');
 }
 </style>
