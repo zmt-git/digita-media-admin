@@ -8,8 +8,9 @@
  */
 import { createProgress } from './progressGuard'
 import { createPermission } from './permissionGuard'
-
+import { createPageLoadingGuard } from './pageLoadingGuard'
 export function setupGuard (router) {
   createPermission(router)
   createProgress(router)
+  createPageLoadingGuard(router)
 }

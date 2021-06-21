@@ -8,6 +8,7 @@
 -->
 <template>
   <div class="login">
+    <!-- <base-page-loading-view key="pageLoadingState" v-if="pageLoadingState"></base-page-loading-view> -->
     <div class="login-box center">
       <div class="login-box-left">
         <h3 class="login-box-left_title">
@@ -132,12 +133,18 @@ import smsCode from '@/mixins/smsCode'
 import { telReg, codeReg } from '@/data/common'
 import { removeToken, setToken } from '@/utils/cache/cacheToken'
 import { close } from '@/utils/http/websocket'
+// import BasePageLoadingView from '@/components/BasePageLoadingView'
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'login',
 
   mixins: [smsCode],
 
+  // components: { BasePageLoadingView },
+
   computed: {
+    ...mapGetters(['pageLoadingState']),
     btnDisabled () {
       if (!this.loginForm.username || !this.loginForm.password) {
         return true

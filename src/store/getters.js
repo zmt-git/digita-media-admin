@@ -3,5 +3,6 @@ export default {
   load: state => state.user.load,
   userType: state => state.user.userType,
   routes: state => state.routes.routes,
-  visitedViews: state => state.tagView.visitedViews
+  visitedViews: state => state.tagView.visitedViews,
+  pageLoadingState: state => state.app.pageLoadingState
 }
