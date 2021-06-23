@@ -15,14 +15,6 @@ module.exports = {
   // 放置静态资源目录
   assetsDir: 'static',
   // indexPath: "index.html", html输出路径 默认 index.html
-  devServer: {
-    proxy: {
-      '/api': {
-        target: 'http://192.168.2.240:8080',
-        changeOrigin: true
-      }
-    }
-  },
   configureWebpack: {
     resolve: {
       alias: {

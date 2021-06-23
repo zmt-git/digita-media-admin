@@ -51,7 +51,7 @@ export default {
         smsLogin(params)
           .then(res => {
             setToken(res.data.token)
-            resolve(res.data)
+            resolve(res)
           })
           .catch(e => reject(e))
       })
