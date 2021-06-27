@@ -18,8 +18,13 @@ export default {
     noMore () {
       return !this.isInit && this.pageList.length >= this.pageTotal
     },
-    scrollDisabled () {
-      return this.pageLoading || this.noMore
+    scrollDisabled: {
+      get () {
+        return this.pageLoading || this.noMore
+      },
+      set (val) {
+        this.scrollDisabled = true
+      }
     }
   },
 
@@ -39,6 +44,7 @@ export default {
         })
         .catch(e => {
           console.log(e)
+          this.scrollDisabled = true
         })
       this.pageLoading = false
     },

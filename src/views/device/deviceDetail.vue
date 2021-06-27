@@ -23,9 +23,10 @@
     </div>
     <div class="device-detail-playlist">
       <div class="device-detail-playlist-list">
-        <template v-for="(item, key) in scenes">
+        <template v-for="(item, key) in scenes.scenes">
           <device-form-play-list
             v-for="i in item"
+            :hasSwitch='scenes.hasSwitch'
             :key="i.type"
             :type='i.type'
             :scenes='key'
@@ -34,6 +35,7 @@
             :disabled='disabled'
             :playlist='playlist'
             :index='i.index'
+            @changeColor='changeColor'
             @updateInfo='updateInfo'
             @updatePlaylist='updatePlaylist'
             @addPlaylist='showDrawer'
@@ -59,7 +61,7 @@ import DeviceState from '@/components/DeviceState.vue'
 import DeviceInfo from '@/components/DeviceInfo.vue'
 import BaseDrawerMedia from '@/components/BaseDrawerMedia.vue'
 import { infoDevice } from '@/api/device'
-import { getPlaylist, updateContent } from '@/api/playlist'
+import { getPlaylist, updateContent, setColor } from '@/api/playlist'
 import { deviceType } from '@/data/common'
 export default {
   name: 'device-detail',
@@ -72,7 +74,7 @@ export default {
     },
     scenes () {
       const scenes = deviceType.find(item => item.value === this.info.type)
-      return scenes ? scenes.scenes : deviceType[0].scenes
+      return scenes || deviceType[0]
     }
   },
 
@@ -142,6 +144,19 @@ export default {
           this.playlist = res.list
         })
         .catch(e => console.log(e))
+    },
+
+    async changeColor (playlist, index, value) {
+      console.log(value)
+      const id = playlist[index].id
+      this.loading = true
+      await setColor(id, { playlistid: id, color: value })
+        .then(res => {
+          this.$message({ type: 'success', message: res.msg })
+        })
+        .catch(e => console.log(e))
+      await this.getPlaylists()
+      this.loading = false
     },
 
     async setPlaylist () {

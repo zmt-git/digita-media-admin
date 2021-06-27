@@ -19,3 +19,11 @@ export function updateContent (params, paramsSerializer) {
     }
   })
 }
+// 设置颜色
+export function setColor (id, params) {
+  return http({
+    url: `/device/playlist/color/${id}`,
+    method: 'POST',
+    params
+  })
+}

@@ -11,7 +11,22 @@
     <div class="play-list-header">
       <span class="scenes-img" :class="[type, scenes]"></span>
       <div class="scenes-info">
-        <h3 class="scenes-info_title ellipsis-1">{{title}}</h3>
+        <div class="scenes-info-top">
+          <h3 class="scenes-info_title ellipsis-1">{{title}}</h3>
+          <el-switch
+            v-if="hasSwitch"
+            :disabled='disabled'
+            :value="lightColor"
+            :active-value="2"
+            :inactive-value="1"
+            active-color="#13ce66"
+            active-text="绿色"
+            inactive-text="红色"
+            inactive-color="#ff4949"
+            @change="changeColor"
+          >
+          </el-switch>
+        </div>
         <p class="scenes-info_des ellipsis-2">{{des}}</p>
       </div>
     </div>
@@ -87,6 +102,10 @@ export default {
       validator: (val) => {
         return !!playlistType[val]
       }
+    },
+    hasSwitch: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -99,6 +118,13 @@ export default {
     },
     length () {
       return this.scenesList.length
+    },
+    lightColor () {
+      if (this.playlist.length > 0 && this.index !== undefined) {
+        return this.playlist[this.index] ? this.playlist[this.index].color : 0
+      } else {
+        return 0
+      }
     }
   },
 
@@ -125,6 +151,10 @@ export default {
       }).catch(() => {
 
       })
+    },
+
+    changeColor (e) {
+      this.$emit('changeColor', this.playlist, this.index, e)
     },
 
     updateInfo () {
@@ -212,6 +242,7 @@ export default {
     margin-left: 18px;
     font-size: 13px;
     &_title{
+      flex: 1;
       line-height: 30px;
       color: #4e4e4f;
     }
@@ -227,5 +258,9 @@ export default {
 }
 .cell-move {
   transition: transform 1s;
+}
+.scenes-info-top{
+  display: flex;
+  align-items: center;
 }
 </style>

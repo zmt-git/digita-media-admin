@@ -59,16 +59,19 @@
 .unknown{
   background-position: -7px -382px;
 }
+.freeze{
+  background-position: -67px -382px;
+}
 
 /*交通场景 -67px -70px-----------------------------------------------------------------*/
 .roadScenes{
   background-image: url('../assets/common/roadScenes.jpg');
   background-size: 390px!important;
 }
-.construction{
+.trafficAccident{
   background-position: -335px -339px
 }
-.trafficAccident{
+.construction{
   background-position: -268px -407px
 }
 /*交通灯场景-----------------------------------------------------------------*/
