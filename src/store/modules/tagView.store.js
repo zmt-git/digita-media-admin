@@ -1,7 +1,7 @@
 export default {
   state: {
     visitedViews: [
-      { title: '设备', path: '/device/deviceList' }
+      { title: '智能终端', path: '/device/deviceList' }
     ]
   },
 

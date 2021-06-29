@@ -19,8 +19,8 @@
       <el-form-item label="设备编码" prop="code" required v-if="isAdd">
         <el-input clearable v-model="ruleForm.code"></el-input>
       </el-form-item>
-      <el-form-item label="设备类型" prop="type" v-if="isAdd">
-        <el-select clearable v-model="ruleForm.type" placeholder="请选择设备类型" style='width: 100%'>
+      <el-form-item label="设备型号" prop="type" v-if="isAdd">
+        <el-select clearable v-model="ruleForm.type" placeholder="请选择设备型号" style='width: 100%'>
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -126,7 +126,7 @@ export default {
           { required: true, pattern: /^(e|E)(l|L)(f|F)/, message: '设备编码应以ELF开头' }
           // { validator: validateCode, trigger: 'blur', required: true }
         ],
-        type: [{ required: true, message: '请选择设备类型', trigger: 'change' }],
+        type: [{ required: true, message: '请选择设备型号', trigger: 'change' }],
         orient: [{ required: true, message: '请选择安装方向', trigger: 'change' }],
         power: [{ required: true, message: '请选择供电方式', trigger: 'change' }]
       }

@@ -64,14 +64,14 @@
                     <i slot="prefix" class="iconfont icon-mima prefix-icon"></i>
                   </el-input>
                 </el-form-item>
-                <el-form-item class="login-contanier-form__item" prop="randomStr" :style="style">
+                <el-form-item class="login-contanier-form__item" prop="captcha" :style="style">
                   <el-input
                     prefix-icon
                     class="login-contanier-form__input"
-                    ref="randomStr"
+                    ref="captcha"
                     placeholder="请输入验证码"
                     tabindex='3'
-                    v-model="loginForm.randomStr"
+                    v-model="loginForm.captcha"
                     @keyup.enter.native="handleLogin"
                   >
                     <i slot="prefix" class="iconfont icon-yanzhengma1 prefix-icon"></i>
@@ -184,6 +184,7 @@ export default {
       loginForm: {
         username: '',
         password: '',
+        captcha: '',
         randomStr: ''
       },
 
@@ -204,7 +205,7 @@ export default {
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' }
         ],
-        randomStr: [
+        captcha: [
           { required: true, message: '请输入验证码', trigger: 'blur' }
         ]
       },
@@ -221,6 +222,7 @@ export default {
     } else if (this.loginForm.password === '') {
       this.$refs.password.focus()
     }
+    this.loginForm.randomStr = new Date().getTime()
   },
 
   methods: {
@@ -232,6 +234,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
+          this.loginForm.randomStr = this.time
           this.$store.dispatch('loginActions', this.loginForm)
             .then((res) => {
               setToken(res.token)
@@ -486,6 +489,15 @@ $color: #f9ffff;
 @media screen and (max-width: 1140px) {
   .login-box-left-progress{
     width: calc(100% - 40px);
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .login-box-left{
+    display: none;
+  }
+  .login-contanier{
+    width: 100%;
   }
 }
 

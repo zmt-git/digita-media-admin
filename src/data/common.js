@@ -168,7 +168,7 @@ const weatherScenes = Object.freeze([
   { type: 'cloudy', title: '多云天气', des: '适用于一般情况下的播放列表' },
   { type: 'shade', title: '阴天天气', des: '适用于一般情况下的播放列表' },
   // ********************
-  { type: 'rain', title: '阵雨', des: '适用于降雨天气道路湿滑时' },
+  { type: 'rain', title: '降雨', des: '适用于降雨天气道路湿滑时' },
   // ********************
   { type: 'thundershower', title: '雷阵雨天气', des: '适用于一般情况下的播放列表' },
   { type: 'thundershower-hail', title: '雷阵雨冰雹天气', des: '适用于一般情况下的播放列表' },

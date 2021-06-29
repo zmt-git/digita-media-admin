@@ -6,7 +6,7 @@ export const asyncRoutes = [
     hidden: false,
     name: 'device',
     meta: {
-      title: '设备',
+      title: '智能终端',
       auth: [0, 1, 2],
       icon: 'icon-touyingyi'
     },
@@ -18,7 +18,7 @@ export const asyncRoutes = [
         path: 'deviceList',
         hidden: false,
         meta: {
-          title: '设备',
+          title: '智能终端',
           auth: [0, 1, 2],
           icon: 'icon-touyingyi1'
         },

@@ -6,7 +6,7 @@
     </li>
 
     <li class="device-state-item">
-      <span class="device-state-item_name">设备类型</span>
+      <span class="device-state-item_name">设备型号</span>
       <span class="device-state-item_value ellipsis-1" :title="type">{{type}}</span>
     </li>
 
