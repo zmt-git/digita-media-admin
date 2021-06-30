@@ -23,7 +23,7 @@ export default {
         return this.pageLoading || this.noMore
       },
       set (val) {
-        this.scrollDisabled = true
+        this.noMore = true
       }
     }
   },

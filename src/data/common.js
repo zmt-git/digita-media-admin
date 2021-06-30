@@ -79,12 +79,12 @@ const scenesTwo = {
     { type: 'freeze', index: 4 }
   ],
   roadScenes: [
-    { type: 'construction', index: 3 },
-    { type: 'trafficAccident', index: 4 }
+    { type: 'construction', index: 5 },
+    { type: 'trafficAccident', index: 6 }
   ],
   customizeScenes: [
-    { type: 'customize1', index: 5 },
-    { type: 'customize2', index: 6 }
+    { type: 'customize1', index: 7 },
+    { type: 'customize2', index: 8 }
   ]
 }
 const scenesThree = scenesTwo
@@ -141,23 +141,40 @@ export const powerOptions = Object.freeze([
 ])
 
 // 切换场景 -------------------------------------------------------------------------------------------
+const w = [
+  { label: '默认场景', value: 0 },
+  { label: '浓雾', value: 1 },
+  { label: '降雨', value: 2 },
+  { label: '积雪', value: 3 },
+  { label: '结冰', value: 4 },
+  { label: '道路施工', value: 5 },
+  { label: '交通事故', value: 6 },
+  { label: '自定义场景1', value: 7 },
+  { label: '自定义场景2', value: 8 }
+]
+const s = [
+  { label: '默认场景', value: 0 },
+  { label: '浓雾', value: 1 },
+  { label: '降雨', value: 2 },
+  { label: '积雪', value: 3 },
+  { label: '结冰', value: 4 }
+]
+const c = [
+  { label: '红灯', value: 0 },
+  { label: '绿灯', value: 1 }
+]
 export const scenesOptions = Object.freeze({
-  A: [
+  'ELF-A': [
     { value: 0, label: '默认场景' }
   ],
-  RG: [
-    { value: 0, label: '红灯' },
-    { value: 1, label: '绿灯' }
-  ],
-  W: [
-    { value: 0, label: '默认场景' },
-    { value: 1, label: '浓雾天气' },
-    { value: 2, label: '雨雪天气' },
-    { value: 3, label: '道路施工' },
-    { value: 4, label: '交通事故' },
-    { value: 5, label: '自定义场景1' },
-    { value: 6, label: '自定义场景2' }
-  ]
+  'TA-W': w,
+  'TA-RG': w,
+  'TA-RG-S': s,
+  'TA-RG-C': c,
+  'TB-W': w,
+  'TB-RG': w,
+  'TB-RG-S': s,
+  'TB-RG-C': c
 })
 
 // 天气场景-------------------------------------------------------------------------------------------

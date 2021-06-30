@@ -58,11 +58,10 @@ export default {
       return this.info.id ? this.info.id : undefined
     },
     scenesOptions () {
-      if (this.info.type && this.info.type.indexOf('-') >= 0) {
-        const type = this.info.type.split('-').pop()
-        return scenesOptions[type]
+      if (this.info.type) {
+        return scenesOptions[this.info.type]
       }
-      return scenesOptions.A
+      return scenesOptions['ELF-A']
     }
   },
 
