@@ -89,23 +89,6 @@ export default {
   mixins: [prompt],
 
   data () {
-    // const validateCode = async (rule, value, callback) => {
-    //   if (value) {
-    //     try {
-    //       const result = await this.registerDevice(value)
-    //       if (result) {
-    //         callback(new Error('设备未注册'))
-    //       } else {
-    //         callback()
-    //       }
-    //     } catch (e) {
-    //       callback(new Error(e))
-    //     }
-    //   } else {
-    //     callback()
-    //   }
-    // }
-
     return {
       options: deviceType,
       orientOptions: orient,
@@ -124,7 +107,6 @@ export default {
         location: [{ required: true, message: '请输入安装位置', trigger: 'blur' }],
         code: [
           { required: true, pattern: /^(e|E)(l|L)(f|F)/, message: '设备编码应以ELF开头' }
-          // { validator: validateCode, trigger: 'blur', required: true }
         ],
         type: [{ required: true, message: '请选择设备型号', trigger: 'change' }],
         orient: [{ required: true, message: '请选择安装方向', trigger: 'change' }],
@@ -170,7 +152,7 @@ export default {
           const params = this.getParams()
           await saveDevice(params)
             .then(res => {
-              this.$message({ type: 'success', message: '添加成功' })
+              this.$message({ type: 'success', message: this.isAdd ? '添加成功' : '编辑成功' })
               this.$emit('submit', res.data)
             })
             .catch(e => {
