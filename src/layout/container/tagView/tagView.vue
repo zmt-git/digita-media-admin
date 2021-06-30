@@ -38,7 +38,8 @@ export default {
 
     delTag (route) {
       this.$store.dispatch('delViews', route)
-      this.$router.push(this.visitedViews[this.visitedViews.length - 1].path)
+      const tag = this.visitedViews[this.visitedViews.length - 1]
+      this.$router.push({ path: tag.path, query: tag.query })
     }
   },
 
