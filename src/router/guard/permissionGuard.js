@@ -31,7 +31,7 @@ export function createPermission (router) {
           routes.forEach(route => {
             router.addRoute(route)
           })
-          next({ path: to.path })
+          next(to)
         } catch (e) {
           console.log(e)
           removeToken()

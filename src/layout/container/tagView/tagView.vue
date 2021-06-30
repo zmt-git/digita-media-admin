@@ -19,7 +19,7 @@ export default {
   name: 'tag-view',
 
   computed: {
-    ...mapGetters(['visitedViews'])
+    ...mapGetters(['visitedViews', 'routes'])
   },
 
   methods: {
@@ -44,8 +44,11 @@ export default {
   },
 
   watch: {
-    '$route' (to, from) {
-      this.$store.dispatch('addViews', to)
+    $route: {
+      handler: function (to, from) {
+        this.$store.dispatch('addViews', to)
+      },
+      immediate: true
     }
   }
 }
