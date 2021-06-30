@@ -54,7 +54,7 @@ export function lightDevice (devid, params) {
 // 设备基本信息的分页查询
 export function listDevice (params) {
   return http({
-    url: '/device/device/list1',
+    url: '/device/device/list',
     method: 'GET',
     params
   })
