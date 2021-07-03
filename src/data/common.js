@@ -56,7 +56,7 @@ export const tradeType = Object.freeze([
 // 上传媒体类型 -------------------------------------------------------------------------------------------
 export const mediaType = Object.freeze([
   // { type: 'video/mp4', mediaType: 0 },
-  { type: 'image/png', mediaType: 2 },
+  { type: 'image/bmp', mediaType: 2 },
   { type: 'image/jpeg', mediaType: 1 }
 ])
 

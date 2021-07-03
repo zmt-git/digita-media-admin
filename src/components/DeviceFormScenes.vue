@@ -62,13 +62,21 @@ export default {
         return scenesOptions[this.info.type]
       }
       return scenesOptions['ELF-A']
+    },
+    ordernumber: {
+      get () {
+        return this.info.playListNumber - 1
+      },
+      set (val) {
+        return val
+      }
     }
+
   },
 
   data () {
     return {
       stateOrient: '',
-      ordernumber: '',
       orientOptions: orientOptions,
       style: {
         width: '100%'
@@ -93,22 +101,14 @@ export default {
       this.$emit('updateInfo')
     },
 
-    async setOrderNumber () {
+    async setOrderNumber (val) {
       this.$emit('update:loading', true)
-      await orderNumber(this.id, { deviceCode: this.info.code, devid: this.info.id, playListNumber: this.ordernumber })
+      await orderNumber(this.id, { deviceCode: this.info.code, devid: this.info.id, playListNumber: val + 1 })
         .then(res => {
           this.prompt(res.state)
         })
         .catch(e => console.log(e))
       this.$emit('updateInfo')
-    }
-  },
-  watch: {
-    info: {
-      handler: function (n, o) {
-        this.assginFormData(n)
-      },
-      immediate: true
     }
   }
 }
