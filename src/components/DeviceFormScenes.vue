@@ -80,7 +80,7 @@ export default {
   methods: {
     assginFormData (obj) {
       this.stateOrient = obj.stateOrient
-      this.ordernumber = obj.ordernumber
+      this.ordernumber = obj.playListNumber
     },
 
     async setStateOrient () {
