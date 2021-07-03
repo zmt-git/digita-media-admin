@@ -36,7 +36,7 @@ export const asyncRoutes = [
         component: () => import('@/views/device/deviceDetail.vue')
       },
       {
-        name: 'add',
+        // name: 'add',
         path: 'add',
         hidden: true,
         meta: {

@@ -19,7 +19,7 @@ export default {
   name: 'tag-view',
 
   computed: {
-    ...mapGetters(['visitedViews'])
+    ...mapGetters(['visitedViews', 'routes'])
   },
 
   methods: {
@@ -38,13 +38,17 @@ export default {
 
     delTag (route) {
       this.$store.dispatch('delViews', route)
-      this.$router.push(this.visitedViews[this.visitedViews.length - 1].path)
+      const tag = this.visitedViews[this.visitedViews.length - 1]
+      this.$router.push({ path: tag.path, query: tag.query })
     }
   },
 
   watch: {
-    '$route' (to, from) {
-      this.$store.dispatch('addViews', to)
+    $route: {
+      handler: function (to, from) {
+        this.$store.dispatch('addViews', to)
+      },
+      immediate: true
     }
   }
 }

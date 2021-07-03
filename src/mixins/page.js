@@ -15,15 +15,15 @@ export default {
     lengthList () {
       return this.pageList.length
     },
-    noMore () {
-      return !this.isInit && this.pageList.length >= this.pageTotal
+    noMore: {
+      get () {
+        return !this.isInit && this.pageList.length >= this.pageTotal
+      },
+      set (val) {}
     },
     scrollDisabled: {
       get () {
         return this.pageLoading || this.noMore
-      },
-      set (val) {
-        this.scrollDisabled = true
       }
     }
   },
@@ -44,7 +44,8 @@ export default {
         })
         .catch(e => {
           console.log(e)
-          this.scrollDisabled = true
+          this.isInit = false
+          this.noMore = true
         })
       this.pageLoading = false
     },
