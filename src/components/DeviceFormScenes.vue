@@ -65,7 +65,11 @@ export default {
     },
     ordernumber: {
       get () {
-        return this.info.playListNumber - 1
+        if (this.info.playListNumber - 1 >= 0) {
+          return this.info.playListNumber - 1
+        } else {
+          return null
+        }
       },
       set (val) {
         return val
