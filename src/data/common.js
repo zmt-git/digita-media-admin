@@ -32,7 +32,8 @@ export const jobState = Object.freeze([ // 1成功，0等待执行，-1失败，
   { type: 'primary', name: '等待', state: 0 },
   { type: 'error', name: '失败', state: -1 },
   { type: 'primary', name: '执行中', state: -2 },
-  { type: 'error', name: '执行超时', state: -3 }
+  { type: 'error', name: '执行超时', state: -3 },
+  { type: 'error', name: '前置任务执行失败', state: -4 }
 ])
 
 // 行业 -------------------------------------------------------------------------------------------

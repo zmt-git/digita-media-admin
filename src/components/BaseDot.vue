@@ -64,11 +64,11 @@ $size: 14px;
 }
 
 .standby{
-  @include bg-color('primariy')
+  @include bg-color('warning')
 }
 
 .standby-bg{
-  @include bg-color('primariy')
+  @include bg-color('warning')
 }
 
 .offline-bg{

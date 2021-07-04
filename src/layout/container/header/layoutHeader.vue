@@ -183,15 +183,15 @@ export default {
         cancelButtonText: '取消',
         type: 'warning',
         center: false
-      }).then(() => {
-        this.$store.dispatch('logoutActions')
+      }).then(async () => {
+        await this.$store.dispatch('logoutActions')
           .then(res => {
-            this.$router.push('/login')
-            location.reload()
           })
           .catch(e => {
             console.log(e)
           })
+        this.$router.push('/login')
+        location.reload()
       }).catch(() => {
         console.log('取消退出')
       })

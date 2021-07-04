@@ -10,7 +10,10 @@
   <li class="detail-device box-shadow radius-10" @click="setup">
     <!-- <div class="mask" v-if="this.info.stateOnline !== 1"></div> -->
     <div class="detail-device-status">
-      <img class="detail-device-status_img" src="../assets/device/device.png" alt="设备图片">
+      <div class="detail-device-status-img">
+        <span v-if="hasError" class="iconfont icon-tanhao6 error detail-device-status-img_icon"></span>
+        <img class="detail-device-status-img_inner" src="../assets/device/device.png" alt="设备图片">
+      </div>
       <div class="detail-device-info">
         <!-- <base-storage :info='info'></base-storage> -->
         <div class="detail-device-info-item" :title="type">
@@ -89,6 +92,9 @@ export default {
     },
     tempTitle () {
       return this.highTemp ? '设备高温' : '温度正常'
+    },
+    hasError () {
+      return this.info.stateMedia === -1
     }
   },
 
@@ -117,10 +123,30 @@ export default {
   &-status{
     display: flex;
     width: 100%;
-    &_img{
-    width: 100px;
-    height: 100px;
-    float: left;
+    &-img{
+      width: 100px;
+      height: 100px;
+      position: relative;
+      &_inner{
+        width: 100px;
+        height: 100px;
+        float: left;
+      }
+      &_icon{
+        width: 25px;
+        height: 25px;
+        font-size: 30px;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: #fff;
+        border-radius: 50%;
+        &::before{
+          position: absolute;
+          top: -3px;
+          left: -3px;
+        }
+      }
     }
     &_right{
       width: 26px;

@@ -10,7 +10,7 @@
   <ul class="device-state">
     <li class="device-state-item">
       <span class="device-state-item_name">在线状态</span>
-      <span class="device-state-item_value" :class="this.info.stateOnline ? 'success' : 'info'">{{stateOnline}}</span>
+      <span class="device-state-item_value" :class="this.info.stateOnline ? 'success' : 'warning'">{{stateOnline}}</span>
     </li>
     <li class="device-state-item">
       <span class="device-state-item_name">工作状态</span>

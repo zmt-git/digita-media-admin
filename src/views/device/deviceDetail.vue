@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="device-detail-playlist">
-      <div class="device-detail-playlist-list">
+      <div class="device-detail-playlist-list" v-loading='uploadLoading'>
         <template v-for="(item, key) in scenes.scenes">
           <device-form-play-list
             v-for="i in item"
@@ -30,7 +30,7 @@
             :key="i.type"
             :type='i.type'
             :scenes='key'
-            :loading.sync='loading'
+            :loading.sync='uploadLoading'
             :info='info'
             :disabled='disabled'
             :playlist='playlist'
@@ -44,7 +44,8 @@
         </template>
       </div>
       <div class="device-detail-playlist-btn">
-        <el-button :disabled='disabled' type="primary" @click="setPlaylist">发布</el-button>
+        <el-button v-show="!bntLoading" :disabled='disabled' :type="uploadType" @click="setPlaylist">{{releaseName}}</el-button>
+        <span v-show="bntLoading" class="upload-loading">{{releaseName}}</span>
       </div>
       <base-drawer-media :visible.sync='visible' @add='addPlaylist'></base-drawer-media>
     </div>
@@ -75,12 +76,34 @@ export default {
     scenes () {
       const scenes = deviceType.find(item => item.value === this.info.type)
       return scenes || deviceType[0]
+    },
+    uploadType () {
+      if (this.info.stateMedia === 1) {
+        return 'primary'
+      } else {
+        return 'danger'
+      }
+    },
+    bntLoading () {
+      return this.info.stateMedia === 0 || this.uploadLoading
+    },
+    releaseName () {
+      if (this.info.stateMedia === 0 || this.uploadLoading) {
+        return '正在上传播放列表，请稍侯！'
+      } else if (this.info.stateMedia === 1) {
+        return '发布'
+      } else if (this.info.stateMedia === -1) {
+        return '重新发布'
+      } else {
+        return ''
+      }
     }
   },
 
   data () {
     return {
       loading: false,
+      uploadLoading: false,
       showSystem: false,
       visible: false,
       playChange: false,
@@ -307,5 +330,8 @@ export default {
   &::-webkit-scrollbar{
     height: 3px;
   }
+}
+.upload-loading{
+  font-size: 14px;
 }
 </style>

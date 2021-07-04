@@ -16,7 +16,7 @@
     </el-image>
 
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="设备编码" prop="code" required v-if="isAdd">
+      <el-form-item label="设备编号" prop="code" required v-if="isAdd">
         <el-input clearable v-model="ruleForm.code"></el-input>
       </el-form-item>
       <el-form-item label="设备型号" prop="type" v-if="isAdd">
@@ -89,6 +89,14 @@ export default {
   mixins: [prompt],
 
   data () {
+    const codeValidator = async (rule, value, callback) => {
+      const result = await this.registerDevice(value)
+      if (result) {
+        return callback()
+      } else {
+        return callback(new Error('设备编号已注册！'))
+      }
+    }
     return {
       options: deviceType,
       orientOptions: orient,
@@ -106,7 +114,8 @@ export default {
         name: [{ required: true, message: '请输入设备名称', trigger: 'blur' }],
         location: [{ required: true, message: '请输入安装位置', trigger: 'blur' }],
         code: [
-          { required: true, pattern: /^(e|E)(l|L)(f|F)/, message: '设备编码应以ELF开头' }
+          { required: true, pattern: /^(e|E)(l|L)(f|F)/, message: '设备编号应以ELF开头' },
+          { validator: codeValidator, trigger: 'blur' }
         ],
         type: [{ required: true, message: '请选择设备型号', trigger: 'change' }],
         orient: [{ required: true, message: '请选择安装方向', trigger: 'change' }],
@@ -127,7 +136,7 @@ export default {
 
   methods: {
     registerDevice (code) {
-      return registerDevice(code)
+      return registerDevice({ deviceCode: code })
         .then(res => {
           return res.msg === 'false'
         })
