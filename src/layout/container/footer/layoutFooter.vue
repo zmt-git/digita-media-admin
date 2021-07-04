@@ -25,7 +25,7 @@ export default {
 
   data () {
     return {
-      time: '2021',
+      time: new Date().getFullYear(),
       company: '西安启明荣光科技有限公司'
     }
   }
