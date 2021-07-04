@@ -122,7 +122,6 @@ export default {
     },
 
     async switchLight () {
-      console.log(1)
       this.$emit('update:loading', true)
       if (this.lightSwitch) {
         this.ruleForm.lightBrightness = 100

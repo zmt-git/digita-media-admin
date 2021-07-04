@@ -120,11 +120,13 @@ export default {
 
   async created () {
     this.loading = true
+    this.uploadLoading = true
     this.id = this.$route.query.id
     this.playChange = false
     await this.getDeviceDetail()
-    await this.getPlaylists()
     this.loading = false
+    await this.getPlaylists()
+    this.uploadLoading = false
 
     // 更新状态
     eventBus.on('devInfoStatus', this.updateInfoWS)

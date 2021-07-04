@@ -57,7 +57,7 @@ export default {
 
     this.$once('hook:beforeDestroy', () => {
       eventBus.off('devStatus', this.updateStatus)
-      eventBus.off('devStatus', this.updateList)
+      eventBus.off('devInfoStatus', this.updateList)
     })
   },
 

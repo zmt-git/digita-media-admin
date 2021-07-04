@@ -56,7 +56,7 @@ export default {
   computed: {
     title () {
       if (this.info.stateOnline === 1) {
-        return this.info.stateWork === 1 ? '工作' : '待机'
+        return this.info.stateWork === 1 ? '工作' : '休眠'
       } else {
         return '离线'
       }

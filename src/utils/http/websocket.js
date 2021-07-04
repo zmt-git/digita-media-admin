@@ -51,22 +51,22 @@ export function reconnect () {
 
 function keepAliveHeart () {
   heartTimer = setTimeout(() => {
-    console.log('发送心跳')
+    console.log('发送心跳', JSON.stringify({ data: { code: 'heart' } }))
     send(JSON.stringify({ data: { code: 'heart' } }))
     heartTimer && clearTimeout(heartTimer)
     keepAliveHeart()
   }, heartTime)
 }
 
-export function onOpen () {
+function onOpen () {
   console.log('WebSocket onOpen')
   reconnectTimer && clearTimeout(reconnectTimer)
   keepAliveHeart()
   eventBus.emit('websocketStatus', 1)
 }
 
-export function onMessage (data) {
-  console.log(data.data)
+function onMessage (data) {
+  console.log(data)
   try {
     const jsonData = data.data
 
@@ -82,7 +82,7 @@ export function onMessage (data) {
   }
 }
 
-export function onClose () {
+function onClose () {
   console.log('WebSocket closed')
   heartTimer && clearTimeout(heartTimer)
   if (reconnectStatus !== 1) {
@@ -90,7 +90,7 @@ export function onClose () {
   }
 }
 
-export function onError (e) {
+function onError (e) {
   console.log(e)
   reconnectTimer && clearTimeout(reconnectTimer)
   reconnectTimer = setTimeout(() => {
