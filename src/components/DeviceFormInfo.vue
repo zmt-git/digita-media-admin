@@ -138,7 +138,7 @@ export default {
     registerDevice (code) {
       return registerDevice({ deviceCode: code })
         .then(res => {
-          return res.msg === 'false'
+          return res.state === 1
         })
         .catch(e => {
           console.log(e)

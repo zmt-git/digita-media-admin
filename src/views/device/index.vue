@@ -52,23 +52,12 @@ export default {
   created () {
     this.getStatisticsDevice()
 
-    eventBus.on('devStatus', (data) => {
-      if (data.code === 'devStatus') {
-        this.statistics = JSON.parse(data.data)
-      } else if (data.code === 'devList') {
-        data.data.forEach(item => {
-          const index = this.pageList.findIndex(el => {
-            return el.id === item.id
-          })
-          if (index >= 0) {
-            this.pageList.splice(index, 1, item)
-          }
-        })
-      }
-    })
+    eventBus.on('devStatus', this.updateStatus)
+    eventBus.on('devInfoStatus', this.updateList)
 
-    this.$emit('hook:beforeDestroy', () => {
-      eventBus.off('devStatus')
+    this.$once('hook:beforeDestroy', () => {
+      eventBus.off('devStatus', this.updateStatus)
+      eventBus.off('devStatus', this.updateList)
     })
   },
 
@@ -80,6 +69,19 @@ export default {
   },
 
   methods: {
+    updateStatus (data) {
+      this.statistics = JSON.parse(data)
+    },
+    updateList (list) {
+      list.forEach(item => {
+        const index = this.pageList.findIndex(el => {
+          return el.id === item.id
+        })
+        if (index >= 0) {
+          this.pageList.splice(index, 1, item)
+        }
+      })
+    },
     addDevice () {
       this.isAdd = true
       this.$router.push({ path: '/device/add', query: { isAdd: true } })

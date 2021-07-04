@@ -72,7 +72,9 @@ export function onMessage (data) {
 
     const content = JSON.parse(jsonData)
 
-    eventBus.emit('devStatus', content)
+    content.code === 'devStatus' && eventBus.emit('devStatus', content.data)
+
+    content.code === 'devStatus' && eventBus.emit('devInfoStatus', content.data)
   } catch (e) {
     console.log(e)
   }

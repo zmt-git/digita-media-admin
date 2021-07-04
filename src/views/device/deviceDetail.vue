@@ -64,6 +64,7 @@ import BaseDrawerMedia from '@/components/BaseDrawerMedia.vue'
 import { infoDevice } from '@/api/device'
 import { getPlaylist, updateContent, setColor } from '@/api/playlist'
 import { deviceType } from '@/data/common'
+import eventBus from '@/utils/eventBus'
 export default {
   name: 'device-detail',
 
@@ -124,6 +125,13 @@ export default {
     await this.getDeviceDetail()
     await this.getPlaylists()
     this.loading = false
+
+    // 更新状态
+    eventBus.on('devInfoStatus', this.updateInfoWS)
+
+    this.$once('hook:beforeDestroy', () => {
+      eventBus.off('devInfoStatus', this.updateInfoWS)
+    })
   },
 
   beforeRouteLeave (to, from, next) {
@@ -149,6 +157,13 @@ export default {
   },
 
   methods: {
+    updateInfoWS (list) {
+      const info = list.find(item => item.id === this.info.id)
+      if (info) {
+        this.info = info
+      }
+    },
+
     toEdit () {
       this.$router.push({ path: '/device/add', query: { info: JSON.stringify(this.info), isAdd: false } })
     },
