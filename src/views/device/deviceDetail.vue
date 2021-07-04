@@ -1,6 +1,6 @@
 <template>
-  <div class="device-detail" v-loading='loading'>
-    <div class="device-detail-info" @click.self="setSystem">
+  <div class="device-detail">
+    <div class="device-detail-info" @click.self="setSystem" v-loading='loading'>
       <!-- <h3 class="device-name">{{info.name}}</h3> -->
       <!-- <base-title type='primary'>运行状态</base-title> -->
       <div class="device-detail-info-control" @click="toEdit" style='cursor: pointer'>
