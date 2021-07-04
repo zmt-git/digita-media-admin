@@ -74,7 +74,9 @@ export function onMessage (data) {
 
     content.code === 'devStatus' && eventBus.emit('devStatus', content.data)
 
-    content.code === 'devStatus' && eventBus.emit('devInfoStatus', content.data)
+    content.code === 'devList' && eventBus.emit('devInfoStatus', content.data)
+
+    content.code === 'taskList' && eventBus.emit('taskList', content.data)
   } catch (e) {
     console.log(e)
   }

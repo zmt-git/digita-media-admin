@@ -90,11 +90,15 @@ export default {
 
   data () {
     const codeValidator = async (rule, value, callback) => {
-      const result = await this.registerDevice(value)
-      if (result) {
+      if (value !== 0 && !value) {
         return callback()
       } else {
-        return callback(new Error('设备编号已注册！'))
+        const result = await this.registerDevice(value)
+        if (result) {
+          return callback()
+        } else {
+          return callback(new Error('设备编号已注册！'))
+        }
       }
     }
     return {
@@ -136,7 +140,7 @@ export default {
 
   methods: {
     registerDevice (code) {
-      return registerDevice({ deviceCode: code })
+      return registerDevice(code, { deviceCode: code })
         .then(res => {
           return res.state === 1
         })

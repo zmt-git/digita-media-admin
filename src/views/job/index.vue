@@ -34,6 +34,7 @@ import { infoDevice } from '@/api/device'
 
 import CardTask from '@/components/CardTask'
 import page from '@/mixins/page'
+import eventBus from '@/utils/eventBus'
 export default {
   name: 'job',
 
@@ -47,7 +48,25 @@ export default {
     }
   },
 
+  created () {
+    eventBus.on('taskList', this.updateList)
+    this.$once('hook:beforeDestroy', () => {
+      eventBus.off('taskList', this.updateList)
+    })
+  },
+
   methods: {
+    updateList (list) {
+      list.forEach(item => {
+        const index = this.pageList.findIndex(el => {
+          return el.id === item.id
+        })
+        if (index >= 0) {
+          const obj = Object.assign(this.pageList[index], item)
+          this.pageList.splice(index, 1, obj)
+        }
+      })
+    },
     async clean () {
       await cleanJob()
         .then(res => {

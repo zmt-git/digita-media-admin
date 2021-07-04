@@ -90,12 +90,11 @@ export function rebootAppDevice (devid, params) {
   })
 }
 
-// /device/device/check
-// check
-// 终端注册码验证
-export function registerDevice (params) {
+// /device/device/check/{devid}
+// 检查设备编号是否存在
+export function registerDevice (devid, params) {
   return http({
-    url: 'device/device/check',
+    url: `/device/device/check/${devid}`,
     method: 'POST',
     params
   })
