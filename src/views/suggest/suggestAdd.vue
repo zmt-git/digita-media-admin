@@ -64,13 +64,13 @@ export default {
       },
       rules: {
         title: [
-          { required: true, message: '请填写标题(最大长度为50)', max: 50, min: 1, trigger: 'blur' }
+          { required: true, message: '请填写标题(最大长度为50)', max: 50, min: 1, trigger: ['blur', 'change'] }
         ],
         product: [
-          { required: true, message: '请填写产品名称', trigger: 'blur' }
+          { required: true, message: '请填写产品名称', trigger: ['blur', 'change'] }
         ],
         des: [
-          { required: true, message: '请具体描述问题', trigger: 'blur' }
+          { required: true, message: '请具体描述问题', trigger: ['blur', 'change'] }
         ]
       },
       params: {

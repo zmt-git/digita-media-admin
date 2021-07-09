@@ -190,23 +190,23 @@ export default {
 
       codeRules: {
         mobile: [
-          { required: true, message: '请输入手机号码', trigger: 'blur' },
+          { required: true, message: '请输入手机号码', trigger: ['blur', 'change'] },
           { pattern: telReg, message: '手机号码格式错误' }
         ],
         code: [
-          { required: true, message: '请输入短信验证码', trigger: 'blur' },
+          { required: true, message: '请输入短信验证码', trigger: ['blur', 'change'] },
           { pattern: codeReg, message: '验证码格式错误' }
         ]
       },
       loginRules: {
         username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' }
+          { required: true, message: '请输入用户名', trigger: ['blur', 'change'] }
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' }
+          { required: true, message: '请输入密码', trigger: ['blur', 'change'] }
         ],
         captcha: [
-          { required: true, message: '请输入验证码', trigger: 'blur' }
+          { required: true, message: '请输入验证码', trigger: ['blur', 'change'] }
         ]
       },
       time: new Date().getTime(),
