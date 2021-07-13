@@ -133,7 +133,7 @@ export const orientOptions = Object.freeze([
 // 设备安装方向 -------------------------------------------------------------------------------------------
 export const orient = Object.freeze([
   { value: 0, label: '正向安装' },
-  { value: 8, label: '方向安装' }
+  { value: 8, label: '反向安装' }
 ])
 // 设备供电方式 -------------------------------------------------------------------------------------------
 export const powerOptions = Object.freeze([
@@ -181,7 +181,7 @@ export const scenesOptions = Object.freeze({
 // 天气场景-------------------------------------------------------------------------------------------
 const weatherScenes = Object.freeze([
   // ********************
-  { type: 'sunny', title: '默认场景', des: '适用于路况良好时' },
+  { type: 'sunny', title: '默认场景', des: '适用于一般场景' },
   // ********************
   { type: 'cloudy', title: '多云天气', des: '适用于一般情况下的播放列表' },
   { type: 'shade', title: '阴天天气', des: '适用于一般情况下的播放列表' },
