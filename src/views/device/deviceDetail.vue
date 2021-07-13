@@ -1,6 +1,6 @@
 <template>
-  <div class="device-detail">
-    <div class="device-detail-info" @click.self="setSystem" v-loading='loading'>
+  <div class="device-detail" v-loading='loading || uploadLoading'>
+    <div class="device-detail-info" @click.self="setSystem">
       <!-- <h3 class="device-name">{{info.name}}</h3> -->
       <!-- <base-title type='primary'>运行状态</base-title> -->
       <div class="device-detail-info-control" @click="toEdit" style='cursor: pointer'>
@@ -21,8 +21,10 @@
         <device-form-system :info='info' @updateInfo='updateInfo' :loading.sync='loading' :disabled='disabled'></device-form-system>
       </div>
     </div>
+
+    <!-- 播放列表 -->
     <div class="device-detail-playlist">
-      <div class="device-detail-playlist-list" v-loading='uploadLoading'>
+      <div class="device-detail-playlist-list">
         <template v-for="(item, key) in scenes.scenes">
           <device-form-play-list
             v-for="i in item"

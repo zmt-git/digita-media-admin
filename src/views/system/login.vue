@@ -324,7 +324,7 @@ $color: #f9ffff;
       flex-direction: column;
       justify-content: space-between;
       &_title{
-        font-size: 32px;
+        font-size: 42px;
         margin-top: 54px;
         color: #0036a5;
         letter-spacing: 5px;
@@ -498,6 +498,12 @@ $color: #f9ffff;
   }
   .login-contanier{
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 1160px) {
+  .login-box-left_title{
+    font-size: 36px;
   }
 }
 
