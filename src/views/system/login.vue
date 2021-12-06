@@ -301,7 +301,7 @@ $color: #f9ffff;
   position: relative;
   box-sizing: border-box;
   padding: 0 .1rem;
-  background-image: url('../../assets/login/bg.jpg');
+  background-image: url('../../assets/login/bg.webp');
   background-size: 100% 100%;
   & *::selection{
     user-select: none;
@@ -310,7 +310,7 @@ $color: #f9ffff;
     width: 1430px;
     height: 400px;
     border-radius: 12px;
-    background-image: url('../../assets/login/form_bg.png');
+    background-image: url('../../assets/login/form_bg.webp');
     background-size: cover;
     display: flex;
     justify-content: space-between;
@@ -347,7 +347,7 @@ $color: #f9ffff;
         height: 15px;
         margin-top: 20px;
         overflow: hidden;
-        background-image: url('../../assets/login/progress.png');
+        background-image: url('../../assets/login/progress.webp');
         animation: progress-bar-stripes 2s linear infinite;
       }
     }

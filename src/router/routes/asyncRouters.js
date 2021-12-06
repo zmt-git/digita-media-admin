@@ -22,7 +22,7 @@ export const asyncRoutes = [
           auth: [0, 1, 2],
           icon: 'icon-touyingyi1'
         },
-        component: () => import('@/views/device/index.vue')
+        component: () => import(/* webpackChunkName: "route-deviceList" */ '@/views/device/index.vue')
       },
       {
         name: 'deviceDetail',
@@ -33,7 +33,7 @@ export const asyncRoutes = [
           auth: [0, 1, 2],
           icon: 'icon-meitiliebiao'
         },
-        component: () => import('@/views/device/deviceDetail.vue')
+        component: () => import(/* webpackChunkName: "route-deviceDetail" */ '@/views/device/deviceDetail.vue')
       },
       {
         // name: 'add',
@@ -44,7 +44,7 @@ export const asyncRoutes = [
           title: '设备添加',
           icon: ''
         },
-        component: () => import('@/views/device/deviceAdd.vue')
+        component: () => import(/* webpackChunkName: "route-deviceAdd" */ '@/views/device/deviceAdd.vue')
       }
     ]
   },
@@ -69,7 +69,7 @@ export const asyncRoutes = [
           auth: [0, 1, 2],
           icon: 'icon-liumeitimeitiliebiao'
         },
-        component: () => import('@/views/media/index.vue')
+        component: () => import(/* webpackChunkName: "route-mediaList" */ '@/views/media/index.vue')
       },
       {
         name: 'mediaDetail',
@@ -80,7 +80,7 @@ export const asyncRoutes = [
           auth: [0, 1, 2],
           icon: 'icon-meitiliebiao'
         },
-        component: () => import('@/views/media/mediaDetail.vue')
+        component: () => import(/* webpackChunkName: "route-mediaDetail" */ '@/views/media/mediaDetail.vue')
       }
     ]
   },
@@ -105,7 +105,7 @@ export const asyncRoutes = [
           auth: [0, 1, 2],
           icon: 'icon-renwu1'
         },
-        component: () => import('@/views/job/index.vue')
+        component: () => import(/* webpackChunkName: "route-taskList" */ '@/views/job/index.vue')
       }
     ]
   },
@@ -131,7 +131,7 @@ export const asyncRoutes = [
           auth: [2],
           btn: ['删除']
         },
-        component: () => import('@/views/user/index.vue')
+        component: () => import(/* webpackChunkName: "route-user" */ '@/views/user/index.vue')
       },
       {
         name: 'suggest',
@@ -142,7 +142,7 @@ export const asyncRoutes = [
           icon: 'icon-yijianliebiao',
           auth: [2]
         },
-        component: () => import('@/views/suggest/index.vue')
+        component: () => import(/* webpackChunkName: "route-suggest" */ '@/views/suggest/index.vue')
       },
       {
         name: 'server',
@@ -153,7 +153,7 @@ export const asyncRoutes = [
           icon: 'icon-fuwuqi1',
           auth: [2]
         },
-        component: () => import('@/views/server/index.vue')
+        component: () => import(/* webpackChunkName: "route-server" */ '@/views/server/index.vue')
       }
     ]
   }
