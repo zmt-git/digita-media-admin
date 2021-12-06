@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./css/pageLoading.css">
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <link href="https://vjs.zencdn.net/7.14.3/video-js.css" rel="stylesheet" />
     <title></title>
@@ -20,7 +21,15 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <script defer src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
-    <div id="app"></div>
+    <div id="app">
+      <div class="first-loading-wrp">
+        <img src='./favicon.ico' class="loading-logo" />
+        <div class="loading-wrp">
+          <span class="dot dot-spin"><i></i><i></i><i></i><i></i></span>
+        </div>
+        <div class="sub-title">云智能交通标志综合管理平台</div>
+      </div>
+    </div>
     <!-- built files will be auto injected -->
   </body>
 </html>

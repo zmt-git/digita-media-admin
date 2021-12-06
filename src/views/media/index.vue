@@ -8,8 +8,7 @@
 
 -->
 <template>
-  <div class="media" v-loading='loading'>
-    <div class="infinite-list-wrapper media-list" style="overflow:auto">
+    <div class="infinite-list-wrapper media-list media" v-loading='loading' style="overflow:auto">
       <ul
         class="list"
         v-infinite-scroll="pageLoad"
@@ -39,7 +38,6 @@
       </ul>
     </div>
     <!-- <media-delete-dialog :visible.sync="dialogVisible" @confirm='deleteConfirm'></media-delete-dialog> -->
-  </div>
 </template>
 <script>
 import CardMedia from '@/components/CardMedia.vue'

@@ -107,6 +107,7 @@ export default {
   border-radius: 10px;
   display: flex;
   flex-flow: wrap;
+  flex-shrink: 0;
 }
 .device{
   display: flex;

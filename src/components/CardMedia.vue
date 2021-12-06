@@ -166,7 +166,7 @@ $iconColor: #ffffff;
       width: 100%;
       height: 100%;
       display: flex;
-      justify-content: center;
+      // justify-content: center;
       align-items: center;
     }
     &-mask{
