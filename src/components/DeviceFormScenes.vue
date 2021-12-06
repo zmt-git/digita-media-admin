@@ -3,7 +3,7 @@
   <div class="device-form-scenes">
     <el-form status-icon ref="ruleForm" label-width="70px" class="demo-ruleForm">
       <el-form-item label="画面方向" prop="stateOrient" v-if="hasStateOrient">
-        <el-select v-model="stateOrient" placeholder="请选择" :style="style" :disabled='disabled' @change="setStateOrient">
+        <el-select v-model="stateOrient" placeholder="" :style="style" :disabled='disabled' @change="setStateOrient">
           <el-option
             v-for="item in orientOptions"
             :key="item.value"
@@ -74,13 +74,21 @@ export default {
       set (val) {
         return val
       }
+    },
+
+    stateOrient: {
+      get () {
+        return this.info.stateOrient
+      },
+      set (val) {
+        return val
+      }
     }
 
   },
 
   data () {
     return {
-      stateOrient: '',
       orientOptions: orientOptions,
       style: {
         width: '100%'
@@ -89,15 +97,10 @@ export default {
   },
 
   methods: {
-    assginFormData (obj) {
-      this.stateOrient = obj.stateOrient
-      this.ordernumber = obj.playListNumber
-    },
-
-    async setStateOrient () {
+    async setStateOrient (val) {
       this.$emit('update:loading', true)
 
-      await directionDevice(this.id, { deviceCode: this.info.code, devid: this.info.id, stateOrient: this.stateOrient })
+      await directionDevice(this.id, { deviceCode: this.info.code, devid: this.info.id, stateOrient: val })
         .then(res => {
           this.prompt(res.state)
         })

@@ -64,18 +64,18 @@ export default {
       },
       rules: {
         mobile: [
-          { required: true, message: '请输入手机号码', trigger: 'blur' },
+          { required: true, message: '请输入手机号码', trigger: ['blur', 'change'] },
           { pattern: telReg, message: '手机号码格式错误' }
         ],
         code: [
-          { required: true, message: '请输入验证码', trigger: 'blur' },
+          { required: true, message: '请输入验证码', trigger: ['blur', 'change'] },
           { pattern: codeReg, message: '验证码格式错误' }
         ],
         newPassword: [
-          { required: true, message: '请输入新密码', trigger: 'blur' }
+          { required: true, message: '请输入新密码', trigger: ['blur', 'change'] }
         ],
         checkedPassword: [
-          { required: true, message: '请确认新密码', trigger: 'blur' },
+          { required: true, message: '请确认新密码', trigger: ['blur', 'change'] },
           { validator: validatePass, trigger: 'blur' }
         ]
       }

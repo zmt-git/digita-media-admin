@@ -115,10 +115,10 @@ export default {
         power: ''
       },
       rules: {
-        name: [{ required: true, message: '请输入设备名称', trigger: 'blur' }],
-        location: [{ required: true, message: '请输入安装位置', trigger: 'blur' }],
+        name: [{ required: true, message: '请输入设备名称', trigger: ['blur', 'change'] }],
+        location: [{ required: true, message: '请输入安装位置', trigger: ['blur', 'change'] }],
         code: [
-          { required: true, pattern: /^(e|E)(l|L)(f|F)/, message: '设备编号应以ELF开头' },
+          { required: true, pattern: /^(e|E)(l|L)(f|F)/, message: '设备编号应以ELF开头', trigger: ['blur', 'change'] },
           { validator: codeValidator, trigger: 'blur' }
         ],
         type: [{ required: true, message: '请选择设备型号', trigger: 'change' }],

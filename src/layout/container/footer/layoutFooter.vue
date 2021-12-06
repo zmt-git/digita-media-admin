@@ -3,8 +3,8 @@
  * @Version: 1.0
  * @Author: ZMT
  * @Date: 2021-04-20 10:58:17
- * @LastEditors: ZMT
- * @LastEditTime: 2021-04-24 11:57:01
+ * @LastEditors: zmt
+ * @LastEditTime: 2021-12-06 10:00:22
 -->
 <template>
   <el-footer class="footer" :height='height'>
@@ -26,7 +26,7 @@ export default {
   data () {
     return {
       time: new Date().getFullYear(),
-      company: '西安启明荣光科技有限公司'
+      company: '云智能交通标志综合管理平台'
     }
   }
 }

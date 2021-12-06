@@ -3,8 +3,8 @@
  * @Version: 1.0
  * @Author: ZMT
  * @Date: 2021-04-20 10:58:02
- * @LastEditors: ZMT
- * @LastEditTime: 2021-04-28 14:06:04
+ * @LastEditors: zmt
+ * @LastEditTime: 2021-12-06 11:34:17
 -->
 <template>
   <el-header class="header" :height='height'>
@@ -25,7 +25,7 @@
         </el-popover>
       </el-tooltip> -->
       <el-tooltip :content="websocketTitle" placement="bottom" effect="light">
-        <i class="iconfont header-right_icon" :class='websocketIcon' @click="toReconnect"></i>
+        <i class="iconfont header-right_icon" style="fontSize: 20px" :class='websocketIcon' @click="toReconnect"></i>
       </el-tooltip>
 
       <el-tooltip content="我要建议" placement="bottom" effect="light">

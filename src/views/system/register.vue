@@ -104,7 +104,7 @@
 import { provinceAndCityData } from 'element-china-area-data'
 import smsCode from '@/mixins/smsCode'
 import { registerCode, registerLogin, existMobile } from '@/api/system/login'
-import { telReg, codeReg, companyCodeReg, idCardReg, tradeType } from '@/data/common'
+import { telReg, codeReg, idCardReg, tradeType } from '@/data/common' // companyCodeReg
 import { setToken } from '@/utils/cache/cacheToken'
 export default {
   name: 'register',
@@ -148,9 +148,10 @@ export default {
       if (!value) {
         return callback(new Error(this.formInfo.userType === 0 ? '请输入身份证号码' : '请输入企业代码'))
       } else {
-        if (this.formInfo.userType === 1 && !companyCodeReg.test(value)) {
-          return callback(new Error('企业代码格式错误'))
-        } else if (this.formInfo.userType === 0 && !idCardReg.test(value)) {
+        // if (this.formInfo.userType === 1 && !companyCodeReg.test(value)) {
+        //   return callback(new Error('企业代码格式错误'))
+        // }
+        if (this.formInfo.userType === 0 && !idCardReg.test(value)) {
           return callback(new Error('身份证格式错误'))
         } else {
           callback()
@@ -188,12 +189,12 @@ export default {
       },
       rulesMobile: {
         mobile: [
-          { required: true, message: '请输入手机号码' },
+          { required: true, message: '请输入手机号码', trigger: ['blur', 'change'] },
           { pattern: telReg, message: '手机号码格式错误' },
-          { validator: validateMobile, trigger: 'change', required: true }
+          { validator: validateMobile, trigger: 'change' }
         ],
         code: [
-          { required: true, message: '请输入验证码', trigger: 'blur' },
+          { required: true, message: '请输入验证码', trigger: ['blur', 'change'] },
           { pattern: codeReg, message: '验证码格式错误' }
         ]
       },
@@ -207,8 +208,8 @@ export default {
         password: ''
       },
       rulesInfo: {
-        username: [{ validator: validateUsername, trigger: 'blur', required: true }],
-        isNumber: [{ validator: validateIsNumber, trigger: 'blur', required: true }],
+        username: [{ validator: validateUsername, trigger: ['blur', 'change'], required: true }],
+        isNumber: [{ validator: validateIsNumber, trigger: ['blur', 'change'], required: true }],
         city: [{ required: true, message: '请选择城市' }],
         tradeType: [{ required: true, message: '请选择行业' }],
         password: [{ required: true, message: '请输入密码' }]

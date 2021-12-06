@@ -190,23 +190,23 @@ export default {
 
       codeRules: {
         mobile: [
-          { required: true, message: '请输入手机号码', trigger: 'blur' },
+          { required: true, message: '请输入手机号码', trigger: ['blur', 'change'] },
           { pattern: telReg, message: '手机号码格式错误' }
         ],
         code: [
-          { required: true, message: '请输入短信验证码', trigger: 'blur' },
+          { required: true, message: '请输入短信验证码', trigger: ['blur', 'change'] },
           { pattern: codeReg, message: '验证码格式错误' }
         ]
       },
       loginRules: {
         username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' }
+          { required: true, message: '请输入用户名', trigger: ['blur', 'change'] }
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' }
+          { required: true, message: '请输入密码', trigger: ['blur', 'change'] }
         ],
         captcha: [
-          { required: true, message: '请输入验证码', trigger: 'blur' }
+          { required: true, message: '请输入验证码', trigger: ['blur', 'change'] }
         ]
       },
       time: new Date().getTime(),
@@ -324,11 +324,12 @@ $color: #f9ffff;
       flex-direction: column;
       justify-content: space-between;
       &_title{
-        font-size: 32px;
+        font-size: 52px;
         margin-top: 54px;
         color: #0036a5;
         letter-spacing: 5px;
         font-weight: 600;
+        transition: all .1s;
       }
       &-bottom{
         margin-bottom: 30px;
@@ -498,6 +499,17 @@ $color: #f9ffff;
   }
   .login-contanier{
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .login-box-left_title{
+    font-size: 42px;
+  }
+}
+@media screen and (max-width: 1160px) {
+  .login-box-left_title{
+    font-size: 36px;
   }
 }
 
