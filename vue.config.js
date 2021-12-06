@@ -81,14 +81,14 @@ module.exports = {
             })
           config.optimization.runtimeChunk('single')
 
-          config.set('externals', {
-            vue: 'Vue',
-            vuex: 'Vuex',
-            'vue-router': 'VueRouter',
-            'element-ui': 'ELEMENT',
-            axios: 'axios',
-            'video.js': 'videojs'
-          })
+          // config.set('externals', {
+          //   vue: 'Vue',
+          //   vuex: 'Vuex',
+          //   'vue-router': 'VueRouter',
+          //   'element-ui': 'ELEMENT',
+          //   axios: 'axios',
+          //   'video.js': 'videojs'
+          // })
         }
       )
   }
