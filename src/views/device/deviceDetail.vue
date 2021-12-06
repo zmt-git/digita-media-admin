@@ -189,7 +189,6 @@ export default {
     },
 
     async changeColor (playlist, index, value) {
-      console.log(value)
       const id = playlist[index].id
       this.loading = true
       await setColor(id, { playlistid: id, color: value })

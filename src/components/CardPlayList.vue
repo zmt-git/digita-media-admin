@@ -3,8 +3,8 @@
  * @version: 1.0
  * @Author: ZMT
  * @Date: 2021-06-06 19:03:26
- * @LastEditors: ZMT
- * @LastEditTime: 2021-06-06 22:51:45
+ * @LastEditors: zmt
+ * @LastEditTime: 2021-12-06 11:36:24
 -->
 <template>
   <div class="card-play-list" :class="[disabled ? 'disabled' : '', isAdd ? 'flex-center' : '']" @click="add">
@@ -74,6 +74,14 @@ export default {
   created () {
     if (this.isAdd) return
     this.getMediaUrl()
+  },
+
+  watch: {
+    'info.mediaId': {
+      handler: function (newVal, oldVal) {
+        this.getMediaUrl()
+      }
+    }
   },
 
   methods: {

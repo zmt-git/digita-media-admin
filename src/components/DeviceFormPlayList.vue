@@ -3,8 +3,8 @@
  * @version: 1.0
  * @Author: ZMT
  * @Date: 2021-06-06 17:42:45
- * @LastEditors: ZMT
- * @LastEditTime: 2021-06-06 22:28:35
+ * @LastEditors: zmt
+ * @LastEditTime: 2021-12-06 11:24:37
 -->
 <template>
   <div class="play-list">
@@ -171,7 +171,7 @@ export default {
 
     move (direction, target) {
       const currentIndex = this.scenesList.findIndex(item => item.mediaOrder === target.mediaOrder)
-      if (direction === 'right' && currentIndex < this.length) {
+      if (direction === 'right' && currentIndex < this.length - 1) {
         const nextItem = this.scenesList[currentIndex + 1]
         this.scenesList.splice(currentIndex, 2, nextItem, target)
       } else if (direction === 'left' && currentIndex !== 0) {
@@ -195,7 +195,7 @@ export default {
     playlist: {
       handler: function (newVal, oldVal) {
         try {
-          this.scenesList = JSON.parse(newVal[this.index].content).sort((a, b) => a.mediaOrder - b.mediaOrder)
+          this.scenesList = JSON.parse(newVal[this.index].content)
         } catch (e) {
           this.scenesList = []
         }
