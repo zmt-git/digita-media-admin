@@ -156,7 +156,6 @@ export default {
     // 上传媒体文件
     createMediaUploadPromise (file) {
       // 获取存储空间
-
       const formData = new FormData()
 
       formData.append('file', file)

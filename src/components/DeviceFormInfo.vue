@@ -17,7 +17,7 @@
 
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
       <el-form-item label="设备编号" prop="code" required v-if="isAdd">
-        <el-input clearable v-model="ruleForm.code"></el-input>
+        <el-input clearable placeholder="请输入设备编号" v-model="ruleForm.code"></el-input>
       </el-form-item>
       <el-form-item label="设备型号" prop="type" v-if="isAdd">
         <el-select clearable v-model="ruleForm.type" placeholder="请选择设备型号" style='width: 100%'>
@@ -30,13 +30,13 @@
         </el-select>
       </el-form-item>
       <el-form-item label="设备名称" prop="name" required>
-        <el-input clearable v-model="ruleForm.name" autocomplete="off"></el-input>
+        <el-input clearable placeholder="请输入设备名称" v-model="ruleForm.name" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="安装位置" prop="location" required>
-        <el-input clearable v-model="ruleForm.location" autocomplete="off"></el-input>
+        <el-input clearable placeholder="请输入设备安装位置" v-model="ruleForm.location" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="安装方向" prop="orient" required v-if="isAdd">
-        <el-select clearable v-model="ruleForm.orient" placeholder="请选择设备安装方向" style='width: 100%'>
+      <el-form-item label="安装方向" prop="stateOrient" required v-if="isAdd">
+        <el-select clearable v-model="ruleForm.stateOrient" placeholder="请选择设备安装方向" style='width: 100%'>
           <el-option
             v-for="item in orientOptions"
             :key="item.value"
@@ -105,24 +105,25 @@ export default {
       options: deviceType,
       orientOptions: orient,
       powerOptions: powerOptions,
-      url: require('../assets/device/orient.png'),
+      url: require('../assets/device/orient.jpg'),
       ruleForm: {
         name: '',
         location: '',
-        code: 'ELF',
+        code: '',
         type: '',
-        orient: '',
+        stateOrient: '',
         power: ''
       },
       rules: {
         name: [{ required: true, message: '请输入设备名称', trigger: ['blur', 'change'] }],
         location: [{ required: true, message: '请输入安装位置', trigger: ['blur', 'change'] }],
         code: [
-          { required: true, pattern: /^(e|E)(l|L)(f|F)/, message: '设备编号应以ELF开头', trigger: ['blur', 'change'] },
-          { validator: codeValidator, trigger: 'blur' }
+          // { required: true, pattern: /^(e|E)(l|L)(f|F)/, message: '设备编号应以ELF开头', trigger: ['blur', 'change'] },
+          { validator: codeValidator, trigger: 'blur' },
+          { required: true, message: '请输入设备编号', trigger: ['blur', 'change'] }
         ],
         type: [{ required: true, message: '请选择设备型号', trigger: 'change' }],
-        orient: [{ required: true, message: '请选择安装方向', trigger: 'change' }],
+        stateOrient: [{ required: true, message: '请选择安装方向', trigger: 'change' }],
         power: [{ required: true, message: '请选择供电方式', trigger: 'change' }]
       }
     }
@@ -159,6 +160,8 @@ export default {
     },
 
     submitForm () {
+      const params = this.getParams()
+      console.log(params)
       this.$refs.ruleForm.validate(async valid => {
         if (valid) {
           this.$emit('update:loading', true)
@@ -194,9 +197,8 @@ export default {
   position: relative;
   top: -10px;
   /deep/ .el-image__inner{
-    min-width: 346px;
-    width: 346px;
-    height: 434px;
+    width: auto;
+    height: 100%;
   }
 }
 .demo-ruleForm{

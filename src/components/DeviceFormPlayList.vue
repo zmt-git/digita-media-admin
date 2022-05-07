@@ -17,8 +17,8 @@
             v-if="hasSwitch"
             :disabled='disabled'
             :value="lightColor"
-            :active-value="2"
-            :inactive-value="1"
+            :active-value="1"
+            :inactive-value="0"
             active-color="#13ce66"
             active-text="绿色"
             inactive-text="红色"

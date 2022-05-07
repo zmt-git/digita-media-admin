@@ -20,14 +20,14 @@
     >
       <card-device :info='item' v-for="item in pageList" :key='item.id' @setup='setup'></card-device>
     </ul>
-    <base-backtop :total='pageTotal' :currentNum='lengthList'></base-backtop>
+    <base-back-top :total='pageTotal' :currentNum='lengthList'></base-back-top>
     <base-page-loading :loading='pageLoading' :noMore='noMore' :list='pageList'></base-page-loading>
   </div>
 </div>
 </template>
 <script>
 import CardDevice from '@/components/CardDevice.vue'
-import BaseBacktop from '@/components/BaseBacktop'
+import BaseBackTop from '@/components/BaseBackTop'
 import BasePageLoading from '@/components/BasePageLoading.vue'
 import BaseStatusCard from '@/components/BaseStatusCard.vue'
 import { listDevice, statisticsDevice } from '@/api/device'
@@ -37,7 +37,7 @@ import eventBus from '@/utils/eventBus'
 export default {
   name: 'device',
 
-  components: { CardDevice, BaseBacktop, BasePageLoading, BaseStatusCard },
+  components: { CardDevice, BaseBackTop, BasePageLoading, BaseStatusCard },
 
   mixins: [page],
 

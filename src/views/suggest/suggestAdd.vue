@@ -5,7 +5,7 @@
         <el-form-item label="提交类型" required>
           <el-row :gutter="20">
             <el-col :span="5" v-for="item in suggestType" :key="item.value">
-              <card-sugget-type :value='item.value' :title="item.title" :des='item.des' :check.sync='form.type'></card-sugget-type>
+              <card-suggest-type :value='item.value' :title="item.title" :des='item.des' :check.sync='form.type'></card-suggest-type>
             </el-col>
           </el-row>
         </el-form-item>
@@ -39,14 +39,14 @@
 </template>
 
 <script>
-import CardSuggetType from '@/components/CardSuggetType.vue'
+import CardSuggestType from '@/components/CardSuggestType.vue'
 import { SuggestType } from '@/data/common'
 import { saveSuggest } from '@/api/suggest'
 import { mapGetters } from 'vuex'
 export default {
   name: 'suggest-add',
 
-  components: { CardSuggetType },
+  components: { CardSuggestType },
 
   computed: {
     ...mapGetters(['user'])
