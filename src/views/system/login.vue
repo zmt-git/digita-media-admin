@@ -15,14 +15,21 @@
           云智能交通标志综合管理平台
         </h3>
         <div class="login-box-left-bottom">
-          <p class="login-box-left_des"><span>智能互联</span><span class="point"></span><span>科技赋能</span></p>
-          <div class="login-box-left-progress">
-        </div>
+          <p class="login-box-left_des">
+            <span>智能互联</span><span class="point"></span
+            ><span>科技赋能</span>
+          </p>
+          <div class="login-box-left-progress"></div>
         </div>
       </div>
       <div class="login-contanier">
         <!-- 登录+验证码 -->
-        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+        <el-menu
+          :default-active="activeIndex"
+          class="el-menu-demo"
+          mode="horizontal"
+          @select="handleSelect"
+        >
           <el-menu-item index="0">密码登录</el-menu-item>
           <el-menu-item index="1">验证码登录</el-menu-item>
         </el-menu>
@@ -32,29 +39,43 @@
             leave-active-class="animate__animated animate__fadeOut"
           >
             <div class="p" key="pwd" v-if="activeIndex === '0'">
-              <el-form class="login-contanier-form" :model="loginForm" ref="loginForm" :rules="loginRules">
-                <el-form-item class="login-contanier-form__item" prop="username">
+              <el-form
+                class="login-contanier-form"
+                :model="loginForm"
+                ref="loginForm"
+                :rules="loginRules"
+              >
+                <el-form-item
+                  class="login-contanier-form__item"
+                  prop="username"
+                >
                   <el-input
                     prefix-icon
                     class="login-contanier-form__input"
                     clearable
                     ref="username"
                     placeholder="请输入用户名"
-                    tabindex='1'
+                    tabindex="1"
                     v-model="loginForm.username"
                     @keyup.enter.native="handleLogin"
                   >
-                    <i slot="prefix" class="iconfont icon-denglu1 prefix-icon"></i>
+                    <i
+                      slot="prefix"
+                      class="iconfont icon-denglu1 prefix-icon"
+                    ></i>
                   </el-input>
                 </el-form-item>
 
-                <el-form-item class="login-contanier-form__item" prop="password">
+                <el-form-item
+                  class="login-contanier-form__item"
+                  prop="password"
+                >
                   <el-input
                     prefix-icon
                     class="login-contanier-form__input"
                     clearable
                     ref="password"
-                    tabindex='2'
+                    tabindex="2"
                     placeholder="请输入密码"
                     type="password"
                     v-model="loginForm.password"
@@ -64,39 +85,67 @@
                     <i slot="prefix" class="iconfont icon-mima prefix-icon"></i>
                   </el-input>
                 </el-form-item>
-                <el-form-item class="login-contanier-form__item" prop="captcha" :style="style">
+                <el-form-item
+                  class="login-contanier-form__item"
+                  prop="captcha"
+                  :style="style"
+                >
                   <el-input
                     prefix-icon
                     class="login-contanier-form__input"
                     ref="captcha"
                     placeholder="请输入验证码"
-                    tabindex='3'
+                    tabindex="3"
                     v-model="loginForm.captcha"
                     @keyup.enter.native="handleLogin"
                   >
-                    <i slot="prefix" class="iconfont icon-yanzhengma1 prefix-icon"></i>
-                    <img class="code-img" slot="suffix" :src="codeImgSrc" @click="getCodeImg" alt="验证码" title="点击重新获取">
+                    <i
+                      slot="prefix"
+                      class="iconfont icon-yanzhengma1 prefix-icon"
+                    ></i>
+                    <img
+                      class="code-img"
+                      slot="suffix"
+                      :src="codeImgSrc"
+                      @click="getCodeImg"
+                      alt="验证码"
+                      title="点击重新获取"
+                    />
                   </el-input>
                 </el-form-item>
-                <el-form-item>
-                </el-form-item>
-                <el-button type="primary" class="login-contanier-form__btn" :disabled='btnDisabled' :loading='loading' @click="handleLogin">登录</el-button>
+                <el-form-item> </el-form-item>
+                <el-button
+                  type="primary"
+                  class="login-contanier-form__btn"
+                  :disabled="btnDisabled"
+                  :loading="loading"
+                  @click="handleLogin"
+                  >登录</el-button
+                >
               </el-form>
             </div>
             <!-- 短信验证码登录 -->
             <div class="p" key="code" v-if="activeIndex === '1'">
-              <el-form class="login-contanier-form" :model="codeForm" ref="codeForm" :rules="codeRules">
+              <el-form
+                class="login-contanier-form"
+                :model="codeForm"
+                ref="codeForm"
+                :rules="codeRules"
+              >
                 <el-form-item class="login-contanier-form__item" prop="mobile">
                   <el-input
                     prefix-icon
                     class="login-contanier-form__input"
                     clearable
-                    tabindex='1'
+                    tabindex="1"
                     placeholder="请输入手机号码"
                     v-model="codeForm.mobile"
                     @keyup.enter.native="handleLoginCode"
                   >
-                    <i slot="prefix" class="iconfont icon-shoujihaoma prefix-icon"></i>
+                    <i
+                      slot="prefix"
+                      class="iconfont icon-shoujihaoma prefix-icon"
+                    ></i>
                   </el-input>
                 </el-form-item>
                 <el-form-item class="login-contanier-form__item" prop="code">
@@ -104,17 +153,33 @@
                     prefix-icon
                     class="login-contanier-form__input"
                     clearable
-                    tabindex='2'
+                    tabindex="2"
                     placeholder="请输入短信验证码"
                     v-model="codeForm.code"
                     @keyup.enter.native="handleLoginCode"
                   >
-                    <i slot="prefix" class="iconfont icon-duanxinyanzhengma prefix-icon"></i>
-                    <el-button slot="suffix" size="mini" :disabled='codeDisabled || hasMobile' :loading='codeLoading' @click="getCode">{{codeBtnName}}</el-button>
+                    <i
+                      slot="prefix"
+                      class="iconfont icon-duanxinyanzhengma prefix-icon"
+                    ></i>
+                    <el-button
+                      slot="suffix"
+                      size="mini"
+                      :disabled="codeDisabled || hasMobile"
+                      :loading="codeLoading"
+                      @click="getCode"
+                      >{{ codeBtnName }}</el-button
+                    >
                   </el-input>
                 </el-form-item>
-                <el-button type="primary" class="login-contanier-form__btn" :disabled='btnDisabledCode' :loading='loading' @click="handleLoginCode">登录</el-button>
-
+                <el-button
+                  type="primary"
+                  class="login-contanier-form__btn"
+                  :disabled="btnDisabledCode"
+                  :loading="loading"
+                  @click="handleLoginCode"
+                  >登录</el-button
+                >
               </el-form>
             </div>
           </transition-group>
@@ -123,6 +188,16 @@
           <span @click="toRegister">注册账号</span>
         </div>
       </div>
+    </div>
+    <div class="right">
+      © 2020-2022 西安启明荣光科技 版权所有
+      <el-link
+        class="right-link"
+        :underline="false"
+        href="https://beian.miit.gov.cn"
+        target="_blank"
+        >陕ICP备 20005158 号-1</el-link
+      >
     </div>
   </div>
 </template>
@@ -190,23 +265,39 @@ export default {
 
       codeRules: {
         mobile: [
-          { required: true, message: '请输入手机号码', trigger: ['blur', 'change'] },
+          {
+            required: true,
+            message: '请输入手机号码',
+            trigger: ['blur', 'change']
+          },
           { pattern: telReg, message: '手机号码格式错误' }
         ],
         code: [
-          { required: true, message: '请输入短信验证码', trigger: ['blur', 'change'] },
+          {
+            required: true,
+            message: '请输入短信验证码',
+            trigger: ['blur', 'change']
+          },
           { pattern: codeReg, message: '验证码格式错误' }
         ]
       },
       loginRules: {
         username: [
-          { required: true, message: '请输入用户名', trigger: ['blur', 'change'] }
+          {
+            required: true,
+            message: '请输入用户名',
+            trigger: ['blur', 'change']
+          }
         ],
         password: [
           { required: true, message: '请输入密码', trigger: ['blur', 'change'] }
         ],
         captcha: [
-          { required: true, message: '请输入验证码', trigger: ['blur', 'change'] }
+          {
+            required: true,
+            message: '请输入验证码',
+            trigger: ['blur', 'change']
+          }
         ]
       },
       time: new Date().getTime(),
@@ -235,13 +326,14 @@ export default {
         if (valid) {
           this.loading = true
           this.loginForm.randomStr = this.time
-          this.$store.dispatch('loginActions', this.loginForm)
-            .then((res) => {
+          this.$store
+            .dispatch('loginActions', this.loginForm)
+            .then(res => {
               setToken(res.token)
               this.$router.push({ path: '/device' })
               this.loading = false
             })
-            .catch((e) => {
+            .catch(e => {
               console.log(e)
               this.loading = false
             })
@@ -256,13 +348,14 @@ export default {
       this.$refs.codeForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('loginCodeActions', this.codeForm)
-            .then((res) => {
+          this.$store
+            .dispatch('loginCodeActions', this.codeForm)
+            .then(res => {
               setToken(res.data.token)
               this.$router.push({ path: '/device' })
               this.loading = false
             })
-            .catch((e) => {
+            .catch(e => {
               console.log(e)
               this.loading = false
             })
@@ -288,25 +381,25 @@ export default {
 }
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 $border-color: #0088ff;
 $border-color2: #eaf6f2;
 $bg-color: #0088fe;
 $color: #f9ffff;
-.login{
+.login {
   width: 100%;
   height: 100%;
   background-size: cover;
   background-repeat: no-repeat;
   position: relative;
   box-sizing: border-box;
-  padding: 0 .1rem;
+  padding: 0 0.1rem;
   background-image: url('../../assets/login/bg.webp');
   background-size: 100% 100%;
-  & *::selection{
+  & *::selection {
     user-select: none;
   }
-  &-box{
+  &-box {
     width: 1430px;
     height: 400px;
     border-radius: 12px;
@@ -314,7 +407,7 @@ $color: #f9ffff;
     background-size: cover;
     display: flex;
     justify-content: space-between;
-    &-left{
+    &-left {
       flex: 1;
       height: 100%;
       box-sizing: border-box;
@@ -323,27 +416,27 @@ $color: #f9ffff;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      &_title{
+      &_title {
         font-size: 52px;
         margin-top: 54px;
         color: #0036a5;
         letter-spacing: 5px;
         font-weight: 600;
-        transition: all .1s;
+        transition: all 0.1s;
       }
-      &-bottom{
+      &-bottom {
         margin-bottom: 30px;
       }
-      &_des{
+      &_des {
         color: #508aff;
         font-size: 18px;
         font-weight: 600;
         letter-spacing: 4px;
-        & span{
+        & span {
           line-height: 20px;
         }
       }
-      &-progress{
+      &-progress {
         width: 557px;
         height: 15px;
         margin-top: 20px;
@@ -353,7 +446,7 @@ $color: #f9ffff;
       }
     }
   }
-  &-contanier{
+  &-contanier {
     width: 370px;
     min-width: 370px;
     height: 100%;
@@ -364,19 +457,19 @@ $color: #f9ffff;
     display: flex;
     flex-direction: column;
     align-items: center;
-    /deep/ .el-menu{
+    /deep/ .el-menu {
       width: 100%;
     }
-    /deep/ .el-menu{
+    /deep/ .el-menu {
       background-color: #ffffffdb;
     }
-    /deep/ .el-menu-item{
+    /deep/ .el-menu-item {
       width: 50%;
       text-align: center;
     }
-    &-form{
+    &-form {
       font-size: 20px;
-      /deep/ .el-input__inner{
+      /deep/ .el-input__inner {
         height: 50px;
         background-color: transparent;
         border: 0;
@@ -385,36 +478,36 @@ $color: #f9ffff;
         color: #000000;
         font-size: 16px;
       }
-      /deep/ .el-input__prefix{
+      /deep/ .el-input__prefix {
         left: 0;
         line-height: 47px;
       }
-      /deep/ .el-input__suffix-inner{
+      /deep/ .el-input__suffix-inner {
         height: 100%;
         display: flex;
         align-items: center;
       }
-      &__item{
+      &__item {
         margin-bottom: 10px;
       }
-      &__input{
+      &__input {
         height: 50px;
       }
-      &__btn{
+      &__btn {
         width: 100%;
         margin-top: 10px;
       }
     }
   }
 }
-.code-img{
+.code-img {
   width: 120px;
   cursor: pointer;
 }
-.prefix-icon{
+.prefix-icon {
   font-size: 20px;
 }
-.p{
+.p {
   position: absolute;
   top: 0;
   left: 0;
@@ -424,26 +517,26 @@ $color: #f9ffff;
   padding: 0 45px;
   padding-top: 20px;
 }
-.code{
+.code {
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #f0f0f0;
   margin-top: 10px;
-  & img{
+  & img {
     flex: 1;
   }
 }
-.close{
+.close {
   cursor: pointer;
 }
-.form-box{
+.form-box {
   width: 100%;
   flex: 1;
   position: relative;
   box-sizing: border-box;
 }
-.register{
+.register {
   width: 100%;
   height: 50px;
   display: flex;
@@ -452,7 +545,7 @@ $color: #f9ffff;
   font-size: 12px;
   cursor: pointer;
 }
-.point{
+.point {
   display: inline-block;
   width: 5px;
   height: 5px;
@@ -461,6 +554,18 @@ $color: #f9ffff;
   position: relative;
   top: -4px;
   margin: 0 17px;
+}
+.right {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  text-align: center;
+  color: #bbb;
+  font-size: 14px;
+  line-height: 22px;
+}
+.right-link {
+  color: #bbb;
 }
 @keyframes progress-bar-stripes {
   0% {
@@ -471,46 +576,45 @@ $color: #f9ffff;
   }
 }
 @media screen and (min-width: 1600px) {
-  .login-box{
+  .login-box {
     width: 1440px;
   }
 }
 @media screen and (max-width: 1600px) {
-  .login-box{
+  .login-box {
     width: calc(100% - 120px);
   }
 }
 
 @media screen and (min-width: 1140px) {
-  .login-box-left-progress{
+  .login-box-left-progress {
     width: 557px;
   }
 }
 
 @media screen and (max-width: 1140px) {
-  .login-box-left-progress{
+  .login-box-left-progress {
     width: calc(100% - 40px);
   }
 }
 
 @media screen and (max-width: 750px) {
-  .login-box-left{
+  .login-box-left {
     display: none;
   }
-  .login-contanier{
+  .login-contanier {
     width: 100%;
   }
 }
 
 @media screen and (max-width: 1300px) {
-  .login-box-left_title{
+  .login-box-left_title {
     font-size: 42px;
   }
 }
 @media screen and (max-width: 1160px) {
-  .login-box-left_title{
+  .login-box-left_title {
     font-size: 36px;
   }
 }
-
 </style>

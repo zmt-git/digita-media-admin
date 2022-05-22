@@ -7,7 +7,7 @@
  * @LastEditTime: 2021-05-24 22:12:39
  */
 const path = require('path')
-const webpackBundleAnalyzer = require('webpack-bundle-analyzer')
+// const webpackBundleAnalyzer = require('webpack-bundle-analyzer')
 module.exports = {
   // 基本路径
   publicPath: './',
@@ -23,7 +23,7 @@ module.exports = {
       }
     },
     plugins: [
-      new webpackBundleAnalyzer.BundleAnalyzerPlugin()
+      // new webpackBundleAnalyzer.BundleAnalyzerPlugin()
     ]
   },
 
