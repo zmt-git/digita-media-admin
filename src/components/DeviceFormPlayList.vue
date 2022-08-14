@@ -16,14 +16,13 @@
           <el-switch
             v-if="hasSwitch"
             :disabled='disabled'
-            :value="lightColor"
+            v-model="playlist[index].color"
             :active-value="1"
             :inactive-value="0"
             active-color="#13ce66"
             active-text="绿色"
             inactive-text="红色"
             inactive-color="#ff4949"
-            @change="changeColor"
           >
           </el-switch>
         </div>
