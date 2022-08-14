@@ -64,7 +64,7 @@ import DeviceState from '@/components/DeviceState.vue'
 import DeviceInfo from '@/components/DeviceInfo.vue'
 import BaseDrawerMedia from '@/components/BaseDrawerMedia.vue'
 import { infoDevice } from '@/api/device'
-import { getPlaylist, updateContent } from '@/api/playlist'
+import { getPlaylist, updateContentV2 } from '@/api/playlist'
 import { deviceType } from '@/data/common'
 import eventBus from '@/utils/eventBus'
 export default {
@@ -92,7 +92,7 @@ export default {
     },
     releaseName () {
       if (this.info.stateMedia === 0 || this.uploadLoading) {
-        return '正在上传播放列表，请稍侯！'
+        return '正在上传播放列表，请稍等！'
       } else if (this.info.stateMedia === 1) {
         return '发布'
       } else if (this.info.stateMedia === -1) {
@@ -224,7 +224,7 @@ export default {
         contents.push(item.content)
       })
       const params = { devid: this.id, ids: ids, colors: colors, contents: contents }
-      return updateContent(params)
+      return updateContentV2(params)
         .then(res => {
           this.$message({ type: 'success', message: res.msg })
         })
