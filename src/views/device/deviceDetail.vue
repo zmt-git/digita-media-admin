@@ -204,6 +204,7 @@ export default {
     async setPlaylist () {
       this.loading = true
       await this.setPlaylistRequest()
+      await this.getDeviceDetail()
       await this.getPlaylists()
       this.playChange = false
       this.loading = false
