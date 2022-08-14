@@ -9,14 +9,13 @@
 <template>
   <div class="add-device">
     <el-image
-      v-if="isAdd"
       class="img"
       :src="url"
       :preview-src-list="[url]">
     </el-image>
 
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="设备编号" prop="code" required v-if="isAdd">
+      <el-form-item label="设备编号" prop="code" required>
         <el-input clearable placeholder="请输入设备编号" v-model="ruleForm.code"></el-input>
       </el-form-item>
       <el-form-item label="设备型号" prop="type" v-if="isAdd">
@@ -29,13 +28,16 @@
           </el-option>
         </el-select>
       </el-form-item>
+      <el-form-item v-else label="设备型号" prop="type" required>
+        <el-input clearable placeholder="请输入设备型号" v-model="ruleForm.type" autocomplete="off"></el-input>
+      </el-form-item>
       <el-form-item label="设备名称" prop="name" required>
         <el-input clearable placeholder="请输入设备名称" v-model="ruleForm.name" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="安装位置" prop="location" required>
         <el-input clearable placeholder="请输入设备安装位置" v-model="ruleForm.location" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="安装方向" prop="stateOrient" required v-if="isAdd">
+      <el-form-item label="安装方向" prop="stateOrient" required>
         <el-select clearable v-model="ruleForm.stateOrient" placeholder="请选择设备安装方向" style='width: 100%'>
           <el-option
             v-for="item in orientOptions"
@@ -45,7 +47,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="供电方式" prop="power" required v-if="isAdd">
+      <el-form-item label="供电方式" prop="power" required>
         <el-select clearable v-model="ruleForm.power" placeholder="请选择设备供电方式" style='width: 100%'>
           <el-option
             v-for="item in powerOptions"
@@ -57,7 +59,7 @@
       </el-form-item>
       <el-form-item>
         <slot>
-          <el-button class="btn" type="primary" @click="submitForm">{{isAdd ? '添加设备' : '编辑'}}</el-button>
+          <el-button class="btn" type="primary" @click="submitForm">{{isAdd ? '添加设备' : '修改设备'}}</el-button>
         </slot>
       </el-form-item>
     </el-form>
@@ -93,6 +95,9 @@ export default {
       if (value !== 0 && !value) {
         return callback()
       } else {
+        if (!this.isAdd && this.dataForm.code === value) {
+          return callback()
+        }
         const result = await this.registerDevice(value)
         if (result) {
           return callback()
@@ -160,8 +165,22 @@ export default {
     },
 
     submitForm () {
-      const params = this.getParams()
-      console.log(params)
+      if (!this.isAdd && this.dataForm.stateOrient !== this.ruleForm.stateOrient) {
+        this.$confirm('设备的【安装方向】发生变化，您必须点击该设备【设备详情】页面的【发布】按钮手动发布播放列表，设备才能够正常工作。若设备当前离线，设备在线后，请勿遗忘此操作。', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.validator()
+        }).catch(() => {
+          console.log('cancel')
+        })
+      } else {
+        this.validator()
+      }
+    },
+
+    validator () {
       this.$refs.ruleForm.validate(async valid => {
         if (valid) {
           this.$emit('update:loading', true)

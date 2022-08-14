@@ -31,7 +31,8 @@ export const asyncRoutes = [
         meta: {
           title: '设备详情',
           auth: [0, 1, 2],
-          icon: 'icon-meitiliebiao'
+          icon: 'icon-meitiliebiao',
+          activeMenu: '/device/deviceList'
         },
         component: () => import(/* webpackChunkName: "route-deviceDetail" */ '@/views/device/deviceDetail.vue')
       },
@@ -42,7 +43,9 @@ export const asyncRoutes = [
         meta: {
           auth: [0, 1, 2],
           title: '设备添加',
-          icon: ''
+          icon: '',
+          activeMenu: '/device/deviceList'
+
         },
         component: () => import(/* webpackChunkName: "route-deviceAdd" */ '@/views/device/deviceAdd.vue')
       }
@@ -78,7 +81,8 @@ export const asyncRoutes = [
         meta: {
           title: '媒体播放',
           auth: [0, 1, 2],
-          icon: 'icon-meitiliebiao'
+          icon: 'icon-meitiliebiao',
+          activeMenu: '/media/mediaList'
         },
         component: () => import(/* webpackChunkName: "route-mediaDetail" */ '@/views/media/mediaDetail.vue')
       }
@@ -140,7 +144,8 @@ export const asyncRoutes = [
         meta: {
           title: '意见建议',
           icon: 'icon-yijianliebiao',
-          auth: [2]
+          auth: [2],
+          activeMenu: '/system/user'
         },
         component: () => import(/* webpackChunkName: "route-suggest" */ '@/views/suggest/index.vue')
       },

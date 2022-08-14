@@ -210,6 +210,7 @@ export default {
 
     setPlaylistRequest () {
       const ids = []
+      const colors = []
       const contents = []
       this.playlist.forEach(item => {
         const content = JSON.parse(item.content)
@@ -218,9 +219,10 @@ export default {
         })
         item.content = JSON.stringify(content)
         ids.push(item.id)
+        colors.push(item.color)
         contents.push(item.content)
       })
-      const params = { devid: this.id, ids: ids, contents: contents }
+      const params = { devid: this.id, ids: ids, colors: colors, contents: contents }
       return updateContent(params)
         .then(res => {
           this.$message({ type: 'success', message: res.msg })

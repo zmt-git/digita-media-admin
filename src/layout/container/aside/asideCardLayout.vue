@@ -3,7 +3,14 @@
     <router-link to="/device">
       <span class="plate-img"></span>
     </router-link>
-    <base-aside-card :active='route.parentPath + "/" + route.path === $route.path' v-for="route in routesChildren" :path='route.parentPath + "/" + route.path' :key='route.path' :title="route.meta.title" :icon='route.meta.icon'></base-aside-card>
+    <!-- :active='route.parentPath + "/" + route.path === $route.path' -->
+    <base-aside-card
+      v-for="route in routesChildren"
+      :path='route.parentPath + "/" + route.path'
+      :key='route.path'
+      :title="route.meta.title"
+      :icon='route.meta.icon'>
+    </base-aside-card>
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="base-aside-card" :class="active ? 'active' : ''" @click="to">
+  <div class="base-aside-card" :class="{active: activeClass}" @click="to">
     <i class="iconfont icon" :class="icon"></i>
     <span class="title ellipsis-1" :title="title">{{title}}</span>
   </div>
@@ -24,6 +24,12 @@ export default {
     active: {
       type: Boolean,
       default: false
+    }
+  },
+
+  computed: {
+    activeClass () {
+      return this.$route.path === this.path || this.path === this.$route.meta.activeMenu
     }
   },
 

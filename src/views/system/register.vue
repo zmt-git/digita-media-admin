@@ -69,7 +69,7 @@
         </el-form-item> -->
         <el-form-item prop="password" class="form-item">
           <span class="required-icon">*</span>
-          <el-input clearable v-model="formInfo.password" type="password" placeholder="密码">
+          <el-input clearable v-model="formInfo.password" type="password" placeholder="密码" show-password>
             <i slot="prefix" class="iconfont icon-mima prefix-icon"></i>
           </el-input>
         </el-form-item>
@@ -212,7 +212,14 @@ export default {
         isNumber: [{ validator: validateIsNumber, trigger: ['blur', 'change'], required: true }],
         city: [{ required: true, message: '请选择城市' }],
         tradeType: [{ required: true, message: '请选择行业' }],
-        password: [{ required: true, message: '请输入密码' }]
+        password: [
+          { required: true, message: '请输入密码' },
+          {
+            pattern: /^[0-9a-zA-z_]*$/,
+            message: '只能输入英文大小写、数字、下划线',
+            trigger: 'blur'
+          }
+        ]
       }
     }
   },

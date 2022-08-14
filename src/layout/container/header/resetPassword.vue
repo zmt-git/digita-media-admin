@@ -18,7 +18,7 @@
         </el-input>
       </el-form-item>
       <el-form-item label="新密码" required prop="newPassword">
-        <el-input type="password" clearable v-model="form.newPassword" placeholder="请输入新密码"></el-input>
+        <el-input type="password" clearable v-model="form.newPassword" placeholder="请输入新密码" show-password></el-input>
       </el-form-item>
       <el-form-item label="确认密码" required prop="checkedPassword">
         <el-input type="password" clearable v-model="form.checkedPassword" placeholder="请确认新密码"></el-input>
@@ -72,7 +72,12 @@ export default {
           { pattern: codeReg, message: '验证码格式错误' }
         ],
         newPassword: [
-          { required: true, message: '请输入新密码', trigger: ['blur', 'change'] }
+          { required: true, message: '请输入新密码', trigger: ['blur', 'change'] },
+          {
+            pattern: /^[0-9a-zA-z_]*$/,
+            message: '只能输入英文大小写、数字、下划线',
+            trigger: 'blur'
+          }
         ],
         checkedPassword: [
           { required: true, message: '请确认新密码', trigger: ['blur', 'change'] },
