@@ -16,9 +16,10 @@
           <el-switch
             v-if="hasSwitch"
             :disabled='disabled'
-            v-model="playlist[index].color"
+            v-model="lightColor"
             :active-value="1"
             :inactive-value="0"
+            @change="changeColor"
             active-color="#13ce66"
             active-text="绿色"
             inactive-text="红色"
@@ -118,11 +119,16 @@ export default {
     length () {
       return this.scenesList.length
     },
-    lightColor () {
-      if (this.playlist.length > 0 && this.index !== undefined) {
-        return this.playlist[this.index] ? this.playlist[this.index].color : 0
-      } else {
-        return 0
+    lightColor: {
+      get () {
+        if (this.playlist.length > 0 && this.index !== undefined) {
+          return this.playlist[this.index] ? this.playlist[this.index].color : 0
+        } else {
+          return 0
+        }
+      },
+      set (val) {
+        this.playlist[this.index].color = val
       }
     }
   },

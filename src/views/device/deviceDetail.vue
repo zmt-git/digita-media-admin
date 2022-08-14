@@ -64,7 +64,7 @@ import DeviceState from '@/components/DeviceState.vue'
 import DeviceInfo from '@/components/DeviceInfo.vue'
 import BaseDrawerMedia from '@/components/BaseDrawerMedia.vue'
 import { infoDevice } from '@/api/device'
-import { getPlaylist, updateContent, setColor } from '@/api/playlist'
+import { getPlaylist, updateContent } from '@/api/playlist'
 import { deviceType } from '@/data/common'
 import eventBus from '@/utils/eventBus'
 export default {
@@ -189,15 +189,16 @@ export default {
     },
 
     async changeColor (playlist, index, value) {
-      const id = playlist[index].id
-      this.loading = true
-      await setColor(id, { playlistid: id, color: value })
-        .then(res => {
-          this.$message({ type: 'success', message: res.msg })
-        })
-        .catch(e => console.log(e))
-      await this.getPlaylists()
-      this.loading = false
+      // const id = playlist[index].id
+      // this.loading = true
+      // await setColor(id, { playlistid: id, color: value })
+      //   .then(res => {
+      //     this.$message({ type: 'success', message: res.msg })
+      //   })
+      //   .catch(e => console.log(e))
+      // await this.getPlaylists()
+      this.playChange = true
+      // this.loading = false
     },
 
     async setPlaylist () {
