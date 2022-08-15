@@ -16,7 +16,7 @@
 
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
       <el-form-item label="设备编号" prop="code" required>
-        <el-input clearable placeholder="请输入设备编号" v-model="ruleForm.code"></el-input>
+        <el-input :disabled="!isAdd" clearable placeholder="请输入设备编号" v-model="ruleForm.code"></el-input>
       </el-form-item>
       <el-form-item label="设备型号" prop="type" v-if="isAdd">
         <el-select clearable v-model="ruleForm.type" placeholder="请选择设备型号" style='width: 100%'>
@@ -29,7 +29,7 @@
         </el-select>
       </el-form-item>
       <el-form-item v-else label="设备型号" prop="type" required>
-        <el-input clearable placeholder="请输入设备型号" v-model="ruleForm.type" autocomplete="off"></el-input>
+        <el-input :disabled="!isAdd"  clearable placeholder="请输入设备型号" v-model="ruleForm.type" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="设备名称" prop="name" required>
         <el-input clearable placeholder="请输入设备名称" v-model="ruleForm.name" autocomplete="off"></el-input>
