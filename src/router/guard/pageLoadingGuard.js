@@ -6,7 +6,7 @@ export function createPageLoadingGuard (router) {
     next()
   })
 
-  router.afterEach((to, from) => {
+  router.afterEach(() => {
     setTimeout(() => {
       store.dispatch('actionsPageLoadingState', false)
     }, 300)

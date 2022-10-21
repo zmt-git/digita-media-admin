@@ -7,7 +7,7 @@
  * @LastEditTime: 2021-06-02 22:21:28
 -->
 <template>
-  <div class="device-add"  v-loading='loading'>
+  <div class="device-add" v-loading="loading">
     <!-- <el-steps :active="active" simple>
       <el-step :title="item.title" :icon="item.icon" v-for="item in steps" :key="item.title">
         <i slot="icon" class="iconfont" :class="item.icon"></i>
@@ -19,7 +19,12 @@
         leave-active-class="animate__fadeOutLeft animate__animated"
       >
         <div class="step-content-form" v-if="active === 0">
-          <device-form-info @submit='submit' :loading.sync='loading' :dataForm='info' :isAdd='isAdd'></device-form-info>
+          <device-form-info
+            @submit="submit"
+            :loading.sync="loading"
+            :dataForm="info"
+            :isAdd="isAdd"
+          ></device-form-info>
         </div>
         <!-- <div class="step-content-form" v-if="active === 1">
           <device-form-config :info='info' @next='next' @updateInfo='updateInfo' :loading.sync='loading' :disabled='disabled'></device-form-config>
@@ -33,8 +38,17 @@
       </transition>
     </div>
     <div class="btn-box" v-if="active !== 0">
-      <el-button size="small" type="primary" @click="next">{{active !== 3 ? '跳过' : '返回首页'}}</el-button>
-      <el-button v-if="active === 3" size="small" type="success" @click="carryOut" :disabled='disabled'>发布</el-button>
+      <el-button size="small" type="primary" @click="next">{{
+        active !== 3 ? '跳过' : '返回首页'
+      }}</el-button>
+      <el-button
+        v-if="active === 3"
+        size="small"
+        type="success"
+        @click="carryOut"
+        :disabled="disabled"
+        >发布</el-button
+      >
     </div>
   </div>
 </template>
@@ -52,12 +66,12 @@ export default {
   components: { DeviceFormInfo /* DeviceFormConfig, DeviceFormSystem, DeviceFormPlayList */ },
 
   computed: {
-    disabled () {
+    disabled() {
       return !this.info.stateOnline
     }
   },
 
-  data () {
+  data() {
     return {
       isAdd: true,
       active: 0,
@@ -67,7 +81,7 @@ export default {
     }
   },
 
-  created () {
+  created() {
     this.isAdd = this.$route.query.isAdd === 'true'
     if (!this.isAdd) {
       this.$route.meta.title = '设备编辑'
@@ -78,32 +92,32 @@ export default {
   },
 
   methods: {
-    submit (info) {
+    submit(info) {
       this.info = info
       this.$router.back()
     },
-    next () {
+    next() {
       this.active++
       if (this.active > 3) {
         this.$router.back()
       }
     },
-    async carryOut () {
+    async carryOut() {
       const result = await this.$refs.playlist.updateList()
       if (result) {
         this.$router.back()
       }
     },
-    getDeviceDetail () {
+    getDeviceDetail() {
       return infoDevice(this.id)
         .then(res => {
           this.info = res.data
         })
-        .catch(e => {
+        .catch(() => {
           this.$refs.ruleForm.resetFields()
         })
     },
-    async updateInfo () {
+    async updateInfo() {
       await this.getDeviceDetail()
       this.loading = false
     }
@@ -111,36 +125,36 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.device-add{
+.device-add {
   display: flex;
   flex-direction: column;
 }
-.step-content{
+.step-content {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: auto;
-  &-form{
+  &-form {
     width: 800px;
     padding: 20px;
     overflow: auto;
     // background-color: #fff;
   }
-  &-system{
+  &-system {
     width: 300px;
     padding: 20px;
     // background-color: #fff;
   }
-  &-list{
+  &-list {
     width: 100%;
     height: 100%;
   }
 }
-.btn-box{
+.btn-box {
   margin-top: 10px;
   text-align: center;
-  & button{
+  & button {
     width: 150px;
   }
 }

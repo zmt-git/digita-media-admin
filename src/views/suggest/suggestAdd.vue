@@ -1,11 +1,16 @@
 <template>
-  <div class="suggest" v-loading='loading'>
+  <div class="suggest" v-loading="loading">
     <div class="suggest-form">
       <el-form ref="form" :model="form" :rules="rules" label-width="130px">
         <el-form-item label="提交类型" required>
           <el-row :gutter="20">
             <el-col :span="5" v-for="item in suggestType" :key="item.value">
-              <card-suggest-type :value='item.value' :title="item.title" :des='item.des' :check.sync='form.type'></card-suggest-type>
+              <card-suggest-type
+                :value="item.value"
+                :title="item.title"
+                :des="item.des"
+                :check.sync="form.type"
+              ></card-suggest-type>
             </el-col>
           </el-row>
         </el-form-item>
@@ -52,7 +57,7 @@ export default {
     ...mapGetters(['user'])
   },
 
-  data () {
+  data() {
     return {
       loading: false,
       suggestType: SuggestType,
@@ -64,14 +69,16 @@ export default {
       },
       rules: {
         title: [
-          { required: true, message: '请填写标题(最大长度为50)', max: 50, min: 1, trigger: ['blur', 'change'] }
+          {
+            required: true,
+            message: '请填写标题(最大长度为50)',
+            max: 50,
+            min: 1,
+            trigger: ['blur', 'change']
+          }
         ],
-        product: [
-          { required: true, message: '请填写产品名称', trigger: ['blur', 'change'] }
-        ],
-        des: [
-          { required: true, message: '请具体描述问题', trigger: ['blur', 'change'] }
-        ]
+        product: [{ required: true, message: '请填写产品名称', trigger: ['blur', 'change'] }],
+        des: [{ required: true, message: '请具体描述问题', trigger: ['blur', 'change'] }]
       },
       params: {
         content: '',
@@ -81,7 +88,7 @@ export default {
   },
 
   methods: {
-    submitSuggest () {
+    submitSuggest() {
       this.$refs.form.validate(async valid => {
         if (valid) {
           const type = SuggestType.find(item => item.value === this.form.type).title
@@ -96,9 +103,9 @@ export default {
       })
     },
 
-    suggestRequest () {
+    suggestRequest() {
       return saveSuggest(this.params)
-        .then(res => {
+        .then(() => {
           this.$message({ type: 'success', message: '您宝贵的意见我们已记录成功' })
         })
         .catch(e => console.log(e))
@@ -108,9 +115,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.suggest{
+.suggest {
   background-color: #fff;
-  &-form{
+  &-form {
     width: 80%;
     height: 100%;
   }

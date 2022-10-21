@@ -7,42 +7,41 @@
  * @LastEditTime: 2021-05-25 21:49:19
 -->
 <template>
-  <el-aside class="aside" :width='width'>
+  <el-aside class="aside" :width="width">
     <router-link class="plate" to="/device">
       <!-- <span ref="plateImg" style="backgroundPositionY: 0px" class="plate-img" @mouseover="translate(true)" @mouseout="translate(false)"></span> -->
       <span class="plate-img"></span>
-      <transition enter-active-class="animate__animated animate__animated" leave-active-class="animate__animated animate__fadeOut"></transition>
+      <transition
+        enter-active-class="animate__animated animate__animated"
+        leave-active-class="animate__animated animate__fadeOut"
+      ></transition>
       <span v-show="!collapse">数字媒体管理平台</span>
     </router-link>
     <el-menu
       class="el-menu-vertical-demo"
       unique-opened
       background-color="#374c74"
-      :collapse='collapse'
+      :collapse="collapse"
       :default-active="defaultActive"
       :text-color="textColor"
-      active-text-color="#49befe">
+      active-text-color="#49befe"
+    >
       <template v-for="route in routes">
         <el-submenu v-if="!route.hidden" :key="route.path" :index="route.path">
           <template slot="title">
             <i class="iconfont menu-icon" :class="route.meta.icon ? route.meta.icon : ''"></i>
-            <span>{{route.meta.title}}</span>
+            <span>{{ route.meta.title }}</span>
           </template>
           <template v-if="route.children && route.children.length > 0">
-            <template
-              v-for="subRoute in route.children"
-            >
-              <router-link
-                v-if="!subRoute.hidden"
-                :to='subRoute.path'
-                :key="subRoute.path"
-              >
-                <el-menu-item
-                  :index='subRoute.path'
-                >
+            <template v-for="subRoute in route.children">
+              <router-link v-if="!subRoute.hidden" :to="subRoute.path" :key="subRoute.path">
+                <el-menu-item :index="subRoute.path">
                   <template #title>
-                    <i class="iconfont menu-icon" :class="subRoute.meta.icon ? subRoute.meta.icon : ''"></i>
-                    <span class="menu-title">{{subRoute.meta.title}}</span>
+                    <i
+                      class="iconfont menu-icon"
+                      :class="subRoute.meta.icon ? subRoute.meta.icon : ''"
+                    ></i>
+                    <span class="menu-title">{{ subRoute.meta.title }}</span>
                   </template>
                 </el-menu-item>
               </router-link>
@@ -70,7 +69,7 @@ export default {
     ...mapGetters(['routes'])
   },
 
-  data () {
+  data() {
     return {
       width: '200px',
       defaultActive: null,
@@ -80,7 +79,7 @@ export default {
   },
 
   methods: {
-    translate (derective) {
+    translate(derective) {
       this.timmer && clearInterval(this.timmer)
       if (derective) {
         let y = 0
@@ -110,7 +109,7 @@ export default {
 
   watch: {
     collapse: {
-      handler: function (n, o) {
+      handler: function(n) {
         if (n) {
           this.width = '70px'
         } else {
@@ -120,7 +119,7 @@ export default {
       immediate: true
     },
     $route: {
-      handler: function (n, o) {
+      handler: function(n) {
         this.defaultActive = n.path
       },
       immediate: true
@@ -131,29 +130,29 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@/styles/handler.scss';
-.aside{
+.aside {
   width: 200px;
   @include bg-color('baseBg');
   overflow-x: hidden;
   overflow-y: auto;
   box-sizing: border-box;
-  /deep/ .el-menu{
+  /deep/ .el-menu {
     border: 0;
   }
-  transition: all .5s ease;
-  &::-webkit-scrollbar-thumb{
+  transition: all 0.5s ease;
+  &::-webkit-scrollbar-thumb {
     background-color: #5d7096;
   }
-  &::-webkit-scrollbar{
+  &::-webkit-scrollbar {
     width: 3px;
   }
 }
-.menu-icon{
+.menu-icon {
   margin: 0 5px;
   color: #ffffff;
   font-size: 22px;
 }
-.plate{
+.plate {
   width: 100%;
   height: 50px;
   line-height: 50px;
@@ -165,7 +164,7 @@ export default {
   overflow: hidden;
   display: table-cell;
 }
-.plate-img{
+.plate-img {
   width: 25px;
   height: 25px;
   display: inline-block;

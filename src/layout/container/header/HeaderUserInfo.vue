@@ -64,13 +64,13 @@ export default {
     filterUserType (val) {
       let type = '用户'
       switch (val) {
-        case 0 : type = '个人'
-          break
-        case 1 : type = '企业'
-          break
-        case 2 : type = '管理员'
-          break
-        default : type = '个人'
+      case 0 : type = '个人'
+        break
+      case 1 : type = '企业'
+        break
+      case 2 : type = '管理员'
+        break
+      default : type = '个人'
       }
       return type
     },

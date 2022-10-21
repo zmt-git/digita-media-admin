@@ -18,7 +18,7 @@ export default {
       this.codeDisabled = true
       this.codeLoading = true
       await this.codeRequest(mobile)
-        .then(res => {
+        .then(() => {
           this.$message({ type: 'success', message: '验证码已发送至手机，请注意查收' })
           this.startInterval()
         })

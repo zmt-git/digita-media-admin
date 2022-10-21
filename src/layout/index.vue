@@ -8,7 +8,7 @@
 -->
 <template>
   <el-container class="layout">
-    <aside-card-layout :collapse='collapse'></aside-card-layout>
+    <aside-card-layout :collapse="collapse"></aside-card-layout>
     <!-- <layout-aside :collapse='collapse'></layout-aside> -->
     <el-container>
       <el-main class="main">
@@ -43,21 +43,21 @@ export default {
 
   components: { /* layoutAside */ asideCardLayout, layoutHeader, layoutFooter },
 
-  data () {
+  data() {
     return {
       collapse: false
     }
   },
 
-  async created () {
+  async created() {
     const { setThemes } = useTheme()
     setThemes()
-    getCollapse() === 'true' ? this.collapse = true : this.collapse = false
+    getCollapse() === 'true' ? (this.collapse = true) : (this.collapse = false)
     initWebsocket()
   },
 
   watch: {
-    collapse (val, oldVal) {
+    collapse(val) {
       if (val) {
         setCollapse(true)
       } else {
@@ -68,18 +68,18 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
-.layout{
+<style lang="scss" scoped>
+.layout {
   width: 100%;
   height: 100%;
 }
-.main{
+.main {
   padding: 0;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  &-view{
+  &-view {
     flex: 1;
     width: 100%;
     box-sizing: border-box;
@@ -87,10 +87,10 @@ export default {
     box-sizing: border-box;
     padding: 5px;
     background-color: #f0f0f0;
-    &::-webkit-scrollbar-thumb{
-    background-color: #d0d0d0;
+    &::-webkit-scrollbar-thumb {
+      background-color: #d0d0d0;
     }
-    &::-webkit-scrollbar{
+    &::-webkit-scrollbar {
       width: 3px;
     }
   }

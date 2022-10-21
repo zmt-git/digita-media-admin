@@ -8,20 +8,47 @@
 -->
 <template>
   <div class="reset-password">
-    <el-form v-loading='loading' :inline='true' size="small" :model="form" ref="form" class="form" :rules="rules" label-width="80px">
+    <el-form
+      v-loading="loading"
+      :inline="true"
+      size="small"
+      :model="form"
+      ref="form"
+      class="form"
+      :rules="rules"
+      label-width="80px"
+    >
       <el-form-item label="手机号码" required prop="mobile">
         <el-input v-model="form.mobile" clearable placeholder="请输入手机号码"></el-input>
       </el-form-item>
       <el-form-item label="验证码" required prop="code">
         <el-input v-model="form.code" clearable placeholder="请输入验证码">
-          <el-button slot="suffix" size="mini" :disabled='codeDisabled || hasMobile' :loading='codeLoading' @click="getCode">{{codeBtnName}}</el-button>
+          <el-button
+            slot="suffix"
+            size="mini"
+            :disabled="codeDisabled || hasMobile"
+            :loading="codeLoading"
+            @click="getCode"
+            >{{ codeBtnName }}</el-button
+          >
         </el-input>
       </el-form-item>
       <el-form-item label="新密码" required prop="newPassword">
-        <el-input type="password" clearable v-model="form.newPassword" placeholder="请输入新密码" show-password></el-input>
+        <el-input
+          type="password"
+          clearable
+          v-model="form.newPassword"
+          placeholder="请输入新密码"
+          show-password
+        ></el-input>
       </el-form-item>
       <el-form-item label="确认密码" required prop="checkedPassword">
-        <el-input type="password" clearable v-model="form.checkedPassword" placeholder="请确认新密码"></el-input>
+        <el-input
+          type="password"
+          clearable
+          v-model="form.checkedPassword"
+          placeholder="请确认新密码"
+        ></el-input>
       </el-form-item>
       <el-button type="primary" class="btn" size="small" @click="submit">确认</el-button>
     </el-form>
@@ -38,12 +65,12 @@ export default {
   mixins: [smsCode],
 
   computed: {
-    hasMobile () {
+    hasMobile() {
       return !telReg.test(this.form.mobile)
     }
   },
 
-  data () {
+  data() {
     var validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请再次输入密码'))
@@ -88,7 +115,7 @@ export default {
   },
 
   methods: {
-    submit () {
+    submit() {
       this.$refs.form.validate(async valid => {
         if (valid) {
           this.loading = true
@@ -99,47 +126,46 @@ export default {
         }
       })
     },
-    updatePassWord () {
+    updatePassWord() {
       return reset(this.form)
-        .then(res => {
+        .then(() => {
           this.$message({
             message: '修改密码成功',
             type: 'success'
           })
-          this.$store.dispatch('logoutActions')
-            .then(res => {
-              this.$store.dispatch('logoutActions')
-              this.$router.push('/login')
-              location.reload()
-            })
+          this.$store.dispatch('logoutActions').then(() => {
+            this.$store.dispatch('logoutActions')
+            this.$router.push('/login')
+            location.reload()
+          })
         })
         .catch(e => {
           console.log(e)
         })
     },
 
-    getCode () {
+    getCode() {
       this.getMobileCode(this.form.mobile)
     }
   }
 }
 </script>
 <style lang="scss" scoped>
-.form{
-  /deep/ .el-form-item__content{
+.form {
+  /deep/ .el-form-item__content {
     vertical-align: middle;
   }
-  /deep/ .el-form-item{
+  /deep/ .el-form-item {
     margin-bottom: 5px;
   }
-  /deep/ .el-input__inner{
+  /deep/ .el-input__inner {
     border: 0;
     border-radius: 0;
-    border-bottom: 1px solid #DCDFE6;
+    border-bottom: 1px solid #dcdfe6;
     width: 220px;
   }
 }
-.btn{
+.btn {
   width: 200px;
   position: relative;
   transform: translateX(80px);

@@ -9,7 +9,7 @@ export function getPlaylist (devid) {
 }
 // /device/playlist/update/content
 // 批量修改播放列表内容
-export function updateContent (params, paramsSerializer) {
+export function updateContent (params) {
   return http({
     url: '/device/playlist/update/content',
     method: 'POST',
@@ -20,7 +20,7 @@ export function updateContent (params, paramsSerializer) {
   })
 }
 
-export function updateContentV2 (params, paramsSerializer) {
+export function updateContentV2 (params) {
   return http({
     url: '/device/playlist/update/all',
     method: 'POST',

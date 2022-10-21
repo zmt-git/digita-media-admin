@@ -30,17 +30,17 @@ export default {
     iconClass () {
       let iconClass
       switch (this.type) {
-        case 'success' : iconClass = 'icon-chenggong2'
-          break
-        case 'error' : iconClass = 'icon-shibai'
-          break
-        case 'primary' : iconClass = 'icon-zhihangzhong'
-          break
-        case 'info' : iconClass = 'icon-tanhao'
-          break
-        case 'warning' : iconClass = 'icon-dengdai'
-          break
-        default: iconClass = 'icon-chenggong2'
+      case 'success' : iconClass = 'icon-chenggong2'
+        break
+      case 'error' : iconClass = 'icon-shibai'
+        break
+      case 'primary' : iconClass = 'icon-zhihangzhong'
+        break
+      case 'info' : iconClass = 'icon-tanhao'
+        break
+      case 'warning' : iconClass = 'icon-dengdai'
+        break
+      default: iconClass = 'icon-chenggong2'
       }
 
       return iconClass

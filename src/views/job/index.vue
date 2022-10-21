@@ -7,22 +7,28 @@
  * @LastEditTime: 2021-06-02 21:59:58
 -->
 <template>
-  <div class="job" v-loading='pageLoading'>
+  <div class="job" v-loading="pageLoading">
     <!-- <el-button-group class="btn-box">
       <el-button type="danger" @click="clean" size="mini">清空任务</el-button>
     </el-button-group> -->
     <div class="infinite-list-wrapper job-list" style="overflow:auto">
-      <ul class="list"
-        v-infinite-scroll="pageLoad"
-        :infinite-scroll-disabled="scrollDisabled"
-      >
+      <ul class="list" v-infinite-scroll="pageLoad" :infinite-scroll-disabled="scrollDisabled">
         <el-timeline>
-          <el-timeline-item :timestamp="item.timeCreate" placement="top" v-for="item in pageList" :key="item.id" >
-            <card-task :info='item'></card-task>
+          <el-timeline-item
+            :timestamp="item.timeCreate"
+            placement="top"
+            v-for="item in pageList"
+            :key="item.id"
+          >
+            <card-task :info="item"></card-task>
           </el-timeline-item>
         </el-timeline>
       </ul>
-      <base-page-loading :loading='pageLoading' :noMore='noMore' :list='pageList'></base-page-loading>
+      <base-page-loading
+        :loading="pageLoading"
+        :noMore="noMore"
+        :list="pageList"
+      ></base-page-loading>
     </div>
   </div>
 </template>
@@ -42,13 +48,13 @@ export default {
 
   mixins: [page],
 
-  data () {
+  data() {
     return {
       pageRequest: listJob
     }
   },
 
-  created () {
+  created() {
     eventBus.on('taskList', this.updateList)
     this.$once('hook:beforeDestroy', () => {
       eventBus.off('taskList', this.updateList)
@@ -56,7 +62,7 @@ export default {
   },
 
   methods: {
-    updateList (list) {
+    updateList(list) {
       list.forEach(item => {
         const index = this.pageList.findIndex(el => {
           return el.id === item.id
@@ -67,16 +73,16 @@ export default {
         }
       })
     },
-    async clean () {
+    async clean() {
       await cleanJob()
-        .then(res => {
+        .then(() => {
           this.$message({ type: 'success', message: '清空任务成功' })
           this.refresh()
         })
         .catch(e => console.log(e))
     },
 
-    async beforeAssignPageList (list) {
+    async beforeAssignPageList(list) {
       let deviceIds = []
 
       list.forEach(item => {
@@ -91,7 +97,7 @@ export default {
       })
     },
 
-    getDeviceInfo (deviceId, list) {
+    getDeviceInfo(deviceId, list) {
       return infoDevice(deviceId)
         .then(res => {
           if (!res.data) return
@@ -107,23 +113,22 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-
-.job{
+.job {
   background-color: #fff;
   display: flex;
   flex-direction: column;
-  &-list{
+  &-list {
     flex: 1;
-    /deep/ .el-divider__text{
-      background-color: #fff!important;
+    /deep/ .el-divider__text {
+      background-color: #fff !important;
     }
-    /deep/ .el-timeline-item__content{
+    /deep/ .el-timeline-item__content {
       // border-radius: 4px;
       overflow: hidden;
     }
   }
 }
-.btn-box{
+.btn-box {
   margin-bottom: 10px;
 }
 </style>

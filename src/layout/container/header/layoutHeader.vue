@@ -7,7 +7,7 @@
  * @LastEditTime: 2021-12-06 11:34:17
 -->
 <template>
-  <el-header class="header" :height='height'>
+  <el-header class="header" :height="height">
     <!-- <div class="header-left">
       <el-tooltip :content="leftIconTitle" placement="bottom-start" effect="light">
         <i class="iconfont header-left_nav" :collapse='collapse' @click="changeCollapse" :class="collapseIconClass"></i>
@@ -25,7 +25,12 @@
         </el-popover>
       </el-tooltip> -->
       <el-tooltip :content="websocketTitle" placement="bottom" effect="light">
-        <i class="iconfont header-right_icon" style="fontSize: 20px" :class='websocketIcon' @click="toReconnect"></i>
+        <i
+          class="iconfont header-right_icon"
+          style="fontSize: 20px"
+          :class="websocketIcon"
+          @click="toReconnect"
+        ></i>
       </el-tooltip>
 
       <el-tooltip content="我要建议" placement="bottom" effect="light">
@@ -44,7 +49,11 @@
         <i class="iconfont header-right_icon icon-tuichu" @click="logout"></i>
       </el-tooltip>
     </div>
-    <header-user-info :userDrawerVisible.sync='userDrawerVisible' :loading.sync='userLoading' :userinfo='user'></header-user-info>
+    <header-user-info
+      :userDrawerVisible.sync="userDrawerVisible"
+      :loading.sync="userLoading"
+      :userinfo="user"
+    ></header-user-info>
   </el-header>
 </template>
 
@@ -80,18 +89,18 @@ export default {
 
   computed: {
     ...mapGetters(['user']),
-    leftIconTitle () {
+    leftIconTitle() {
       let title = '导航收起'
-      this.collapseIconClass === 'icon-daohangshouqi' ? title = '导航收起' : title = '导航展开'
+      this.collapseIconClass === 'icon-daohangshouqi' ? (title = '导航收起') : (title = '导航展开')
       return title
     },
-    screenTitle () {
+    screenTitle() {
       let title = '全屏'
-      this.screenIcon === 'icon-fullscreen' ? title = '全屏' : title = '退出全屏'
+      this.screenIcon === 'icon-fullscreen' ? (title = '全屏') : (title = '退出全屏')
       return title
     },
 
-    websocketTitle () {
+    websocketTitle() {
       if (this.websocketStatus === -1) {
         return 'websocket重连中'
       } else if (this.websocketStatus === 1) {
@@ -100,7 +109,7 @@ export default {
         return 'websocket已断开,点击重连'
       }
     },
-    websocketIcon () {
+    websocketIcon() {
       if (this.websocketStatus === -1) {
         return 'icon-jiazaizhong el-icon-loading'
       } else if (this.websocketStatus === 1) {
@@ -111,7 +120,7 @@ export default {
     }
   },
 
-  data () {
+  data() {
     return {
       collapseIconClass: 'icon-daohangshouqi', // icon-daohangzhankai
       screenIcon: 'icon-fullscreen',
@@ -122,14 +131,16 @@ export default {
     }
   },
 
-  created () {
-    eventBus.on('websocketStatus', (status) => {
+  created() {
+    eventBus.on('websocketStatus', status => {
       this.websocketStatus = status
     })
-    this.collapse ? this.collapseIconClass = 'icon-daohangzhankai' : this.collapseIconClass = 'icon-daohangshouqi'
+    this.collapse
+      ? (this.collapseIconClass = 'icon-daohangzhankai')
+      : (this.collapseIconClass = 'icon-daohangshouqi')
   },
 
-  mounted () {
+  mounted() {
     window.addEventListener('resize', this.setFullscreenStatus)
 
     this.$once('hook:beforeDestroy', () => {
@@ -138,7 +149,7 @@ export default {
   },
 
   methods: {
-    changeCollapse () {
+    changeCollapse() {
       if (this.collapseIconClass === 'icon-daohangzhankai') {
         this.collapseIconClass = 'icon-daohangshouqi'
         this.$emit('update:collapse', false)
@@ -148,53 +159,50 @@ export default {
       }
     },
 
-    notice () {
+    notice() {},
 
-    },
-
-    toggleScreen () {
+    toggleScreen() {
       toggleFullscreen()
     },
 
-    setFullscreenStatus () {
-      isFullscreen() ? this.screenIcon = 'icon-tuichuquanping' : this.screenIcon = 'icon-fullscreen'
+    setFullscreenStatus() {
+      isFullscreen()
+        ? (this.screenIcon = 'icon-tuichuquanping')
+        : (this.screenIcon = 'icon-fullscreen')
     },
 
-    async viewUserInfo () {
+    async viewUserInfo() {
       this.userDrawerVisible = true
       this.userLoading = true
       await this.$store.dispatch('infoUserActions')
       this.userLoading = false
     },
 
-    toReconnect () {
+    toReconnect() {
       if (this.websocketStatus === 0) {
         reconnectWS()
       }
     },
 
-    toSuggest () {
+    toSuggest() {
       this.$router.push('/suggestAdd/add')
     },
 
-    logout () {
+    logout() {
       this.$confirm('退出当前该用户, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',
         center: false
-      }).then(async () => {
-        await this.$store.dispatch('logoutActions')
-          .then(res => {
-          })
-          .catch(e => {
-            console.log(e)
-          })
-        this.$router.push('/login')
-        location.reload()
-      }).catch(() => {
-        console.log('取消退出')
       })
+        .then(async () => {
+          await this.$store.dispatch('logoutActions')
+          this.$router.push('/login')
+          location.reload()
+        })
+        .catch(() => {
+          console.log('取消退出')
+        })
     }
   }
 }
@@ -202,7 +210,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@/styles/handler.scss';
-.header{
+.header {
   width: 100%;
   height: 50px;
   box-sizing: border-box;
@@ -215,16 +223,16 @@ export default {
     line-height: 50px;
     height: 100%;
   }
-  &-left{
+  &-left {
     flex-shrink: 0;
-    &_nav{
+    &_nav {
       font-size: 22px;
       cursor: pointer;
     }
   }
-  &-right{
+  &-right {
     float: right;
-    &_icon{
+    &_icon {
       color: #000;
       margin: 0 5px;
       font-size: 22px;
@@ -232,13 +240,13 @@ export default {
     }
   }
 }
-.icon-jiazaizhong{
+.icon-jiazaizhong {
   @include color('primary');
 }
-.icon-websocket{
+.icon-websocket {
   @include color('success');
 }
-.icon-bianzu{
+.icon-bianzu {
   @include color('danger');
 }
 </style>

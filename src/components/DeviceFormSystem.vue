@@ -10,33 +10,54 @@
   <ul class="device-form-system">
     <li class="device-form-system-item">
       <span class="device-form-system-item_name">开机动画</span>
-      <el-switch v-model="dataForm.stateLogo" :disabled='disabled' active-color="#13ce66" inactive-color="#ff4949" @change="setLogo"></el-switch>
+      <el-switch
+        v-model="dataForm.stateLogo"
+        :disabled="disabled"
+        active-color="#13ce66"
+        inactive-color="#ff4949"
+        @change="setLogo"
+      ></el-switch>
     </li>
     <li class="device-form-system-item">
       <span class="device-form-system-item_name">信息提示</span>
-      <el-switch v-model="dataForm.stateInfo" :disabled='disabled' active-color="#13ce66" inactive-color="#ff4949" @change="setInfo"></el-switch>
+      <el-switch
+        v-model="dataForm.stateInfo"
+        :disabled="disabled"
+        active-color="#13ce66"
+        inactive-color="#ff4949"
+        @change="setInfo"
+      ></el-switch>
     </li>
     <li class="device-form-system-item">
       <span class="device-form-system-item_name">重启智能终端</span>
-      <el-button type="primary" size="mini" :disabled='disabled' @click="rebootDevice">重启</el-button>
+      <el-button type="primary" size="mini" :disabled="disabled" @click="rebootDevice"
+        >重启</el-button
+      >
     </li>
     <li class="device-form-system-item">
       <span class="device-form-system-item_name">重启核心程序</span>
-      <el-button type="primary" size="mini" :disabled='disabled' @click="rebootApp">重启</el-button>
+      <el-button type="primary" size="mini" :disabled="disabled" @click="rebootApp">重启</el-button>
     </li>
     <li class="device-form-system-item">
       <span class="device-form-system-item_name">上传工作日志</span>
-      <el-button type="primary" size="mini" :disabled='disabled' @click="uploadLog">重启</el-button>
+      <el-button type="primary" size="mini" :disabled="disabled" @click="uploadLog">重启</el-button>
     </li>
     <li class="device-form-system-item">
       <span class="device-form-system-item_name">恢复出厂设置</span>
-      <el-button type="danger" size="mini" :disabled='disabled' @click="reset">恢复</el-button>
+      <el-button type="danger" size="mini" :disabled="disabled" @click="reset">恢复</el-button>
     </li>
   </ul>
 </template>
 
 <script>
-import { logoDevice, infoDevicePost, rebootAllDevice, rebootAppDevice, uploadLogDevice, resetDevice } from '@/api/device'
+import {
+  logoDevice,
+  infoDevicePost,
+  rebootAllDevice,
+  rebootAppDevice,
+  uploadLogDevice,
+  resetDevice
+} from '@/api/device'
 import prompt from '@/mixins/prompt'
 export default {
   name: 'device-form-system',
@@ -59,12 +80,12 @@ export default {
   },
 
   computed: {
-    id () {
+    id() {
       return this.info.id ? this.info.id : undefined
     }
   },
 
-  data () {
+  data() {
     return {
       dataForm: {
         timeControl: '',
@@ -80,18 +101,18 @@ export default {
     }
   },
 
-  mounted () {
+  mounted() {
     this.assginFormData(this.info)
   },
 
   methods: {
-    assginFormData (obj) {
+    assginFormData(obj) {
       Object.keys(this.dataForm).forEach(key => {
         this.dataForm[key] = obj[key]
       })
     },
 
-    setLogo () {
+    setLogo() {
       this.$emit('update:loading', true)
       logoDevice(this.id, this.dataForm)
         .then(res => {
@@ -101,7 +122,7 @@ export default {
       this.$emit('updateInfo')
     },
 
-    setInfo () {
+    setInfo() {
       this.$emit('update:loading', true)
       infoDevicePost(this.id, this.dataForm)
         .then(res => {
@@ -111,7 +132,7 @@ export default {
       this.$emit('updateInfo')
     },
 
-    rebootDevice () {
+    rebootDevice() {
       this.$emit('update:loading', true)
       rebootAllDevice(this.id, this.dataForm)
         .then(res => {
@@ -121,7 +142,7 @@ export default {
       this.$emit('updateInfo')
     },
 
-    rebootApp () {
+    rebootApp() {
       this.$emit('update:loading', true)
       rebootAppDevice(this.id, this.dataForm)
         .then(res => {
@@ -131,7 +152,7 @@ export default {
       this.$emit('updateInfo')
     },
 
-    uploadLog () {
+    uploadLog() {
       this.$emit('update:loading', true)
       uploadLogDevice(this.id, this.dataForm)
         .then(res => {
@@ -141,7 +162,7 @@ export default {
       this.$emit('updateInfo')
     },
 
-    reset () {
+    reset() {
       this.$emit('update:loading', true)
       resetDevice(this.id, this.dataForm)
         .then(res => {
@@ -152,27 +173,27 @@ export default {
     }
   },
   watch: {
-    info (n, o) {
+    info(n) {
       this.assginFormData(n)
     }
   }
 }
 </script>
 <style lang="scss" scoped>
-.device-form-system{
-  &-item{
+.device-form-system {
+  &-item {
     display: flex;
     height: 40px;
     justify-content: space-between;
     align-items: center;
     // border-bottom: 1px solid #f0f0f0;
-    &_name{
+    &_name {
       font-size: 14px;
       color: #606266;
     }
   }
 }
-.btn{
+.btn {
   width: 100%;
 }
 </style>

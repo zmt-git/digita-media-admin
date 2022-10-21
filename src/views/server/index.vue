@@ -1,9 +1,20 @@
 <template>
-  <div class="server" v-loading='loading'>
+  <div class="server" v-loading="loading">
     <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="form">
       <el-form-item label="服务器类型" prop="type" required>
-        <el-select v-model="form.type" placeholder="请选择服务器类型" disabled style="width: 100%" clearable>
-          <el-option :label="item.name" :value="item.value" v-for="item in typeOptions" :key="item.value"></el-option>
+        <el-select
+          v-model="form.type"
+          placeholder="请选择服务器类型"
+          disabled
+          style="width: 100%"
+          clearable
+        >
+          <el-option
+            :label="item.name"
+            :value="item.value"
+            v-for="item in typeOptions"
+            :key="item.value"
+          ></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="服务器地址" prop="minioUrl" required clearable>
@@ -28,7 +39,7 @@ import { setMediaConfig, getMediaConfig } from '@/api/server'
 export default {
   name: 'server',
 
-  data () {
+  data() {
     return {
       loading: false,
       typeOptions: serverType,
@@ -43,14 +54,14 @@ export default {
     }
   },
 
-  async mounted () {
+  async mounted() {
     this.loading = true
     await this.getConfig()
     this.loading = false
   },
 
   methods: {
-    submitForm () {
+    submitForm() {
       this.$refs.form.validate(async valid => {
         if (valid) {
           this.loading = true
@@ -63,7 +74,7 @@ export default {
       })
     },
 
-    getConfig () {
+    getConfig() {
       return getMediaConfig()
         .then(res => {
           this.info = res.config
@@ -74,9 +85,9 @@ export default {
         .catch(e => console.log(e))
     },
 
-    setConfig () {
+    setConfig() {
       return setMediaConfig(this.form)
-        .then(res => {
+        .then(() => {
           this.$message({ message: '修改成功', type: 'success' })
         })
         .catch(e => console.log(e))
@@ -86,15 +97,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.server{
+.server {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.form{
+.form {
   width: 500px;
 }
-.btn{
+.btn {
   width: 100%;
 }
 </style>

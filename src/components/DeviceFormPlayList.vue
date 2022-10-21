@@ -12,10 +12,10 @@
       <span class="scenes-img" :class="[type, scenes]"></span>
       <div class="scenes-info">
         <div class="scenes-info-top">
-          <h3 class="scenes-info_title ellipsis-1">{{title}}</h3>
+          <h3 class="scenes-info_title ellipsis-1">{{ title }}</h3>
           <el-switch
             v-if="hasSwitch"
-            :disabled='disabled'
+            :disabled="disabled"
             v-model="lightColor"
             :active-value="1"
             :inactive-value="0"
@@ -27,37 +27,34 @@
           >
           </el-switch>
         </div>
-        <p class="scenes-info_des ellipsis-2">{{des}}</p>
+        <p class="scenes-info_des ellipsis-2">{{ des }}</p>
       </div>
     </div>
     <div class="play-list-content clear">
-      <draggable v-model="scenesList"
+      <draggable
+        v-model="scenesList"
         ref="draggable"
         chosenClass="chosen"
         forceFallback
         :disabled="disabled"
         :group="type"
-        :touchStartThreshold='0'
-        @end='end'
+        :touchStartThreshold="0"
+        @end="end"
       >
-      <transition-group name="cell" tag="div">
-        <card-play-list
-          v-for="item in scenesList"
-          :key='item.mediaOrder'
-          :info='item'
-          :length.sync='item.mediaTime'
-          :disabled="disabled"
-          @deleteMedia='deleteMedia'
-          @move='move'
-          @setLength='setLength'
-        ></card-play-list>
-      </transition-group>
+        <transition-group name="cell" tag="div">
+          <card-play-list
+            v-for="item in scenesList"
+            :key="item.mediaOrder"
+            :info="item"
+            :length.sync="item.mediaTime"
+            :disabled="disabled"
+            @deleteMedia="deleteMedia"
+            @move="move"
+            @setLength="setLength"
+          ></card-play-list>
+        </transition-group>
       </draggable>
-      <card-play-list
-        isAdd
-        :disabled="disabled"
-        @add='addPlaylist'
-      ></card-play-list>
+      <card-play-list isAdd :disabled="disabled" @add="addPlaylist"></card-play-list>
     </div>
   </div>
 </template>
@@ -99,7 +96,7 @@ export default {
     scenes: {
       type: String,
       default: '',
-      validator: (val) => {
+      validator: val => {
         return !!playlistType[val]
       }
     },
@@ -110,30 +107,30 @@ export default {
   },
 
   computed: {
-    title () {
+    title() {
       return playlistType[this.scenes].find(item => item.type === this.type).title
     },
-    des () {
+    des() {
       return playlistType[this.scenes].find(item => item.type === this.type).des
     },
-    length () {
+    length() {
       return this.scenesList.length
     },
     lightColor: {
-      get () {
+      get() {
         if (this.playlist.length > 0 && this.index !== undefined) {
           return this.playlist[this.index] ? this.playlist[this.index].color : 0
         } else {
           return 0
         }
       },
-      set (val) {
+      set(val) {
         this.playlist[this.index].color = val
       }
     }
   },
 
-  data () {
+  data() {
     return {
       visible: false,
       target: null,
@@ -142,39 +139,39 @@ export default {
   },
 
   methods: {
-    deleteMedia (info) {
+    deleteMedia(info) {
       this.$confirm('在播放列表中删除该媒体吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(() => {
-        const index = this.scenesList.findIndex(item => item.mediaOrder === info.mediaOrder)
-        if (index >= 0) {
-          this.scenesList.splice(index, 1)
-          this.updatePlaylist()
-        }
-      }).catch(() => {
-
       })
+        .then(() => {
+          const index = this.scenesList.findIndex(item => item.mediaOrder === info.mediaOrder)
+          if (index >= 0) {
+            this.scenesList.splice(index, 1)
+            this.updatePlaylist()
+          }
+        })
+        .catch(() => {})
     },
 
-    changeColor (e) {
+    changeColor(e) {
       this.$emit('changeColor', this.playlist, this.index, e)
     },
 
-    updateInfo () {
+    updateInfo() {
       this.$emit('updateInfo', this.info)
     },
 
-    addPlaylist () {
+    addPlaylist() {
       this.$emit('addPlaylist', this.index)
     },
 
-    async setLength (target, value) {
+    async setLength() {
       this.updatePlaylist()
     },
 
-    move (direction, target) {
+    move(direction, target) {
       const currentIndex = this.scenesList.findIndex(item => item.mediaOrder === target.mediaOrder)
       if (direction === 'right' && currentIndex < this.length - 1) {
         const nextItem = this.scenesList[currentIndex + 1]
@@ -187,18 +184,18 @@ export default {
       this.updatePlaylist()
     },
 
-    end () {
+    end() {
       this.updatePlaylist()
     },
 
-    updatePlaylist () {
+    updatePlaylist() {
       this.$emit('updatePlaylist', this.scenesList, this.index)
     }
   },
 
   watch: {
     playlist: {
-      handler: function (newVal, oldVal) {
+      handler: function(newVal) {
         try {
           this.scenesList = JSON.parse(newVal[this.index].content)
         } catch (e) {
@@ -213,12 +210,12 @@ export default {
 <style lang="scss" scoped>
 @import '~@/styles/handler.scss';
 @import '~@/styles/scenes.scss';
-.play-list{
+.play-list {
   border: 1px solid #cecece;
   border-radius: 10px;
   margin-bottom: 16px;
   background-color: #ffffff;
-  &-header{
+  &-header {
     height: 80px;
     width: 100%;
     border-bottom: 2px solid #dcdfe6;
@@ -226,45 +223,45 @@ export default {
     box-sizing: border-box;
     padding: 10px 10px 15px 10px;
   }
-  &-content{
+  &-content {
     width: 100%;
     box-sizing: border-box;
   }
 }
 
-.scenes{
+.scenes {
   font-size: 13px;
   display: flex;
-  &-img{
+  &-img {
     display: inline-block;
     width: 55px;
     height: 55px;
     background-size: 190px;
     background-repeat: no-repeat;
   }
-  &-info{
+  &-info {
     flex: 1;
     margin-left: 18px;
     font-size: 13px;
-    &_title{
+    &_title {
       flex: 1;
       line-height: 30px;
       color: #4e4e4f;
     }
-    &_des{
+    &_des {
       line-height: 18px;
       color: #878788;
       font-size: 12px;
     }
   }
 }
-.chosen{
+.chosen {
   @include border-color('danger');
 }
 .cell-move {
   transition: transform 1s;
 }
-.scenes-info-top{
+.scenes-info-top {
   display: flex;
   align-items: center;
 }

@@ -3,12 +3,16 @@
     <span
       class="tagView-item"
       v-for="tag in visitedViews"
-      :key='tag.path'
+      :key="tag.path"
       :class="isActive(tag) ? 'active' : ''"
       @click="to(tag)"
     >
-      {{tag.title}}
-      <i v-show="isNotIndex(tag)" class="iconfont icon-error icon" @click.self.stop="delTag(tag)"></i>
+      {{ tag.title }}
+      <i
+        v-show="isNotIndex(tag)"
+        class="iconfont icon-error icon"
+        @click.self.stop="delTag(tag)"
+      ></i>
     </span>
   </div>
 </template>
@@ -23,20 +27,20 @@ export default {
   },
 
   methods: {
-    isNotIndex (tag) {
+    isNotIndex(tag) {
       return tag.path !== '/device/deviceList'
     },
 
-    isActive (route) {
+    isActive(route) {
       return route.path === this.$route.path
     },
 
-    to (tag) {
+    to(tag) {
       if (this.$route.path === tag.path) return
       this.$router.push({ path: tag.path, query: tag.query })
     },
 
-    delTag (route) {
+    delTag(route) {
       this.$store.dispatch('delViews', route)
       const tag = this.visitedViews[this.visitedViews.length - 1]
       this.$router.push({ path: tag.path, query: tag.query })
@@ -45,7 +49,7 @@ export default {
 
   watch: {
     $route: {
-      handler: function (to, from) {
+      handler: function(to) {
         this.$store.dispatch('addViews', to)
       },
       immediate: true
@@ -56,7 +60,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@/styles/handler.scss';
-.tagView{
+.tagView {
   flex: 1;
   height: 100%;
   min-height: 35px;
@@ -67,13 +71,13 @@ export default {
   border-bottom: 1px solid #f0f0f0;
   box-sizing: border-box;
   padding: 0 5px;
-  &::-webkit-scrollbar-thumb{
+  &::-webkit-scrollbar-thumb {
     background-color: #d0d0d0;
   }
-  &::-webkit-scrollbar{
+  &::-webkit-scrollbar {
     height: 3px;
   }
-  &-item{
+  &-item {
     flex-shrink: 0;
     display: inline-block;
     position: relative;
@@ -89,17 +93,17 @@ export default {
     padding-right: 20px;
   }
 }
-.icon{
+.icon {
   position: absolute;
   right: 0;
   top: 0;
   z-index: 1;
 }
-.active{
+.active {
   @include bg-color('success');
   color: #ffffff;
-  &::before{
-    content: "";
+  &::before {
+    content: '';
     background: #fff;
     display: inline-block;
     width: 8px;

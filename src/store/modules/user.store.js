@@ -35,7 +35,7 @@ export default {
       })
     },
 
-    loginActions ({ commit }, params) {
+    loginActions (state, params) {
       return new Promise((resolve, reject) => {
         login(params)
           .then(res => {
@@ -46,7 +46,7 @@ export default {
       })
     },
 
-    loginCodeActions ({ commit }, params) {
+    loginCodeActions (state, params) {
       return new Promise((resolve, reject) => {
         smsLogin(params)
           .then(res => {

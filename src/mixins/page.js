@@ -18,8 +18,7 @@ export default {
     noMore: {
       get () {
         return !this.isInit && this.pageList.length >= this.pageTotal
-      },
-      set (val) {}
+      }
     },
     scrollDisabled: {
       get () {

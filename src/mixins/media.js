@@ -45,10 +45,10 @@ export default {
       // -1：删除，0，审核中，-2，审核失败，1：正常；
       let obj = { name: '审核中', type: 'primary' }
       switch (state) {
-        case 0: obj = { name: '审核中', type: 'primary' }
-          break
-        case -2: obj = { name: '审核失败', type: 'warning' }
-          break
+      case 0: obj = { name: '审核中', type: 'primary' }
+        break
+      case -2: obj = { name: '审核失败', type: 'warning' }
+        break
       }
       return obj
     },
