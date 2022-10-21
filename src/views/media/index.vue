@@ -16,7 +16,7 @@
           action=""
           ref="upload"
           class="avatar-uploader"
-          accept="image/bmp, image/jpeg, image/gif"
+          :accept="accept"
           :auto-upload="false"
           :show-file-list="false"
           :before-upload="beforeUpload"
@@ -67,6 +67,7 @@ export default {
 
   data() {
     return {
+      accept: 'image/bmp, image/jpeg, image/gif',
       window: window,
       loading: false,
       dialogVisible: false,
