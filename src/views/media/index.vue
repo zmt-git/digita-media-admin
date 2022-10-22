@@ -122,41 +122,40 @@ export default {
 
     async uploadMedia() {
       this.loading = true
+      try {
+        await this.$store.dispatch('infoUserActions')
+        const reduce = (accumulator, currentValue) =>
+          accumulator + currentValue.raw.size / 1024 / 1024
+        const size = this.filelist.reduce(reduce, 0)
+        // 判断空间是否溢满
+        if (this.user.storageTotal < this.user.storageUsed + size) {
+          this.$message({ type: 'warning', message: '云空间不足，请删除不需要的媒体' })
+        }
+        const promiseMedia = []
+        const promiseInfo = []
 
-      await this.$store.dispatch('infoUserActions')
-      const reduce = (accumulator, currentValue) =>
-        accumulator + currentValue.raw.size / 1024 / 1024
-      const size = this.filelist.reduce(reduce, 0)
-      // 判断空间是否溢满
-      if (this.user.storageTotal < this.user.storageUsed + size) {
-        this.$message({ type: 'warning', message: '云空间不足，请删除不需要的媒体' })
-      }
-      const promiseMedia = []
-      const promiseInfo = []
-
-      // 上传媒体至媒体服务器
-      this.filelist.forEach(file => {
-        const p = this.createMediaUploadPromise(file.raw)
-        promiseMedia.push(p)
-      })
-
-      await Promise.allSettled(promiseMedia)
-        .then(res => {
-          console.log(res)
-          res.forEach(item => {
-            const p = this.createMediaSavePromise(item.value)
-            promiseInfo.push(p)
-          })
+        // 上传媒体至媒体服务器
+        this.filelist.forEach(file => {
+          const p = this.createMediaUploadPromise(file.raw)
+          promiseMedia.push(p)
         })
-        .catch(e => console.log(e))
 
-      // 上传媒体信息
-      await Promise.allSettled(promiseInfo).catch(e => console.log(e))
+        const res = await Promise.allSettled(promiseMedia)
+        res.forEach(item => {
+          const p = this.createMediaSavePromise(item.value)
+          promiseInfo.push(p)
+        })
 
-      this.$refs.upload.clearFiles()
-      this.filelist = []
-      // 刷新列表
-      this.refresh()
+        // 上传媒体信息
+        await Promise.allSettled(promiseInfo)
+
+        this.$refs.upload.clearFiles()
+        this.filelist = []
+        // 刷新列表
+        this.refresh()
+      } catch (e) {
+        console.log(e)
+      }
 
       this.loading = false
     },
