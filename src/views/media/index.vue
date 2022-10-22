@@ -107,7 +107,7 @@ export default {
         return type.type === file.type
       })
       if (!res) {
-        this.$message({ type: 'warning', message: '媒体格式只能是PNG和JPG' })
+        this.$message({ type: 'warning', message: '媒体格式只能是BMP、JPG和GIF' })
       }
       return res
     },

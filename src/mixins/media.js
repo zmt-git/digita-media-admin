@@ -38,7 +38,7 @@ export default {
       try {
         return this.info.name.split('.').pop().toUpperCase()
       } catch (e) {
-        return 'PNG'
+        return '--'
       }
     },
     getState (state) {
