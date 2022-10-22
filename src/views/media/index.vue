@@ -130,7 +130,9 @@ export default {
         // 判断空间是否溢满
         if (this.user.storageTotal < this.user.storageUsed + size) {
           this.$message({ type: 'warning', message: '云空间不足，请删除不需要的媒体' })
+          return
         }
+
         const promiseMedia = []
         const promiseInfo = []
 
@@ -141,6 +143,7 @@ export default {
         })
 
         const res = await Promise.allSettled(promiseMedia)
+
         res.forEach(item => {
           const p = this.createMediaSavePromise(item.value)
           promiseInfo.push(p)
