@@ -6,3 +6,17 @@ export function getVideoDuration (file, cb) {
     video.remove()
   })
 }
+
+export function getImageInfo (file) {
+  const reader = new FileReader()
+
+  reader.readAsDataURL(file)
+
+  reader.onload = function ()  {
+    const img = new Image()
+
+    img.src = this.result
+    
+    console.log(img.width, img.height)
+  }
+}
