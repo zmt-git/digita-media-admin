@@ -57,9 +57,10 @@ export const tradeType = Object.freeze([
 // 上传媒体类型 -------------------------------------------------------------------------------------------
 export const mediaType = Object.freeze([
   // { type: 'video/mp4', mediaType: 0 },
-  { type: 'image/gif', mediaType: 3 },
+  { type: 'image/jpeg', mediaType: 1 },
   { type: 'image/bmp', mediaType: 2 },
-  { type: 'image/jpeg', mediaType: 1 }
+  { type: 'image/png', mediaType: 3 },
+  // { type: 'image/png', mediaType: 4 },
 ])
 
 // 建议类型 -------------------------------------------------------------------------------------------
@@ -140,6 +141,14 @@ export const orient = Object.freeze([
 export const powerOptions = Object.freeze([
   { value: 0, label: '电网市电' },
   { value: 1, label: '太阳能蓄电池' }
+])
+
+// 设备投影方向 -------------------------------------------------------------------------------------------
+export const orientProjection = Object.freeze([
+  { value: 1, label: '正向' },
+  { value: 2, label: '右转' },
+  { value: 3, label: '反向' },
+  { value: 4, label: '左转' }
 ])
 
 // 切换场景 -------------------------------------------------------------------------------------------

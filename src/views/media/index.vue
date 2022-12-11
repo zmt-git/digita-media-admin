@@ -49,7 +49,7 @@ import CardMedia from '@/components/CardMedia.vue'
 import BasePageLoading from '@/components/BasePageLoading.vue'
 // import MediaDeleteDialog from '@/components/MediaDeleteDialog.vue'
 import { mediaType } from '@/data/common'
-// import { getVideoDuration } from '@/utils/tools'
+import { getImageInfo } from '@/utils/tools'
 import page from '@/mixins/page'
 import media from '@/mixins/media'
 import { mapGetters } from 'vuex'
@@ -67,7 +67,7 @@ export default {
 
   data() {
     return {
-      accept: 'image/bmp, image/jpeg, image/gif',
+      accept: 'image/bmp, image/jpeg, image/png',
       window: window,
       loading: false,
       dialogVisible: false,
@@ -107,7 +107,7 @@ export default {
         return type.type === file.type
       })
       if (!res) {
-        this.$message({ type: 'warning', message: '媒体格式只能是BMP、JPG和GIF' })
+        this.$message({ type: 'warning', message: '媒体格式只能是BMP、JPG和PNG' })
       }
       return res
     },
@@ -144,10 +144,10 @@ export default {
 
         const res = await Promise.allSettled(promiseMedia)
 
-        res.forEach(item => {
-          const p = this.createMediaSavePromise(item.value)
+        for (let i = 0; i < res.length; i++) {
+          const p = await this.createMediaSavePromise(res[i].value)
           promiseInfo.push(p)
-        })
+        }
 
         // 上传媒体信息
         await Promise.allSettled(promiseInfo)
@@ -172,21 +172,24 @@ export default {
       return this.uploadMediaFile(formData, file)
     },
 
-    createMediaSavePromise(res) {
-      const mediaForm = this.getSaveParams(res, res.file)
+    async createMediaSavePromise(res) {
+      const mediaForm = await this.getSaveParams(res, res.file)
       return this.saveMediaRequest(res.file, mediaForm)
     },
 
     // 获取媒体文件请求参数
-    getSaveParams(res, file) {
+    async getSaveParams(res, file) {
       const mediaForm = {}
       const type = file.type.split('/').pop()
       const name = (this.user.mobile || 'unknown') + '/' + new Date().getTime() + '.' + type
+      const obj = await getImageInfo(file)
       mediaForm.name = name
       mediaForm.size = file.size / 1024
       mediaForm.mediaType = mediaType.find(item => item.type === file.type).mediaType
       mediaForm.address = res.url
       mediaForm.length = 10
+      mediaForm.width = obj.width
+      mediaForm.height = obj.height
       return mediaForm
     },
 

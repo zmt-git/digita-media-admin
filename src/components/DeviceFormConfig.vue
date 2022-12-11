@@ -1,6 +1,22 @@
 <template>
   <div class="device-form-config">
-    <el-form :model="ruleForm" status-icon ref="ruleForm" label-width="70px" class="demo-ruleForm">
+    <el-form :model="ruleForm" status-icon ref="ruleForm" label-width="70px" class="ruleForm">
+      <el-form-item label="投影方向" prop="stateOrient">
+        <el-select
+          v-model="ruleForm.stateOrient"
+          placeholder="请选择设备投影方向"
+          @change="setOrient"
+          style="width: 100%"
+        >
+          <el-option
+            v-for="item in orientOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item label="光源控制" prop="lightControl" style="text-align: right;">
         <el-switch
           :disabled="disabled"
@@ -17,7 +33,7 @@
       </el-form-item>
       <el-form-item label="光源开关" prop="lightBrightness" style="text-align: right;">
         <el-switch
-          :disabled="disabled || disbledLigthSwitch"
+          :disabled="disabled || disabledLightSwitch"
           active-text="ON"
           inactive-text="OFF"
           :active-value="true"
@@ -67,6 +83,7 @@
 
 <script>
 import { lightDevice } from '@/api/device'
+import { orientProjection } from '@/data/common'
 import prompt from '@/mixins/prompt'
 export default {
   name: 'device-form-config',
@@ -95,8 +112,18 @@ export default {
     disabledTime() {
       return this.ruleForm.lightControl === 1
     },
-    disbledLigthSwitch() {
+    disabledLightSwitch() {
       return this.ruleForm.lightControl === 0
+    },
+    getType() {
+      return this.info.type ? this.info.type.split('-').shift() : ''
+    },
+    orientOptions() {
+      if (this.getType === 'TB') return this.getTBorient
+      return orientProjection
+    },
+    getTBorient() {
+      return orientProjection.filter(item => item.value === 1 || item.value === 3)
     }
   },
 
@@ -104,6 +131,7 @@ export default {
     return {
       lightSwitch: false,
       ruleForm: {
+        stateOrient: 1,
         timeClose: '00:00',
         timeOpen: '00:00',
         lightControl: 0,
@@ -115,7 +143,7 @@ export default {
     }
   },
   methods: {
-    assginFormData(obj) {
+    assignFormData(obj) {
       Object.keys(this.ruleForm).forEach(key => {
         this.ruleForm[key] = obj[key] !== undefined ? obj[key] : this.ruleForm[key]
       })
@@ -156,6 +184,12 @@ export default {
       this.$emit('updateInfo')
     },
 
+    async setOrient() {
+      this.$emit('update:loading', true)
+      await this.setLight()
+      this.$emit('updateInfo')
+    },
+
     setLight() {
       return lightDevice(this.id, {
         devid: this.info.id,
@@ -171,8 +205,10 @@ export default {
   watch: {
     info: {
       handler: function(n) {
-        this.assginFormData(n)
-        this.ruleForm.lightBrightness > 0 ? (this.lightSwitch = true) : (this.lightSwitch = false)
+        if (n) {
+          this.assignFormData(n)
+          this.ruleForm.lightBrightness > 0 ? (this.lightSwitch = true) : (this.lightSwitch = false)
+        }
       },
       immediate: true
     }
@@ -180,6 +216,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.ruleForm {
+  padding-top: 10px;
+}
 .device-form-config {
   /deep/ .el-form-item {
     margin-bottom: 10px;
