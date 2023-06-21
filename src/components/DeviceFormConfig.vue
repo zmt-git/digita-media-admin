@@ -3,6 +3,7 @@
     <el-form :model="ruleForm" status-icon ref="ruleForm" label-width="70px" class="ruleForm">
       <el-form-item label="投影方向" prop="stateOrient">
         <el-select
+          :disabled="disabled"
           v-model="ruleForm.stateOrient"
           placeholder="请选择设备投影方向"
           @change="setOrient"
@@ -82,7 +83,7 @@
 </template>
 
 <script>
-import { lightDevice } from '@/api/device'
+import { lightDevice, directionDevice } from '@/api/device'
 import { orientProjection } from '@/data/common'
 import prompt from '@/mixins/prompt'
 export default {
@@ -186,8 +187,20 @@ export default {
 
     async setOrient() {
       this.$emit('update:loading', true)
-      await this.setLight()
+      await this.setOrientReq()
       this.$emit('updateInfo')
+    },
+
+    setOrientReq() {
+      return directionDevice(this.id, {
+        devid: this.info.id,
+        deviceCode: this.info.code,
+        stateOrient: this.ruleForm.stateOrient
+      })
+        .then(res => {
+          this.prompt(res.state)
+        })
+        .catch(e => console.log(e))
     },
 
     setLight() {
