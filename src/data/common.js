@@ -27,7 +27,8 @@ export const companyCodeReg = /[A-Z0-9]{8}-[A-Z0-9]$|[A-Z0-9]{8}-[A-Z0-9]-[0-9]{
 export const idCardReg = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
 
 // 任务状态 -------------------------------------------------------------------------------------------
-export const jobState = Object.freeze([ // 1成功，0等待执行，-1失败，-2执行中，-3执行超时
+export const jobState = Object.freeze([
+  // 1成功，0等待执行，-1失败，-2执行中，-3执行超时
   { type: 'success', name: '成功', state: 1 },
   { type: 'primary', name: '等待', state: 0 },
   { type: 'error', name: '失败', state: -1 },
@@ -59,15 +60,23 @@ export const mediaType = Object.freeze([
   // { type: 'video/mp4', mediaType: 0 },
   { type: 'image/jpeg', mediaType: 1 },
   { type: 'image/bmp', mediaType: 2 },
-  { type: 'image/png', mediaType: 3 },
+  { type: 'image/png', mediaType: 3 }
   // { type: 'image/png', mediaType: 4 },
 ])
 
 // 建议类型 -------------------------------------------------------------------------------------------
 export const SuggestType = Object.freeze([
   { value: 1, title: '产品建议', des: '请输入您对XX智能产品在XX场景下的改进建议或体验类问题' },
-  { value: 2, title: '功能缺陷', des: '请输入您在使用智能产品过程中遇到的阻断或影响正常使用的缺陷类问题' },
-  { value: 3, title: '软件BUG', des: '请输入您在使用软件平台或APP过程中遇到的无法正常显示或无法正常控制智能产品等问题' },
+  {
+    value: 2,
+    title: '功能缺陷',
+    des: '请输入您在使用智能产品过程中遇到的阻断或影响正常使用的缺陷类问题'
+  },
+  {
+    value: 3,
+    title: '软件BUG',
+    des: '请输入您在使用软件平台或APP过程中遇到的无法正常显示或无法正常控制智能产品等问题'
+  },
   { value: 4, title: '其他', des: '请输入使用智能产品过程中的咨询类问题，如账号、云空间等相关问题' }
 ])
 
@@ -146,9 +155,9 @@ export const powerOptions = Object.freeze([
 // 设备投影方向 -------------------------------------------------------------------------------------------
 export const orientProjection = Object.freeze([
   { value: 1, label: '正向' },
-  { value: 2, label: '右转' },
+  { value: 2, label: '左转' },
   { value: 3, label: '反向' },
-  { value: 4, label: '左转' }
+  { value: 4, label: '右转' }
 ])
 
 // 切换场景 -------------------------------------------------------------------------------------------
@@ -175,9 +184,7 @@ const c = [
   { label: '绿灯', value: 1 }
 ]
 export const scenesOptions = Object.freeze({
-  'ELF-A': [
-    { value: 0, label: '默认场景' }
-  ],
+  'ELF-A': [{ value: 0, label: '默认场景' }],
   'TA-W': w,
   'TA-RG': w,
   'TA-RG-S': s,
