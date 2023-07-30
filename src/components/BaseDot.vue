@@ -1,7 +1,6 @@
 <template>
-  <span class="base-dot" :title='title'>
-    <span v-show="ripple" class="base-dot_status outer_status" :class="borderClass">
-    </span>
+  <span class="base-dot" :title="title">
+    <span v-show="ripple" class="base-dot_status outer_status" :class="borderClass"> </span>
     <span class="base-dot_status" :class="bgClass"></span>
   </span>
 </template>
@@ -33,7 +32,7 @@ export default {
 <style lang="scss" scoped>
 @import '~@/styles/handler.scss';
 $size: 14px;
-.base-dot{
+.base-dot {
   display: inline-block;
   width: $size;
   height: $size;
@@ -45,50 +44,72 @@ $size: 14px;
     height: $size;
     border-radius: 50%;
     position: absolute;
-    top: 0px;
+    top: -1px;
     right: 0px;
     border: 1px solid transparent;
   }
 }
-.outer_status{
+.outer_status {
   border: 1px solid transparent;
   background-color: transparent;
 }
-.online-bg{
-  @include bg-color('success')
+.online-bg {
+  @include bg-color('success');
 }
 
-.online{
+.online {
   @include border-color('success');
   animation: zoom 1s infinite;
 }
 
-.standby{
-  @include bg-color('warning')
+.standby {
+  @include bg-color('warning');
 }
 
-.standby-bg{
-  @include bg-color('warning')
+.standby-bg {
+  @include bg-color('warning');
 }
 
-.offline-bg{
-  @include bg-color('info')
+.offline-bg {
+  @include bg-color('info');
 }
-.offline{
+.offline {
   @include border-color('info');
   border: 1px solid;
 }
 @keyframes zoom {
-  0% { transform: scale(1); }
-  10% { transform: scale(1.1); }
-  20% { transform: scale(1.2); }
-  30% { transform: scale(1.3); }
-  40% { transform: scale(1.4); }
-  50% { transform: scale(1.5); }
-  60% { transform: scale(1.4); }
-  70% { transform: scale(1.3); }
-  80% { transform: scale(1.2); }
-  90% { transform: scale(1.1); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(1.1);
+  }
+  20% {
+    transform: scale(1.2);
+  }
+  30% {
+    transform: scale(1.3);
+  }
+  40% {
+    transform: scale(1.4);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  60% {
+    transform: scale(1.4);
+  }
+  70% {
+    transform: scale(1.3);
+  }
+  80% {
+    transform: scale(1.2);
+  }
+  90% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>

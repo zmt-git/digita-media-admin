@@ -101,15 +101,15 @@ const scenesTwo = {
 }
 const scenesThree = scenesTwo
 
-const scenesFour = {
-  weatherScenes: [
-    { type: 'sunny', index: 0 },
-    { type: 'fog', index: 1 },
-    { type: 'rain', index: 2 },
-    { type: 'rain-snow', index: 3 },
-    { type: 'freeze', index: 4 }
-  ]
-}
+// const scenesFour = {
+//   weatherScenes: [
+//     { type: 'sunny', index: 0 },
+//     { type: 'fog', index: 1 },
+//     { type: 'rain', index: 2 },
+//     { type: 'rain-snow', index: 3 },
+//     { type: 'freeze', index: 4 }
+//   ]
+// }
 const scenesFive = {
   lightScenes: [
     { type: 'red', index: 0 },
@@ -120,17 +120,19 @@ const scenesFive = {
 // 设备类型-------------------------------------------------------------------------------------------
 export const deviceType = Object.freeze([
   // ELF-A
-  { value: 'ELF-A', label: 'ELF-A', scenes: scenesOne, hasSwitch: false },
+  { value: 'XA', label: 'XA', scenes: scenesOne, hasSwitch: false },
   // TA
-  { value: 'TA-W', label: 'TA-W', scenes: scenesTwo, hasSwitch: false },
-  { value: 'TA-RG', label: 'TA-RG', scenes: scenesThree, hasSwitch: true },
-  { value: 'TA-RG-S', label: 'TA-RG-S', scenes: scenesFour, hasSwitch: true },
-  { value: 'TA-RG-C', label: 'TA-RG-C', scenes: scenesFive, hasSwitch: false },
+  { value: 'TA', label: 'TA', scenes: scenesThree, hasSwitch: true },
+  { value: 'TA-C', label: 'TA-C', scenes: scenesFive, hasSwitch: false },
+  { value: 'TA-R', label: 'TA-R', scenes: scenesFive, hasSwitch: false },
   // TB
-  { value: 'TB-W', label: 'TB-W', scenes: scenesTwo, hasSwitch: false },
-  { value: 'TB-RG', label: 'TB-RG', scenes: scenesThree, hasSwitch: true },
-  { value: 'TB-RG-S', label: 'TB-RG-S', scenes: scenesFour, hasSwitch: true },
-  { value: 'TB-RG-C', label: 'TB-RG-C', scenes: scenesFive, hasSwitch: false }
+  { value: 'TB', label: 'TB', scenes: scenesThree, hasSwitch: true },
+  { value: 'TB-C', label: 'TB-C', scenes: scenesFive, hasSwitch: false },
+  { value: 'TB-R', label: 'TB-R', scenes: scenesFive, hasSwitch: false },
+  // TC
+  { value: 'TC', label: 'TC', scenes: scenesThree, hasSwitch: true },
+  { value: 'TC-C', label: 'TC-C', scenes: scenesFive, hasSwitch: false },
+  { value: 'TC-R', label: 'TC-R', scenes: scenesFive, hasSwitch: false }
 ])
 
 // 设备播放方向 -------------------------------------------------------------------------------------------
@@ -158,6 +160,19 @@ export const orientProjection = Object.freeze([
   { value: 2, label: '左转' },
   { value: 3, label: '反向' },
   { value: 4, label: '右转' }
+])
+
+// 投影雷达联动 警灯雷达联动 -------------------------------------------------------------------------------------------
+export const linkOptions = Object.freeze([
+  { value: 0, label: '联动关闭' },
+  { value: 1, label: '与本机雷达联动' },
+  { value: 2, label: '与远程雷达联动' }
+])
+
+// 投影雷达联动模式 -------------------------------------------------------------------------------------------
+export const LinkModeOptions = Object.freeze([
+  { value: 0, label: '模式 1', content: '模式 1：有车播放列表 1 / 无车播放列表 2' },
+  { value: 1, label: '模式 2', content: '模式 2：有车播放列表 1 / 无车关闭投影' }
 ])
 
 // 切换场景 -------------------------------------------------------------------------------------------

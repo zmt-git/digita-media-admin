@@ -18,6 +18,14 @@
           :disabled="disabled"
         ></device-form-config>
       </div>
+      <div class="device-detail-info-control" v-if="isR">
+        <device-form-radar
+          :info="info"
+          @updateInfo="updateInfo"
+          :loading.sync="loading"
+          :disabled="disabled"
+        ></device-form-radar>
+      </div>
       <div class="device-detail-info-control">
         <device-form-scenes
           :info="info"
@@ -79,6 +87,7 @@
 // import BaseTitle from '@/components/BaseTitle'
 import DeviceFormPlayList from '@/components/DeviceFormPlayList'
 import DeviceFormConfig from '@/components/DeviceFormConfig.vue'
+import DeviceFormRadar from '@/components/DeviceFormRadar.vue'
 import DeviceFormScenes from '@/components/DeviceFormScenes.vue'
 import DeviceFormSystem from '@/components/DeviceFormSystem.vue'
 import DeviceState from '@/components/DeviceState.vue'
@@ -95,6 +104,7 @@ export default {
     /* BaseTitle, */ DeviceInfo,
     DeviceFormPlayList,
     DeviceFormConfig,
+    DeviceFormRadar,
     DeviceFormSystem,
     DeviceState,
     DeviceFormScenes,
@@ -129,6 +139,9 @@ export default {
       } else {
         return ''
       }
+    },
+    isR() {
+      return ['TA-R', 'TB-R', 'TC-R'].includes(this.info.type)
     }
   },
 
@@ -328,7 +341,7 @@ export default {
 .device-detail {
   display: flex;
   &-info {
-    width: 300px;
+    width: 345px;
     flex-shrink: 0;
     flex-grow: 0;
     height: 100%;

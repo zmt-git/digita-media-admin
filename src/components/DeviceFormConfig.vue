@@ -18,13 +18,13 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="光源控制" prop="lightControl" style="text-align: right;">
+      <el-form-item label="投影控制" prop="lightControl" style="text-align: right;">
         <el-switch
           :disabled="disabled"
-          active-text="手动控制"
-          inactive-text="时间控制"
-          :active-value="1"
-          :inactive-value="0"
+          inactive-text="手动"
+          active-text="时间控制"
+          :active-value="0"
+          :inactive-value="1"
           v-model="ruleForm.lightControl"
           @change="modelLight"
           active-color="#13ce66"
@@ -32,11 +32,16 @@
         >
         </el-switch>
       </el-form-item>
-      <el-form-item label="光源开关" prop="lightBrightness" style="text-align: right;">
+      <el-form-item
+        v-if="!disabledLightSwitch"
+        label="投影开关"
+        prop="lightBrightness"
+        style="text-align: right;"
+      >
         <el-switch
-          :disabled="disabled || disabledLightSwitch"
-          active-text="ON"
-          inactive-text="OFF"
+          :disabled="disabled"
+          active-text="开启"
+          inactive-text="关闭"
           :active-value="true"
           :inactive-value="false"
           v-model="lightSwitch"
@@ -46,28 +51,30 @@
         >
         </el-switch>
       </el-form-item>
-      <el-form-item label="休眠时间" prop="timeClose">
-        <el-time-picker
-          v-model="ruleForm.timeClose"
-          @change="setTimeClose"
-          placeholder="请选择休眠时间"
-          format="HH:mm"
-          value-format="HH:mm"
-          :style="style"
-          :disabled="disabled || disabledTime"
-        ></el-time-picker>
-      </el-form-item>
-      <el-form-item label="唤醒时间" prop="timeOpen">
-        <el-time-picker
-          v-model="ruleForm.timeOpen"
-          @change="setTimeOpen"
-          placeholder="请选择唤醒时间"
-          format="HH:mm"
-          value-format="HH:mm"
-          :style="style"
-          :disabled="disabled || disabledTime"
-        ></el-time-picker>
-      </el-form-item>
+      <template v-if="!disabledTime">
+        <el-form-item label="休眠时间" prop="timeClose">
+          <el-time-picker
+            v-model="ruleForm.timeClose"
+            @change="setTimeClose"
+            placeholder="请选择休眠时间"
+            format="HH:mm"
+            value-format="HH:mm"
+            :style="style"
+            :disabled="disabled || disabledTime"
+          ></el-time-picker>
+        </el-form-item>
+        <el-form-item label="唤醒时间" prop="timeOpen">
+          <el-time-picker
+            v-model="ruleForm.timeOpen"
+            @change="setTimeOpen"
+            placeholder="请选择唤醒时间"
+            format="HH:mm"
+            value-format="HH:mm"
+            :style="style"
+            :disabled="disabled || disabledTime"
+          ></el-time-picker>
+        </el-form-item>
+      </template>
       <!-- <el-form-item label="媒体音量" prop="stateVolume">
         <el-slider
           :disabled='disabled'
@@ -78,12 +85,42 @@
           show-stops>
         </el-slider>
       </el-form-item> -->
+      <template v-if="isR">
+        <el-form-item label="警灯开关" prop="lamp" style="text-align: right;">
+          <el-switch
+            :disabled="disabled"
+            active-text="开启"
+            inactive-text="关闭"
+            :active-value="1"
+            :inactive-value="0"
+            v-model="ruleForm.lamp"
+            @change="switchLamp"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+          >
+          </el-switch>
+        </el-form-item>
+        <el-form-item label="雷达开关" prop="radar" style="text-align: right;">
+          <el-switch
+            :disabled="disabled"
+            active-text="开启"
+            inactive-text="关闭"
+            :active-value="1"
+            :inactive-value="0"
+            v-model="ruleForm.radar"
+            @change="switchRadar"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+          >
+          </el-switch>
+        </el-form-item>
+      </template>
     </el-form>
   </div>
 </template>
 
 <script>
-import { lightDevice, directionDevice } from '@/api/device'
+import { lightDevice, directionDevice, lampDevice, radarDevice } from '@/api/device'
 import { orientProjection } from '@/data/common'
 import prompt from '@/mixins/prompt'
 export default {
@@ -109,6 +146,9 @@ export default {
   computed: {
     id() {
       return this.info.id ? this.info.id : undefined
+    },
+    isR() {
+      return ['TA-R', 'TB-R', 'TC-R'].includes(this.info.type)
     },
     disabledTime() {
       return this.ruleForm.lightControl === 1
@@ -136,7 +176,9 @@ export default {
         timeClose: '00:00',
         timeOpen: '00:00',
         lightControl: 0,
-        lightBrightness: 1
+        lightBrightness: 1,
+        lamp: 0,
+        radar: 0
       },
       style: {
         width: '100%'
@@ -191,6 +233,18 @@ export default {
       this.$emit('updateInfo')
     },
 
+    async switchLamp() {
+      this.$emit('update:loading', true)
+      await this.setLamp()
+      this.$emit('updateInfo')
+    },
+
+    async switchRadar() {
+      this.$emit('update:loading', true)
+      await this.setRadar()
+      this.$emit('updateInfo')
+    },
+
     setOrientReq() {
       return directionDevice(this.id, {
         devid: this.info.id,
@@ -208,6 +262,28 @@ export default {
         devid: this.info.id,
         deviceCode: this.info.code,
         ...this.ruleForm
+      })
+        .then(res => {
+          this.prompt(res.state)
+        })
+        .catch(e => console.log(e))
+    },
+    setLamp() {
+      return lampDevice(this.id, {
+        devid: this.info.id,
+        deviceCode: this.info.code,
+        lamp: this.ruleForm.lamp
+      })
+        .then(res => {
+          this.prompt(res.state)
+        })
+        .catch(e => console.log(e))
+    },
+    setRadar() {
+      return radarDevice(this.id, {
+        devid: this.info.id,
+        deviceCode: this.info.code,
+        radar: this.ruleForm.radar
       })
         .then(res => {
           this.prompt(res.state)
