@@ -177,10 +177,6 @@ export default {
     },
 
     async onConfirm() {
-      if (!this.ruleForm.loraCode) {
-        this.$message.warning('远程雷达设备编号')
-        return
-      }
       this.$emit('update:loading', true)
       await this.changeLora()
       this.visible = false
