@@ -207,7 +207,17 @@ export const scenesOptions = Object.freeze({
   'TB-W': w,
   'TB-RG': w,
   'TB-RG-S': s,
-  'TB-RG-C': c
+  'TB-RG-C': c,
+  XA: [{ value: 0, label: '默认场景' }],
+  TA: w,
+  'TA-C': c,
+  'TA-R': c,
+  TB: w,
+  'TB-C': c,
+  'TB-R': '',
+  TC: w,
+  'TC-C': c,
+  'TC-R': c
 })
 
 // 天气场景-------------------------------------------------------------------------------------------
