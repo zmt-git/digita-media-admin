@@ -86,7 +86,7 @@
           style="width: 100%"
         >
           <el-option
-            v-for="item in linkLampOptions"
+            v-for="item in LinkModeOptions"
             :key="item.value"
             :label="item.label"
             :value="item.value"
@@ -114,7 +114,7 @@
 
 <script>
 import { loraDevice, linkLampDevice, linkLightDevice } from '@/api/device'
-import { linkOptions, linkModeOptions } from '@/data/common'
+import { linkOptions, LinkModeOptions } from '@/data/common'
 import { pick } from 'lodash'
 import prompt from '@/mixins/prompt'
 export default {
@@ -147,7 +147,7 @@ export default {
     return {
       visible: false,
       linkLampOptions: linkOptions,
-      linkModeOptions: linkModeOptions,
+      LinkModeOptions: LinkModeOptions,
       ruleForm: {
         lora: 0,
         loraMode: 0,
