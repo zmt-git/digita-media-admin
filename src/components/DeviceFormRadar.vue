@@ -184,19 +184,19 @@ export default {
 
     async changeLora() {
       this.$emit('update:loading', true)
-      this.setLora()
+      await this.setLora()
       this.$emit('updateInfo')
     },
 
     async changeLinkLamp() {
       this.$emit('update:loading', true)
-      this.setLinkLamp()
+      await this.setLinkLamp()
       this.$emit('updateInfo')
     },
 
     async changeLinkLight() {
       this.$emit('update:loading', true)
-      this.setLinkLight()
+      await this.setLinkLight()
       this.$emit('updateInfo')
     },
 
