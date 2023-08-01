@@ -116,6 +116,12 @@ const scenesFive = {
     { type: 'green', index: 1 }
   ]
 }
+const scenesSix = {
+  listScenes: [
+    { type: 'list1', index: 0 },
+    { type: 'list2', index: 1 }
+  ]
+}
 
 // 设备类型-------------------------------------------------------------------------------------------
 export const deviceType = Object.freeze([
@@ -124,15 +130,15 @@ export const deviceType = Object.freeze([
   // TA
   { value: 'TA', label: 'TA', scenes: scenesThree, hasSwitch: true },
   { value: 'TA-C', label: 'TA-C', scenes: scenesFive, hasSwitch: false },
-  { value: 'TA-R', label: 'TA-R', scenes: scenesFive, hasSwitch: false },
+  { value: 'TA-R', label: 'TA-R', scenes: scenesSix, hasSwitch: true },
   // TB
   { value: 'TB', label: 'TB', scenes: scenesThree, hasSwitch: true },
   { value: 'TB-C', label: 'TB-C', scenes: scenesFive, hasSwitch: false },
-  { value: 'TB-R', label: 'TB-R', scenes: scenesFive, hasSwitch: false },
+  { value: 'TB-R', label: 'TB-R', scenes: scenesSix, hasSwitch: true },
   // TC
   { value: 'TC', label: 'TC', scenes: scenesThree, hasSwitch: true },
   { value: 'TC-C', label: 'TC-C', scenes: scenesFive, hasSwitch: false },
-  { value: 'TC-R', label: 'TC-R', scenes: scenesFive, hasSwitch: false }
+  { value: 'TC-R', label: 'TC-R', scenes: scenesSix, hasSwitch: true }
 ])
 
 // 设备播放方向 -------------------------------------------------------------------------------------------
@@ -198,6 +204,10 @@ const c = [
   { label: '红灯', value: 0 },
   { label: '绿灯', value: 1 }
 ]
+const r = [
+  { label: '列表1', value: 0 },
+  { label: '列表2', value: 1 }
+]
 export const scenesOptions = Object.freeze({
   'ELF-A': [{ value: 0, label: '默认场景' }],
   'TA-W': w,
@@ -211,13 +221,13 @@ export const scenesOptions = Object.freeze({
   XA: [{ value: 0, label: '默认场景' }],
   TA: w,
   'TA-C': c,
-  'TA-R': c,
+  'TA-R': r,
   TB: w,
   'TB-C': c,
-  'TB-R': '',
+  'TB-R': r,
   TC: w,
   'TC-C': c,
-  'TC-R': c
+  'TC-R': r
 })
 
 // 天气场景-------------------------------------------------------------------------------------------
@@ -271,13 +281,19 @@ const lightScenes = Object.freeze([
   { type: 'red', title: '红灯', des: '适用于红色信号灯开启时' },
   { type: 'green', title: '绿灯', des: '适用于绿色信号灯开启时' }
 ])
+// 列表1列表2
+const listScenes = Object.freeze([
+  { type: 'list1', title: '列表1', des: '用户可根据需要自行配置' },
+  { type: 'list2', title: '列表2', des: '用户可根据需要自行配置' }
+])
 
 // 场景集合-------------------------------------------------------------------------------------------
 export const playlistType = Object.freeze({
   weatherScenes,
   roadScenes,
   customizeScenes,
-  lightScenes
+  lightScenes,
+  listScenes
 })
 
 // 媒体服务器类型-------------------------------------------------------------------------------------------

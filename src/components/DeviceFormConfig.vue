@@ -40,14 +40,14 @@
       >
         <el-switch
           :disabled="disabled"
-          active-text="开启"
-          inactive-text="关闭"
-          :active-value="true"
-          :inactive-value="false"
+          inactive-text="开启"
+          active-text="关闭"
+          :inactive-value="true"
+          :active-value="false"
           v-model="lightSwitch"
           @change="switchLight"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
+          inactive-color="#13ce66"
+          active-color="#ff4949"
         >
         </el-switch>
       </el-form-item>
@@ -89,28 +89,28 @@
         <el-form-item label="警灯开关" prop="lamp" style="text-align: right;">
           <el-switch
             :disabled="disabled"
-            active-text="开启"
-            inactive-text="关闭"
-            :active-value="1"
-            :inactive-value="0"
+            inactive-text="开启"
+            active-text="关闭"
+            :inactive-value="1"
+            :active-value="0"
             v-model="ruleForm.lamp"
             @change="switchLamp"
-            active-color="#13ce66"
-            inactive-color="#ff4949"
+            inactive-color="#13ce66"
+            active-color="#ff4949"
           >
           </el-switch>
         </el-form-item>
         <el-form-item label="雷达开关" prop="radar" style="text-align: right;">
           <el-switch
             :disabled="disabled"
-            active-text="开启"
-            inactive-text="关闭"
-            :active-value="1"
-            :inactive-value="0"
+            inactive-text="开启"
+            active-text="关闭"
+            :inactive-value="1"
+            :active-value="0"
             v-model="ruleForm.radar"
             @change="switchRadar"
-            active-color="#13ce66"
-            inactive-color="#ff4949"
+            inactive-color="#13ce66"
+            active-color="#ff4949"
           >
           </el-switch>
         </el-form-item>

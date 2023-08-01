@@ -1,98 +1,140 @@
 /*天气场景-----------------------------------------------------------------*/
-.weatherScenes{
+.weatherScenes {
   background-image: url('../assets/common/weatherScenes.jpg');
 }
-.sunny{
+
+.sunny {
   background-position: -7px -5px;
 }
-.cloudy{
+
+.cloudy {
   background-position: -67px -5px;
 }
-.shade{
+
+.shade {
   background-position: -127px -5px;
 }
-.rain{
+
+.rain {
   background-position: -7px -66px;
 }
-.thundershower{
+
+.thundershower {
   background-position: -67px -66px;
 }
-.thundershower-hail{
+
+.thundershower-hail {
   background-position: -127px -66px;
 }
-.rain-hail{
+
+.rain-hail {
   background-position: -7px -128px;
 }
-.freezing-rain{
+
+.freezing-rain {
   background-position: -67px -128px;
 }
-.snow{
+
+.snow {
   background-position: -127px -128px;
 }
-.rain-snow{
+
+.rain-snow {
   background-position: -7px -189px;
 }
-.fog{
+
+.fog {
   background-position: -67px -189px;
 }
-.heat{
+
+.heat {
   background-position: -127px -189px;
 }
-.cold{
+
+.cold {
   background-position: -7px -250px;
 }
-.gale{
+
+.gale {
   background-position: -67px -250px;
 }
-.hail{
+
+.hail {
   background-position: -127px -250px;
 }
-.sandstorm{
+
+.sandstorm {
   background-position: -7px -312px;
 }
-.haze{
+
+.haze {
   background-position: -67px -312px;
 }
-.smoke{
+
+.smoke {
   background-position: -127px -312px;
 }
-.unknown{
+
+.unknown {
   background-position: -7px -382px;
 }
-.freeze{
+
+.freeze {
   background-position: -67px -382px;
 }
 
 /*交通场景 -67px -70px-----------------------------------------------------------------*/
-.roadScenes{
+.roadScenes {
   background-image: url('../assets/common/roadScenes.jpg');
-  background-size: 390px!important;
+  background-size: 390px !important;
 }
-.trafficAccident{
+
+.trafficAccident {
   background-position: -335px -339px
 }
-.construction{
+
+.construction {
   background-position: -268px -407px
 }
+
 /*交通灯场景-----------------------------------------------------------------*/
-.lightScenes{
+.lightScenes {
   background-image: url('../assets/common/lightScenes.jpg');
-  background-size: 470px!important;
+  background-size: 470px !important;
 }
-.red{
-  background-position:-70px -0px;
+
+.red {
+  background-position: -70px -0px;
 }
-.green{
+
+.green {
   background-position: -0px -0px;
 }
+
 /*自定义场景-----------------------------------------------------------------*/
-.customizeScenes{
+.customizeScenes {
   background-image: url('../assets/common/customizeScenes.jpg');
-  background-size: 300px!important;
+  background-size: 300px !important;
 }
-.customize1{
-  background-position:-30px -189px;
+
+.customize1 {
+  background-position: -30px -189px;
 }
-.customize2{
+
+.customize2 {
+  background-position: -30px -189px;
+}
+
+/*自定义场景-----------------------------------------------------------------*/
+.listScenes {
+  background-image: url('../assets/common/customizeScenes.jpg');
+  background-size: 300px !important;
+}
+
+.list1 {
+  background-position: -30px -189px;
+}
+
+.list2 {
   background-position: -30px -189px;
 }

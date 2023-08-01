@@ -13,7 +13,12 @@
       <div class="scenes-info">
         <div class="scenes-info-top">
           <h3 class="scenes-info_title ellipsis-1">{{ title }}</h3>
-          <el-switch
+          <el-radio-group :disabled="disabled" v-model="lightColor" @change="changeColor">
+            <el-radio class="green" :label="1">绿色</el-radio>
+            <el-radio class="red" :label="0">红色</el-radio>
+            <el-radio class="yellow" :label="9">黄色</el-radio>
+          </el-radio-group>
+          <!-- <el-switch
             v-if="hasSwitch"
             :disabled="disabled"
             v-model="lightColor"
@@ -25,7 +30,7 @@
             inactive-text="红色"
             inactive-color="#ff4949"
           >
-          </el-switch>
+          </el-switch> -->
         </div>
         <p class="scenes-info_des ellipsis-2">{{ des }}</p>
       </div>
@@ -264,5 +269,32 @@ export default {
 .scenes-info-top {
   display: flex;
   align-items: center;
+}
+.green {
+  /deep/ .is-checked + .el-radio__label {
+    color: #67c23a;
+  }
+  /deep/ .is-checked .el-radio__inner {
+    background-color: #67c23a;
+    border-color: #67c23a;
+  }
+}
+.red {
+  /deep/ .is-checked + .el-radio__label {
+    color: #f56c6c;
+  }
+  /deep/ .is-checked .el-radio__inner {
+    background-color: #f56c6c;
+    border-color: #f56c6c;
+  }
+}
+.yellow {
+  /deep/ .is-checked + .el-radio__label {
+    color: #e6a23c;
+  }
+  /deep/ .is-checked .el-radio__inner {
+    background-color: #e6a23c;
+    border-color: #e6a23c;
+  }
 }
 </style>

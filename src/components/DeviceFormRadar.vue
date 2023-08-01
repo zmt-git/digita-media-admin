@@ -6,12 +6,12 @@
           :disabled="disabled"
           inactive-text="开启"
           active-text="关闭"
-          :active-value="1"
-          :inactive-value="0"
+          :inactive-value="1"
+          :active-value="0"
           v-model="ruleForm.lora"
           @change="changeLora"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
+          inactive-color="#13ce66"
+          active-color="#ff4949"
         >
         </el-switch>
       </el-form-item>
