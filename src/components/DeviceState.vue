@@ -10,22 +10,28 @@
   <ul class="device-state">
     <li class="device-state-item">
       <span class="device-state-item_name">在线状态</span>
-      <span class="device-state-item_value" :class="this.info.stateOnline ? 'success' : 'info'">{{stateOnline}}</span>
+      <span class="device-state-item_value" :class="this.info.stateOnline ? 'success' : 'info'">{{
+        stateOnline
+      }}</span>
     </li>
     <li class="device-state-item">
       <span class="device-state-item_name">工作状态</span>
-      <span class="device-state-item_value" :class="this.info.stateWork ? 'success' : 'warning'">{{stateWork}}</span>
+      <span class="device-state-item_value" :class="this.info.stateWork ? 'success' : 'warning'">{{
+        stateWork
+      }}</span>
     </li>
 
-    <!-- <li class="device-state-item">
+    <li class="device-state-item">
       <span class="device-state-item_name">核心温度</span>
-      <span class="device-state-item_value" :class="highTemp ? 'error' : 'success'">{{temperature}}</span>
-    </li> -->
+      <span class="device-state-item_value" :class="highTemp ? 'error' : 'success'">{{
+        temperature
+      }}</span>
+    </li>
 
-    <!-- <li class="device-state-item">
-      <span class="device-state-item_name">内存使用</span>
-      <span class="device-state-item_value" :class="fillStorage ? 'error' : 'success'">{{storage}}</span>
-    </li> -->
+    <li class="device-state-item">
+      <span class="device-state-item_name">过期时间</span>
+      <span class="device-state-item_value">{{ registerTime }}</span>
+    </li>
   </ul>
 </template>
 <script>
@@ -40,35 +46,42 @@ export default {
   },
 
   computed: {
-    stateOnline () {
+    stateOnline() {
       return this.info.stateOnline === 1 ? '在线' : '离线'
     },
-    stateWork () {
-      return this.info.stateWork === 1
-        ? '工作'
-        : this.info.stateWork === 0
-          ? '休眠'
-          : ''
+    stateWork() {
+      return this.info.stateWork === 1 ? '工作' : this.info.stateWork === 0 ? '休眠' : ''
     },
-    temperature () {
-      if (this.info.stateWork !== 1 || this.info.stateWork !== 0) return ''
-      if (typeof (this.info.temperature) === 'number') {
+    temperature() {
+      if (this.info.stateWork !== 1 && this.info.stateWork !== 0) return ''
+
+      if (typeof this.info.temperature === 'number') {
         return this.info.temperature + '℃'
       } else {
         return '0℃'
       }
     },
-    storage () {
-      return this.filtersStorage(this.info.storageTotal - this.info.storageUsable) + 'G/' + this.filtersStorage(this.info.storageTotal) + 'G'
+    registerTime() {
+      if (this.info.stateWork !== 1 && this.info.stateWork !== 0) return ''
+
+      return this.info.registerTime
     },
-    highTemp () {
+    storage() {
+      return (
+        this.filtersStorage(this.info.storageTotal - this.info.storageUsable) +
+        'G/' +
+        this.filtersStorage(this.info.storageTotal) +
+        'G'
+      )
+    },
+    highTemp() {
       if (this.info.alarm) {
         return this.detailInfo.alarm.includes('2001')
       } else {
         return false
       }
     },
-    fillStorage () {
+    fillStorage() {
       if (this.info.alarm) {
         return this.detailInfo.alarm.includes('2002')
       } else {
@@ -78,8 +91,8 @@ export default {
   },
 
   methods: {
-    filtersStorage (val) {
-      if (typeof (val) === 'number' && !isNaN(val)) {
+    filtersStorage(val) {
+      if (typeof val === 'number' && !isNaN(val)) {
         return (val / 1024).toFixed(2)
       } else {
         return 0
@@ -89,17 +102,17 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.device-state{
-  &-item{
+.device-state {
+  &-item {
     display: flex;
     height: 40px;
     justify-content: space-between;
     align-items: center;
-    &_name{
+    &_name {
       font-size: 14px;
       color: #606266;
     }
-    &_value{
+    &_value {
       font-size: 14px;
     }
   }
