@@ -15,32 +15,32 @@
         >
         </el-switch>
       </el-form-item>
-      <el-form-item label="本机安装方向" prop="loraMode" style="text-align: right;">
-        <el-switch
-          :disabled="disabled"
-          inactive-text="方向1"
-          active-text="方向2"
-          :active-value="1"
-          :inactive-value="0"
-          v-model="ruleForm.loraMode"
-          @change="changeLora"
-          active-color="#13ce66"
-          inactive-color="#409eff"
-        >
-        </el-switch>
-      </el-form-item>
-
-      <el-form-item label="远程雷达设备编号" prop="loraCode" style="text-align: right;">
-        <el-input
-          :disabled="disabled"
-          placeholder="点击编辑远程雷达设备编号"
-          v-model="ruleForm.loraCode"
-          readonly
-        >
-          <i class="el-icon-edit edit" slot="suffix" @click="showDialog"> </i>
-        </el-input>
-      </el-form-item>
-
+      <template v-if="ruleForm.lora === 1">
+        <el-form-item label="本机安装方向" prop="loraMode" style="text-align: right;">
+          <el-switch
+            :disabled="disabled"
+            inactive-text="方向1"
+            active-text="方向2"
+            :active-value="0"
+            :inactive-value="1"
+            v-model="ruleForm.loraMode"
+            @change="changeLora"
+            active-color="#13ce66"
+            inactive-color="#409eff"
+          >
+          </el-switch>
+        </el-form-item>
+        <el-form-item label="远程雷达设备编号" prop="loraCode" style="text-align: right;">
+          <el-input
+            :disabled="disabled"
+            placeholder="点击编辑远程雷达设备编号"
+            v-model="ruleForm.loraCode"
+            readonly
+          >
+            <i class="el-icon-edit edit" slot="suffix" @click="showDialog"> </i>
+          </el-input>
+        </el-form-item>
+      </template>
       <el-form-item label="警灯雷达联动" prop="linkLamp">
         <el-select
           :disabled="disabled"

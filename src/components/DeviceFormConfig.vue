@@ -123,6 +123,7 @@
 import { lightDevice, directionDevice, lampDevice, radarDevice } from '@/api/device'
 import { orientProjection } from '@/data/common'
 import prompt from '@/mixins/prompt'
+import { omit } from 'lodash'
 export default {
   name: 'device-form-config',
 
@@ -258,10 +259,11 @@ export default {
     },
 
     setLight() {
+      const params = omit(this.ruleForm, 'radar', 'lamp')
       return lightDevice(this.id, {
         devid: this.info.id,
         deviceCode: this.info.code,
-        ...this.ruleForm
+        ...params
       })
         .then(res => {
           this.prompt(res.state)
