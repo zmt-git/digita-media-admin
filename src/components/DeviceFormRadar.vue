@@ -270,6 +270,7 @@ export default {
   }
   /deep/ .el-switch__label--right {
     text-align: left;
+    width: auto !important;
   }
 }
 .btn {
