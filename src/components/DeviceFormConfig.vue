@@ -18,7 +18,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="投影闪烁" prop="lightBlink" v-if="!isFA">
+      <!-- <el-form-item label="投影闪烁" prop="lightBlink" v-if="!isFA">
         <el-select
           :disabled="disabled"
           v-model="ruleForm.lightBlink"
@@ -34,7 +34,7 @@
           >
           </el-option>
         </el-select>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="投影控制" prop="lightControl" style="text-align: right;">
         <el-switch
           :disabled="disabled"
@@ -181,7 +181,7 @@ export default {
       return this.info.type ? this.info.type.split('-').shift() : ''
     },
     orientOptions() {
-      if (this.getType === 'TB') return this.getTBorient
+      if (this.getType === 'TB' || this.getType === 'FA') return this.getTBorient
       return orientProjection
     },
     getTBorient() {
@@ -198,7 +198,7 @@ export default {
         timeOpen: '00:00',
         lightControl: 0,
         lightBrightness: 1,
-        lightBlink: 1,
+        // lightBlink: 1,
         lamp: 0,
         radar: 0
       },

@@ -12,12 +12,25 @@
       <span class="scenes-img" :class="[type, scenes]"></span>
       <div class="scenes-info">
         <div class="scenes-info-top">
-          <h3 class="scenes-info_title ellipsis-1">{{ title }}</h3>
-          <el-radio-group :disabled="disabled" v-model="lightColor" @change="changeColor">
-            <el-radio class="green" :label="1">绿色</el-radio>
-            <el-radio class="red" :label="0">红色</el-radio>
-            <el-radio class="yellow" :label="9" v-if="scenes !== 'customizeScenes2'">黄色</el-radio>
-          </el-radio-group>
+          <div class="scenes-text">
+            <h3 class="scenes-info_title ellipsis-1">{{ title }}</h3>
+            <p class="scenes-info_des ellipsis-2">{{ des }}</p>
+          </div>
+          <div class="action">
+            <el-radio-group :disabled="disabled" v-model="lightColor" @change="changeColor">
+              <el-radio class="green" :label="1">绿色</el-radio>
+              <el-radio class="red" :label="0">红色</el-radio>
+              <el-radio class="yellow" :label="9" v-if="scenes !== 'customizeScenes2'"
+                >黄色</el-radio
+              >
+            </el-radio-group>
+
+            <el-radio-group :disabled="disabled" v-model="speed" @change="changeSpeed">
+              <el-radio :label="1">正常</el-radio>
+              <el-radio :label="2">快速</el-radio>
+              <el-radio :label="3">特快</el-radio>
+            </el-radio-group>
+          </div>
           <!-- <el-switch
             v-if="hasSwitch"
             :disabled="disabled"
@@ -32,7 +45,6 @@
           >
           </el-switch> -->
         </div>
-        <p class="scenes-info_des ellipsis-2">{{ des }}</p>
       </div>
     </div>
     <div class="play-list-content clear">
@@ -132,6 +144,18 @@ export default {
       set(val) {
         this.playlist[this.index].color = val
       }
+    },
+    speed: {
+      get() {
+        if (this.playlist.length > 0 && this.index !== undefined) {
+          return this.playlist[this.index] ? this.playlist[this.index].speed : 1
+        } else {
+          return 1
+        }
+      },
+      set(val) {
+        this.playlist[this.index].speed = val
+      }
     }
   },
 
@@ -162,6 +186,10 @@ export default {
 
     changeColor(e) {
       this.$emit('changeColor', this.playlist, this.index, e)
+    },
+
+    changeSpeed(e) {
+      this.$emit('changeSpeed', this.playlist, this.index, e)
     },
 
     updateInfo() {
@@ -270,6 +298,12 @@ export default {
   display: flex;
   align-items: center;
 }
+.scenes-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .green {
   /deep/ .is-checked + .el-radio__label {
     color: #67c23a;
@@ -296,5 +330,11 @@ export default {
     background-color: #e6a23c;
     border-color: #e6a23c;
   }
+}
+.action {
+  display: flex;
+  height: 48px;
+  flex-direction: column;
+  justify-content: space-between;
 }
 </style>

@@ -134,6 +134,14 @@ const scenesSix = {
     { type: 'list2', index: 1 }
   ]
 }
+const scenesSeven = {
+  lightScenes2: [
+    { type: 'red', index: 0 },
+    { type: 'green', index: 1 },
+    { type: 'red2', index: 2 },
+    { type: 'green2', index: 3 }
+  ]
+}
 
 // 设备类型-------------------------------------------------------------------------------------------
 export const deviceType = Object.freeze([
@@ -144,13 +152,20 @@ export const deviceType = Object.freeze([
   { value: 'TA-C', label: 'TA-C', scenes: scenesFive, hasSwitch: false },
   { value: 'TA-R', label: 'TA-R', scenes: scenesSix, hasSwitch: true },
   // TB
-  { value: 'TB', label: 'TB', scenes: scenesThree, hasSwitch: true },
-  { value: 'TB-C', label: 'TB-C', scenes: scenesFive, hasSwitch: false },
-  { value: 'TB-R', label: 'TB-R', scenes: scenesSix, hasSwitch: true },
+  // 2025-08-08 隐藏 TB、TB-C、TB-R 设备类型
+  // { value: 'TB', label: 'TB', scenes: scenesThree, hasSwitch: true },
+  // { value: 'TB-C', label: 'TB-C', scenes: scenesFive, hasSwitch: false },
+  // { value: 'TB-R', label: 'TB-R', scenes: scenesSix, hasSwitch: true },
   // TC
   { value: 'TC', label: 'TC', scenes: scenesThree, hasSwitch: true },
   { value: 'TC-C', label: 'TC-C', scenes: scenesFive, hasSwitch: false },
-  { value: 'TC-R', label: 'TC-R', scenes: scenesSix, hasSwitch: true }
+  // 2025-08-08 隐藏 TC-R 设备类型
+  // { value: 'TC-R', label: 'TC-R', scenes: scenesSix, hasSwitch: true }，
+  { value: 'TC-D', label: 'TC-D', scenes: scenesSeven, hasSwitch: false },
+  { value: 'TD-C', label: 'TD-C', scenes: scenesFive, hasSwitch: false },
+  { value: 'TE-C', label: 'TE-C', scenes: scenesFive, hasSwitch: false },
+  { value: 'MC', label: 'MC', scenes: scenesThree, hasSwitch: false },
+  { value: 'MC-D', label: 'MC-D', scenes: scenesSeven, hasSwitch: false }
 ])
 
 // 设备播放方向 -------------------------------------------------------------------------------------------
@@ -220,7 +235,7 @@ const s = [
 const a = new Array(9).fill('').map((el, index) => {
   return {
     label: '场景' + (index + 1),
-    value: index + 1
+    value: index
   }
 })
 const c = [
@@ -230,6 +245,12 @@ const c = [
 const r = [
   { label: '列表1', value: 0 },
   { label: '列表2', value: 1 }
+]
+const d = [
+  { label: '红灯', value: 0 },
+  { label: '绿灯', value: 1 },
+  { label: '红灯倒计时', value: 2 },
+  { label: '绿灯倒计时', value: 3 }
 ]
 export const scenesOptions = Object.freeze({
   'ELF-A': [{ value: 0, label: '默认场景' }],
@@ -250,7 +271,12 @@ export const scenesOptions = Object.freeze({
   'TB-R': r,
   TC: w,
   'TC-C': c,
-  'TC-R': r
+  'TC-R': r,
+  'TD-C': c,
+  'TE-C': c,
+  MC: w,
+  'TC-D': d,
+  'MC-D': d
 })
 
 // 天气场景-------------------------------------------------------------------------------------------
@@ -315,6 +341,12 @@ const lightScenes = Object.freeze([
   { type: 'red', title: '红灯', des: '适用于红色信号灯开启时' },
   { type: 'green', title: '绿灯', des: '适用于绿色信号灯开启时' }
 ])
+const lightScenes2 = Object.freeze([
+  { type: 'red', title: '红灯', des: '适用于红色信号灯开启时' },
+  { type: 'green', title: '绿灯', des: '适用于绿色信号灯开启时' },
+  { type: 'red2', title: '红灯倒计时', des: '适用于红色信号灯开启时' },
+  { type: 'green2', title: '绿灯倒计时', des: '适用于绿色信号灯开启时' }
+])
 // 列表1列表2
 const listScenes = Object.freeze([
   { type: 'list1', title: '列表1', des: '用户可根据需要自行配置' },
@@ -328,7 +360,8 @@ export const playlistType = Object.freeze({
   customizeScenes,
   lightScenes,
   listScenes,
-  customizeScenes2
+  customizeScenes2,
+  lightScenes2
 })
 
 // 媒体服务器类型-------------------------------------------------------------------------------------------

@@ -15,7 +15,7 @@
           :info="info"
           @updateInfo="updateInfo"
           :loading.sync="loading"
-          :disabled="disabled"
+          :disabled="false"
         ></device-form-config>
       </div>
       <div class="device-detail-info-control" v-if="isR">
@@ -61,6 +61,7 @@
             :playlist="playlist"
             :index="i.index"
             @changeColor="changeColor"
+            @changeSpeed="changeSpeed"
             @updateInfo="updateInfo"
             @updatePlaylist="updatePlaylist"
             @addPlaylist="showDrawer"
@@ -117,6 +118,7 @@ export default {
     },
     scenes() {
       const scenes = deviceType.find(item => item.value === this.info.type)
+      console.log('🚀 ~ scenes ~ scenes:', scenes)
       return scenes || deviceType[0]
     },
     uploadType() {
@@ -248,6 +250,10 @@ export default {
       // this.loading = false
     },
 
+    changeSpeed() {
+      this.playChange
+    },
+
     async setPlaylist() {
       this.loading = true
       await this.setPlaylistRequest()
@@ -260,6 +266,7 @@ export default {
     setPlaylistRequest() {
       const ids = []
       const colors = []
+      const speeds = []
       const contents = []
       this.playlist.forEach(item => {
         const content = JSON.parse(item.content)
@@ -269,9 +276,10 @@ export default {
         item.content = JSON.stringify(content)
         ids.push(item.id)
         colors.push(item.color)
+        speeds.push(item.speed)
         contents.push(item.content)
       })
-      const params = { devid: this.id, ids: ids, colors: colors, contents: contents }
+      const params = { devid: this.id, ids: ids, colors: colors, speeds, contents: contents }
       return updateContentV2(params)
         .then(res => {
           this.$message({ type: 'success', message: res.msg })
