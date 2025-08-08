@@ -118,7 +118,6 @@ export default {
     },
     scenes() {
       const scenes = deviceType.find(item => item.value === this.info.type)
-      console.log('🚀 ~ scenes ~ scenes:', scenes)
       return scenes || deviceType[0]
     },
     uploadType() {
